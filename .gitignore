@@ -1,6 +1,7 @@
 
 ### Build ###
 target/
+src/main/resources/static/
 
 ### IntelliJ IDEA ###
 .idea
