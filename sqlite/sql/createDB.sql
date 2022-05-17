@@ -86,9 +86,11 @@ INSERT INTO STO_CELL (sto_id, cell_id, remainder)
 VALUES (2, 1, 3); -- sto2 cell10 remainder3
 
 INSERT INTO WORKER (name, personnelNumber)
-VALUES ('worker1', 'workerNumber1');
+VALUES ('WORKER1', '1');
 INSERT INTO WORKER (name, personnelNumber)
-VALUES ('worker2', 'workerNumber2');
+VALUES ('WORKER1', '2');
+INSERT INTO WORKER (name, personnelNumber)
+VALUES ('WORKER2', '3');
 
 
 

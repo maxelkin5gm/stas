@@ -31,12 +31,7 @@ const WorkerPanel = ({stasIndex}: WorkerPanelProps) => {
         dispatch({type: AppStateActionTypes.SET_LOADING, isLoading: false})
 
         if (!workers || workers.length === 0) {
-            dispatch({
-                type: AppStateActionTypes.SET_ERROR_MODAL,
-                visible: true,
-                title: "Ошибка",
-                text: "Сотрудника с таким ФИО не найдено"
-            })
+            showError("Сотрудника с таким ФИО не найдено")
             return;
         }
 
@@ -53,12 +48,7 @@ const WorkerPanel = ({stasIndex}: WorkerPanelProps) => {
         dispatch({type: AppStateActionTypes.SET_LOADING, isLoading: false})
 
         if (!worker)
-            dispatch({
-                type: AppStateActionTypes.SET_ERROR_MODAL,
-                visible: true,
-                title: "Ошибка",
-                text: "Сотрудника с таким табельным номером не найдено"
-            });
+            showError("Сотрудника с таким табельным номером не найдено")
         else
             dispatch({type: StasStateActionTypes.SET_WORKER, worker, stasIndex});
     }
@@ -69,15 +59,22 @@ const WorkerPanel = ({stasIndex}: WorkerPanelProps) => {
 
     function tableHandler() {
         if (!worker.personnelNumber)
-            dispatch({
-                type: AppStateActionTypes.SET_ERROR_MODAL, visible: true, title: "Ошибка", text: "Сотрудник не выбран"
-            })
+            showError("Сотрудник не выбран")
         else
             dispatch({
                 type: StasStateActionTypes.SET_TABLE,
                 stasIndex: stasIndex,
                 table: {type: TableTypeEnum.WORKER, query: worker}
             })
+    }
+
+    function showError(text: string) {
+        dispatch({
+            type: AppStateActionTypes.SET_ERROR_MODAL,
+            visible: true,
+            title: "Ошибка",
+            text
+        });
     }
 
     return (
@@ -93,7 +90,8 @@ const WorkerPanel = ({stasIndex}: WorkerPanelProps) => {
             </div>
 
             <div>
-                <Button htmlType={"submit"} form={"formNumber" + stasIndex} type="primary" size="middle">Выбрать</Button>
+                <Button htmlType={"submit"} form={"formNumber" + stasIndex} type="primary"
+                        size="middle">Выбрать</Button>
             </div>
 
             <div style={{gridRow: "span 2"}}>
