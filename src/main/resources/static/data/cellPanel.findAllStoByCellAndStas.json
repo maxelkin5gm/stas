@@ -1,0 +1,29 @@
+[
+  {
+    "key": 1,
+    "sto": "НАПИЛЬНИК",
+    "remainder": "2",
+    "side": "ПРАВО",
+    "cellNumber": 50,
+    "status": "УСТАНОВЛЕНА",
+    "note": "note1"
+  },
+  {
+    "key": 2,
+    "sto": "ФРЕЗА",
+    "remainder": "3",
+    "side": "ПРАВО",
+    "cellNumber": 50,
+    "status": "УСТАНОВЛЕНА",
+    "note": "note1"
+  },
+  {
+    "key": 3,
+    "sto": "ДРЕЛЬ",
+    "remainder": "1",
+    "side": "ПРАВО",
+    "cellNumber": 50,
+    "status": "УСТАНОВЛЕНА",
+    "note": "note1"
+  }
+]

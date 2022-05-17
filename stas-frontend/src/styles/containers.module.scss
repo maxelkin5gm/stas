@@ -1,0 +1,16 @@
+.container,
+.tabContainer {
+  height: 100%;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.container {
+  padding: 0 10px;
+}
+
+.tabContainer {
+  padding: 10px;
+  overflow: auto;
+}

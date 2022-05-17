@@ -1,0 +1,9 @@
+
+### IntelliJ IDEA ###
+.idea
+
+### Dependencies ###
+/node_modules
+
+### Production ###
+/build

@@ -1,0 +1,12 @@
+.inputNumber {
+  font-size: 18px;
+  border: 1px solid black;
+  padding: 5px;
+  text-align: right;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    opacity: 1!important;
+    margin-left: 10px;
+  }
+}

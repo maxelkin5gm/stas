@@ -1,0 +1,45 @@
+.modal {
+  display: flex;
+  justify-content: center;
+
+  > div {
+    width: 400px;
+    height: 400px;
+    margin: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+  }
+
+  .leftSide {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    select {
+      font-size: 18px;
+      padding: 5px;
+      overflow: auto;
+      flex-basis: 50%;
+    }
+
+    h3 span {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  }
+
+  .rightSide {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    textarea {
+      height: 50%;
+      padding: 5px;
+      font-size: 16px;
+      resize: none;
+    }
+  }
+}

@@ -1,0 +1,21 @@
+.input {
+  width: 100%;
+  font-weight: bold;
+  font-size: 15px;
+  color: black;
+  padding: 0 0 0 10px;
+  border-bottom: 3px black solid;
+  background: transparent;
+  border-radius: 0;
+
+  &::placeholder {
+    color: black;
+    font-weight: normal;
+    text-align: center;
+  }
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+}
