@@ -11,6 +11,9 @@ import SelectWorkerModal from "../../modals/SelectWorkerModal";
 import {Worker} from "../../../store/stasReducer/types/worker.types";
 import {TableTypeEnum} from "../../../store/stasReducer/types/table.types";
 import {StasStateEnum} from "../../../store/stasReducer/types/state.types";
+import {WorkerPanelService} from "../../../services/panels/WorkerPanelService";
+import {UtilsStore} from "../../../store/UtilsStore";
+import axios, {AxiosError} from "axios";
 
 interface WorkerPanelProps {
     stasIndex: number
@@ -25,58 +28,27 @@ const WorkerPanel = ({stasIndex}: WorkerPanelProps) => {
     const numberInputState = useState("");
     const nameInputState = useState("");
 
-    async function selectByNameHandler() {
-        dispatch({type: AppStateActionTypes.SET_LOADING, isLoading: true})
-        const workers: Worker[] | null = await WorkerService.findAllByName(nameInputState[0])
-        dispatch({type: AppStateActionTypes.SET_LOADING, isLoading: false})
+    const workerPanelService = new WorkerPanelService(dispatch, stasIndex);
 
-        if (!workers || workers.length === 0) {
-            showError("Сотрудника с таким ФИО не найдено")
-            return;
-        }
 
-        if (workers.length === 1)
-            dispatch({type: StasStateActionTypes.SET_WORKER, worker: workers[0], stasIndex})
-
-        if (workers.length > 1)
-            setModalState({visible: true, workers})
+    function selectByNumberHandler() {
+        workerPanelService.selectByNumberHandler(numberInputState[0])
     }
 
-    async function selectByNumberHandler() {
-        dispatch({type: AppStateActionTypes.SET_LOADING, isLoading: true})
-        const worker: Worker | null = await WorkerService.findByPersonnelNumber(numberInputState[0])
-        dispatch({type: AppStateActionTypes.SET_LOADING, isLoading: false})
-
-        console.log(worker)
-
-        if (!worker)
-            showError("Сотрудника с таким табельным номером не найдено")
-        else
-            dispatch({type: StasStateActionTypes.SET_WORKER, worker, stasIndex});
+    function selectByNameHandler() {
+        workerPanelService.selectByNameHandler(nameInputState[0], setModalState);
     }
 
-    function resetHandler() {
+    async function resetHandler() {
         dispatch({type: StasStateActionTypes.SET_WORKER, stasIndex, worker: {nameWorker: "", personnelNumber: ""}})
     }
 
     function tableHandler() {
-        if (!worker.personnelNumber)
-            showError("Сотрудник не выбран")
-        else
-            dispatch({
-                type: StasStateActionTypes.SET_TABLE,
-                stasIndex: stasIndex,
-                table: {type: TableTypeEnum.WORKER, query: worker}
-            })
-    }
-
-    function showError(text: string) {
-        dispatch({
-            type: AppStateActionTypes.SET_ERROR_MODAL,
-            visible: true,
-            title: "Ошибка",
-            text
-        });
+        if (worker.personnelNumber) {
+            UtilsStore.setTable(dispatch, stasIndex, {type: TableTypeEnum.WORKER, query: worker})
+        } else {
+            UtilsStore.showError(dispatch, "Сотрудник не выбран")
+        }
     }
 
     return (

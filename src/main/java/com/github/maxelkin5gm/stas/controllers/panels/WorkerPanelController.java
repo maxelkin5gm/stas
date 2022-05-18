@@ -21,13 +21,13 @@ public class WorkerPanelController {
     WorkerDao workerDao;
     WorkerPanelDao workerPanelDao;
 
-    @PostMapping("/findAllByName")
-    public List<Worker> findAllByName(@RequestBody String nameWorker) {
+    @GetMapping("/findAllByName")
+    public List<Worker> findAllByName(@RequestParam String nameWorker) {
         return workerDao.findAllByName(nameWorker);
     }
 
-    @PostMapping("/findByPersonnelNumber")
-    public Worker findByPersonnelNumber(@RequestBody String personnelNumber) {
+    @GetMapping("/findByPersonnelNumber")
+    public Worker findByPersonnelNumber(@RequestParam String personnelNumber) {
         return workerDao.findByPersonnelNumber(personnelNumber).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }

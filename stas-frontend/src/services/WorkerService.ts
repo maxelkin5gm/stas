@@ -1,24 +1,16 @@
 import {Worker} from "../store/stasReducer/types/worker.types";
+import axios from "axios";
+import {Dispatch} from "redux";
 
 export class WorkerService {
 
-    static async findAllByName(nameWorker: string) {
-        const res = await fetch("/api/workerPanel/findAllByName", {
-            method: "POST",
-            body: nameWorker
-        });
-
-        if (res.status === 200) return await res.json() as Worker[];
-        return null;
+    static findAllByName(nameWorker: string) {
+        return axios.get<Worker[]>("/api/workerPanel/findAllByName", {params: {nameWorker}})
+            .then(res => res.data)
     }
 
     static async findByPersonnelNumber(personnelNumber: string) {
-        const res = await fetch("/api/workerPanel/findByPersonnelNumber", {
-            method: "POST",
-            body: personnelNumber
-        });
-
-        if (res.status === 200) return await res.json() as Worker;
-        return null;
+        return axios.get<Worker>("/api/workerPanel/findByPersonnelNumber", {params: {personnelNumber}})
+            .then(res => res.data)
     }
 }
