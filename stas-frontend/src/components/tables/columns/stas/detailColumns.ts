@@ -3,8 +3,8 @@ import {sortNumber, sortString} from "../../utils/sortingFunctions";
 export const detailColumns = [
     {
         title: 'Обозначение детали',
-        dataIndex: 'detail',
-        key: 'detail',
+        dataIndex: 'nameDetail',
+        key: 'nameDetail',
     },
     {
         title: 'Номер операции',
@@ -13,15 +13,15 @@ export const detailColumns = [
     },
     {
         title: 'Обозначение СТО',
-        dataIndex: 'sto',
-        key: 'sto',
-        sorter: sortString('sto')
+        dataIndex: 'nameSto',
+        key: 'nameSto',
+        sorter: sortString('nameSto')
     },
     {
         title: 'Остаток, шт.',
         dataIndex: 'remainder',
         key: 'remainder',
-        sorter: sortString('sto')
+        sorter: sortString('remainder')
     },
     {
         title: 'Сторона',

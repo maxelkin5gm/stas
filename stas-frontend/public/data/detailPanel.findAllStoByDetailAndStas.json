@@ -1,35 +1,13 @@
 [
   {
     "key": 1,
-    "detail": "НАСОС",
+    "nameDetail": "НАСОС",
     "operationNumber": "90",
-    "sto": "НАПИЛЬНИК",
+    "nameSto": "НАПИЛЬНИК",
     "remainder": "2",
     "side": "ПРАВО",
     "cellNumber": 50,
     "status": "УСТАНОВЛЕНА",
-    "note": "note1"
-  },
-  {
-    "key": 2,
-    "detail": "НАСОС",
-    "operationNumber": "90",
-    "sto": "ФРЕЗА",
-    "remainder": "3",
-    "side": "ЛЕВО",
-    "cellNumber": 40,
-    "status": "УСТАНОВЛЕНА",
-    "note": "note1"
-  },
-  {
-    "key": 3,
-    "detail": "НАСОС",
-    "operationNumber": "90",
-    "sto": "ДРЕЛЬ",
-    "remainder": "1",
-    "side": "ПРАВО",
-    "cellNumber": 100,
-    "status": "СНЯТА",
     "note": "note1"
   }
 ]

@@ -1,25 +1,24 @@
 package com.github.maxelkin5gm.stas.controllers;
 
-import com.github.maxelkin5gm.stas.models.Worker;
-import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
-import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
 
-import com.github.maxelkin5gm.stas.ui.Gui;
+import com.github.maxelkin5gm.stas.dao.panels.DetailPanelDao;
+import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.Map;
 
 
 @RestController
 @AllArgsConstructor
 public class TestController {
-    JdbcTemplate jdbcTemplate;
+    DetailPanelDao detailPanelDao;
 
     @GetMapping("/test")
-    public String test() {
-        return "test";
+    public List<Map<String, Object>> test() {
+        return detailPanelDao.findAllByDetailAndStas("DETAIL1", "1", 1);
+//        return stoCellDao.findAllByDetailAndStas("DETAIL1", "1", 1);
     }
 
 }

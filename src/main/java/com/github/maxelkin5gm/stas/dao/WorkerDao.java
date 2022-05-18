@@ -22,7 +22,7 @@ public class WorkerDao {
                 new BeanPropertyRowMapper<>(Worker.class), name);
     }
 
-    public Optional<Worker> findAllByPersonnelNumber(String personnelNumber) {
+    public Optional<Worker> findByPersonnelNumber(String personnelNumber) {
         return jdbcTemplate.query("SELECT name, personnelNumber FROM WORKER WHERE personnelNumber = ?;",
                 new BeanPropertyRowMapper<>(Worker.class), personnelNumber).stream().findAny();
     }

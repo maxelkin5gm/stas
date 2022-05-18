@@ -23,7 +23,7 @@ public class WorkerController {
 
     @PostMapping("/findByPersonnelNumber")
     public Worker findByPersonnelNumber(@RequestBody String personnelNumber) {
-        return workerDao.findAllByPersonnelNumber(personnelNumber).orElseThrow(
+        return workerDao.findByPersonnelNumber(personnelNumber).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 }

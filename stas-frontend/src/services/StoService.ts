@@ -10,12 +10,29 @@ export class StoService {
     }
 
     // detail panel
-    static async findAllByDetailAndStas(detail: string, operationNumber: string, stasIndex: number) {
-        const res = await fetch("/data/detailPanel.findAllStoByDetailAndStas.json")
+    static async findAllByDetailAndStas(nameDetail: string, operationNumber: string, stasIndex: number) {
+        const res = await fetch("/api/detailPanel/findAllByDetail", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                nameDetail,
+                operationNumber,
+                stasIndex: stasIndex + 1
+            })
+        })
 
         if (res.status !== 200) throw Error("Произошла ошибка связи с сервером")
 
-        const data = await res.json();
+        const data = await res.json() as any;
+        data.map((item: any, i: number) => {
+            item.key = i
+            return item;
+        })
+        if (data.length === 0) {
+            throw Error("По запросу ничего не найдено")
+        }
         return data;
     }
 
