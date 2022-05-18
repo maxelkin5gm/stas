@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import {Button, Radio} from "antd";
-import InputCustom from "../../Input/InputCustom";
 import {useTypeSelector} from "../../../hooks/useTypeSelector";
-import {StasStateEnum} from "../../../store/stasReducer/types/state.types";
-import {StasStateActionTypes} from "../../../store/stasReducer/stasReducer.type";
-import {TableTypeEnum} from "../../../store/stasReducer/types/table.types";
 import {useTypeDispatch} from "../../../hooks/useTypeDispatch";
+
+import InputCustom from "../../Input/InputCustom";
+import {StasStateEnum} from "../../../store/stasReducer/types/state.types";
+import {TableTypeEnum} from "../../../store/stasReducer/types/table.types";
+import {UtilsStore} from "../../../store/UtilsStore";
 
 interface CellPanelProps {
     stasIndex: number,
@@ -19,9 +20,9 @@ const CellPanel = ({stasIndex}: CellPanelProps) => {
     const [radioValue, setRadioValue] = useState("ПРАВО");
 
     function tableHandler() {
-        dispatch({
-            type: StasStateActionTypes.SET_TABLE, stasIndex,
-            table: {type: TableTypeEnum.CELL, query: {side: radioValue, cellNumber: Number(cellInputState[0])}}
+        UtilsStore.setTable(dispatch, stasIndex, {
+            type: TableTypeEnum.CELL,
+            query: {side: radioValue, cellNumber: Number(cellInputState[0])}
         })
     }
 

@@ -7,6 +7,7 @@ import {StasStateActionTypes} from "../../store/stasReducer/stasReducer.type";
 import DoubleClickRowModal from "../modals/DoubleClickRowModal";
 import {AppStateActionTypes} from "../../store/appReducer/appReducer.type";
 import {fillStasTable} from "./utils/fillStasTable";
+import {UtilsStore} from "../../store/UtilsStore";
 
 interface MainTableProps {
     stasIndex: number,
@@ -43,15 +44,10 @@ const StasTable = ({stasIndex, isLoading}: MainTableProps) => {
     }
 
     useEffect(() => {
-        dispatch({type: AppStateActionTypes.SET_LOADING, isLoading: true})
+        UtilsStore.setLoader(dispatch, true)
         fillStasTable(tableQuery, stasIndex, setTableState)
-            .finally(() => dispatch({type: AppStateActionTypes.SET_LOADING, isLoading: false}))
-            .catch((e: Error) => dispatch({
-                type: AppStateActionTypes.SET_ERROR_MODAL,
-                visible: true,
-                title: "Ошибка",
-                text: e.message
-            }))
+            .catch((e: Error) => UtilsStore.showError(dispatch, e.message))
+            .finally(() => UtilsStore.setLoader(dispatch, false))
     }, [tableQuery, stasIndex, dispatch])
 
     return (

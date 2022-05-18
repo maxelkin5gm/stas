@@ -19,7 +19,7 @@ export class UtilsStore {
         });
     }
 
-    static setLoader(show: boolean, dispatch: Dispatch) {
+    static setLoader(dispatch: Dispatch, show: boolean) {
         dispatch({type: AppStateActionTypes.SET_LOADING, isLoading: show})
     }
 

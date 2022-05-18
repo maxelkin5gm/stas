@@ -3,17 +3,14 @@ import {Button} from "antd";
 import {useTypeSelector} from "../../../hooks/useTypeSelector";
 import {useTypeDispatch} from "../../../hooks/useTypeDispatch";
 
-import {WorkerService} from "../../../services/WorkerService";
 import {StasStateActionTypes} from "../../../store/stasReducer/stasReducer.type";
 import InputCustom from "../../Input/InputCustom";
-import {AppStateActionTypes} from "../../../store/appReducer/appReducer.type";
 import SelectWorkerModal from "../../modals/SelectWorkerModal";
 import {Worker} from "../../../store/stasReducer/types/worker.types";
 import {TableTypeEnum} from "../../../store/stasReducer/types/table.types";
 import {StasStateEnum} from "../../../store/stasReducer/types/state.types";
-import {WorkerPanelService} from "../../../services/panels/WorkerPanelService";
+import {WorkerPanelService} from "../../../services/WorkerPanelService";
 import {UtilsStore} from "../../../store/UtilsStore";
-import axios, {AxiosError} from "axios";
 
 interface WorkerPanelProps {
     stasIndex: number

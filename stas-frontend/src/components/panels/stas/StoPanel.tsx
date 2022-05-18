@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import {Button} from "antd";
-import InputCustom from "../../Input/InputCustom";
 import {useTypeSelector} from "../../../hooks/useTypeSelector";
-import {StasStateEnum} from "../../../store/stasReducer/types/state.types";
 import {useTypeDispatch} from "../../../hooks/useTypeDispatch";
-import {StasStateActionTypes} from "../../../store/stasReducer/stasReducer.type";
+
+import InputCustom from "../../Input/InputCustom";
+import {StasStateEnum} from "../../../store/stasReducer/types/state.types";
 import {TableTypeEnum} from "../../../store/stasReducer/types/table.types";
+import {UtilsStore} from "../../../store/UtilsStore";
 
 interface StoPanelProps {
     stasIndex: number,
@@ -18,9 +19,9 @@ const StoPanel = ({stasIndex}: StoPanelProps) => {
     const stoInputState = useState("");
 
     function tableHandler() {
-        dispatch({
-            type: StasStateActionTypes.SET_TABLE, stasIndex,
-            table: {type: TableTypeEnum.STO, query: {sto: stoInputState[0]}}
+        UtilsStore.setTable(dispatch, stasIndex, {
+            type: TableTypeEnum.STO,
+            query: {sto: stoInputState[0]}
         })
     }
 

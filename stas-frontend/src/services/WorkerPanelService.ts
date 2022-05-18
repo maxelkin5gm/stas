@@ -1,12 +1,11 @@
-import {fetchArray} from "../utils/fetchArray";
-import {Worker} from "../../store/stasReducer/types/worker.types";
-import {WorkerService} from "../WorkerService";
-import {StasStateActionTypes} from "../../store/stasReducer/stasReducer.type";
-
 import React from "react";
-import {useTypeDispatch} from "../../hooks/useTypeDispatch";
-import {UtilsStore} from "../../store/UtilsStore";
+import {useTypeDispatch} from "../hooks/useTypeDispatch";
 import {AxiosError} from "axios";
+
+import {Worker} from "../store/stasReducer/types/worker.types";
+import {WorkerService} from "./WorkerService";
+import {StasStateActionTypes} from "../store/stasReducer/stasReducer.type";
+import {UtilsStore} from "../store/UtilsStore";
 
 export class WorkerPanelService {
 
@@ -14,15 +13,8 @@ export class WorkerPanelService {
                 private stasIndex: number) {
     }
 
-    static async findAllReceivedByWorkerAndStas(personnelNumber: string, stasIndex: number) {
-        return await fetchArray("/api/workerPanel/findAllReceivedByWorkerAndStas", {
-            personnelNumber,
-            stasIndex: stasIndex + 1
-        }) as Worker[]
-    }
-
     async selectByNumberHandler(numberInput: string) {
-        UtilsStore.setLoader(true, this.dispatch)
+        UtilsStore.setLoader(this.dispatch, true)
         try {
             const worker = await WorkerService.findByPersonnelNumber(numberInput)
             this.dispatch({type: StasStateActionTypes.SET_WORKER, worker, stasIndex: this.stasIndex});
@@ -32,12 +24,12 @@ export class WorkerPanelService {
             } else
                 UtilsStore.showError(this.dispatch)
         } finally {
-            UtilsStore.setLoader(false, this.dispatch)
+            UtilsStore.setLoader(this.dispatch, false)
         }
     }
 
     async selectByNameHandler(nameInput: string, setModalState: React.Dispatch<any>) {
-        UtilsStore.setLoader(true, this.dispatch)
+        UtilsStore.setLoader(this.dispatch, true)
         try {
             const workers: Worker[] = await WorkerService.findAllByName(nameInput)
 
@@ -51,7 +43,7 @@ export class WorkerPanelService {
         } catch (e) {
             UtilsStore.showError(this.dispatch)
         } finally {
-            UtilsStore.setLoader(false, this.dispatch)
+            UtilsStore.setLoader(this.dispatch, false)
         }
     }
 

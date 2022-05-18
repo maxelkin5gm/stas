@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import {Button} from "antd";
 import {useTypeDispatch} from "../../../hooks/useTypeDispatch";
+import {useTypeSelector} from "../../../hooks/useTypeSelector";
 
 import InputCustom from "../../Input/InputCustom";
-import {StasStateActionTypes} from "../../../store/stasReducer/stasReducer.type";
 import {TableTypeEnum} from "../../../store/stasReducer/types/table.types";
 import {StasStateEnum} from "../../../store/stasReducer/types/state.types";
-import {useTypeSelector} from "../../../hooks/useTypeSelector";
+import {UtilsStore} from "../../../store/UtilsStore";
 
 interface DetailPanelProps {
     stasIndex: number,
@@ -20,12 +20,9 @@ const DetailPanel = ({stasIndex}: DetailPanelProps) => {
     const numberInputState = useState("");
 
     function tableHandler() {
-        dispatch({
-            type: StasStateActionTypes.SET_TABLE, stasIndex,
-            table: {
-                type: TableTypeEnum.DETAIL,
-                query: {detail: detailInputState[0], operationNumber: numberInputState[0]}
-            }
+        UtilsStore.setTable(dispatch, stasIndex, {
+            type: TableTypeEnum.DETAIL,
+            query: {detail: detailInputState[0], operationNumber: numberInputState[0]}
         })
     }
 

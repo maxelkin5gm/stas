@@ -1,6 +1,5 @@
 import {Worker} from "../store/stasReducer/types/worker.types";
 import axios from "axios";
-import {Dispatch} from "redux";
 
 export class WorkerService {
 
