@@ -20,7 +20,7 @@ const SelectWorkerModal = ({modalState, onClose, stasIndex}: SelectWorkerModalPr
 
     if (!modalState.visible) return null;
 
-    const name = modalState.workers[0].name;
+    const nameWorker = modalState.workers[0].nameWorker;
 
     function selectHandler(e: React.MouseEvent<HTMLOptionElement, MouseEvent>) {
         const personnelNumber = e.currentTarget.value;
@@ -28,7 +28,7 @@ const SelectWorkerModal = ({modalState, onClose, stasIndex}: SelectWorkerModalPr
             type: StasStateActionTypes.SET_WORKER,
             stasIndex: stasIndex,
             worker: {
-                name,
+                nameWorker,
                 personnelNumber
             }
         })
@@ -39,7 +39,7 @@ const SelectWorkerModal = ({modalState, onClose, stasIndex}: SelectWorkerModalPr
         <BaseModal onClose={onClose}>
             <div className={cl.selectWorkerModal}>
 
-                <h2>Найдено более одного сотрудника с ФИО: <span>{name}</span></h2>
+                <h2>Найдено более одного сотрудника с ФИО: <span>{nameWorker}</span></h2>
                 <h3>Выберите табельный номер</h3>
 
                 <select multiple>

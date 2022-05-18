@@ -47,6 +47,8 @@ const WorkerPanel = ({stasIndex}: WorkerPanelProps) => {
         const worker: Worker | null = await WorkerService.findByPersonnelNumber(numberInputState[0])
         dispatch({type: AppStateActionTypes.SET_LOADING, isLoading: false})
 
+        console.log(worker)
+
         if (!worker)
             showError("Сотрудника с таким табельным номером не найдено")
         else
@@ -54,7 +56,7 @@ const WorkerPanel = ({stasIndex}: WorkerPanelProps) => {
     }
 
     function resetHandler() {
-        dispatch({type: StasStateActionTypes.SET_WORKER, stasIndex, worker: {name: "", personnelNumber: ""}})
+        dispatch({type: StasStateActionTypes.SET_WORKER, stasIndex, worker: {nameWorker: "", personnelNumber: ""}})
     }
 
     function tableHandler() {
@@ -113,8 +115,8 @@ const WorkerPanel = ({stasIndex}: WorkerPanelProps) => {
 
             <div style={{textAlign: "center"}}>
                 <span style={{fontSize: 16, fontWeight: "bold"}}>
-                    {worker.name
-                        ? `${worker.name} (${worker.personnelNumber})`
+                    {worker.nameWorker
+                        ? `${worker.nameWorker} (${worker.personnelNumber})`
                         : "Не выбрано"}
                 </span>
             </div>

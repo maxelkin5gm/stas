@@ -3,32 +3,32 @@ import {sortNumber, sortString} from "../../utils/sortingFunctions";
 export const receivedStoColumns = [
     {
         title: 'Обозначение СТО',
-        dataIndex: 'sto',
-        key: 'sto',
-        sorter: sortString('sto')
+        dataIndex: 'receivedNameSto',
+        key: 'receivedNameSto',
+        sorter: sortString('receivedNameSto')
     },
     {
         title: 'Выдано, шт.',
-        dataIndex: 'received',
-        key: 'received',
-        sorter: sortNumber('received')
+        dataIndex: 'amount',
+        key: 'amount',
+        sorter: sortNumber('amount')
     },
     {
         title: 'Обозначение детали',
-        dataIndex: 'detail',
-        key: 'detail',
-        sorter: sortString('detail')
+        dataIndex: 'receivedNameDetail',
+        key: 'receivedNameDetail',
+        sorter: sortString('receivedNameDetail')
     },
     {
         title: 'Номер операции',
-        dataIndex: 'operationNumber',
-        key: 'operationNumber',
-        sorter: sortNumber('operationNumber')
+        dataIndex: 'receivedOperationNumber',
+        key: 'receivedOperationNumber',
+        sorter: sortNumber('receivedOperationNumber')
     },
     {
         title: 'Дата',
-        dataIndex: 'date',
-        key: 'date',
+        dataIndex: 'operationDate',
+        key: 'operationDate',
     },
     {
         title: 'Сторона',

@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class Worker {
-    String name;
+    String nameWorker;
     String personnelNumber;
 }

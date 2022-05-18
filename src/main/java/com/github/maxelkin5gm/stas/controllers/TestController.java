@@ -1,7 +1,7 @@
 package com.github.maxelkin5gm.stas.controllers;
 
-
 import com.github.maxelkin5gm.stas.dao.panels.DetailPanelDao;
+
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,9 +16,8 @@ public class TestController {
     DetailPanelDao detailPanelDao;
 
     @GetMapping("/test")
-    public List<Map<String, Object>> test() {
-        return detailPanelDao.findAllByDetailAndStas("DETAIL1", "1", 1);
-//        return stoCellDao.findAllByDetailAndStas("DETAIL1", "1", 1);
+    public String test() {
+        return "test";
     }
 
 }

@@ -5,7 +5,7 @@ import {TableTypeEnum} from "./types/table.types";
 const stasInit: StasState = {
     state: StasStateEnum.READY,
     worker: {
-        name: "",
+        nameWorker: "",
         personnelNumber: ""
     },
     table: {

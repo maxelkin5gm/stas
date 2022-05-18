@@ -3,15 +3,15 @@ import {sortString} from "../../utils/sortingFunctions";
 export const cellColumns = [
     {
         title: 'Обозначение СТО',
-        dataIndex: 'sto',
-        key: 'sto',
-        sorter: sortString('sto')
+        dataIndex: 'nameSto',
+        key: 'nameSto',
+        sorter: sortString('nameSto')
     },
     {
         title: 'Остаток, шт.',
         dataIndex: 'remainder',
         key: 'remainder',
-        sorter: sortString('sto')
+        sorter: sortString('remainder')
     },
     {
         title: 'Сторона',

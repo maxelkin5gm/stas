@@ -2,10 +2,10 @@ import {Worker} from "../store/stasReducer/types/worker.types";
 
 export class WorkerService {
 
-    static async findAllByName(name: string) {
-        const res = await fetch("/api/worker/findByName", {
+    static async findAllByName(nameWorker: string) {
+        const res = await fetch("/api/workerPanel/findAllByName", {
             method: "POST",
-            body: name
+            body: nameWorker
         });
 
         if (res.status === 200) return await res.json() as Worker[];
@@ -13,7 +13,7 @@ export class WorkerService {
     }
 
     static async findByPersonnelNumber(personnelNumber: string) {
-        const res = await fetch("/api/worker/findByPersonnelNumber", {
+        const res = await fetch("/api/workerPanel/findByPersonnelNumber", {
             method: "POST",
             body: personnelNumber
         });

@@ -3,14 +3,14 @@ import {sortNumber, sortString} from "../../utils/sortingFunctions";
 export const stoColumns = [
     {
         title: 'Обозначение СТО',
-        dataIndex: 'sto',
-        key: 'sto',
+        dataIndex: 'nameSto',
+        key: 'nameSto',
     },
     {
         title: 'Остаток, шт.',
         dataIndex: 'remainder',
         key: 'remainder',
-        sorter: sortString('sto')
+        sorter: sortString('remainder')
     },
     {
         title: 'Сторона',

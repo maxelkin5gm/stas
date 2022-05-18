@@ -1,4 +1,4 @@
-package com.github.maxelkin5gm.stas.controllers;
+package com.github.maxelkin5gm.stas.controllers.panels;
 
 import com.github.maxelkin5gm.stas.dao.panels.DetailPanelDao;
 import com.github.maxelkin5gm.stas.dto.detailPanel.QueryFindAllByDetail;

@@ -38,7 +38,7 @@ const CellPanel = ({stasIndex}: CellPanelProps) => {
                 <Radio.Group size="small" defaultValue="ПРАВО" buttonStyle="solid" value={radioValue}
                              onChange={(e => setRadioValue(e.target.value))}>
                     <Radio.Button value="ПРАВО">ПРАВО</Radio.Button>
-                    <Radio.Button value="ЛЕВО ">ЛЕВО</Radio.Button>
+                    <Radio.Button value="ЛЕВО">ЛЕВО</Radio.Button>
                 </Radio.Group>
             </div>
 

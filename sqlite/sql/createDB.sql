@@ -6,6 +6,7 @@ DROP TABLE STO;
 DROP TABLE DETAIL;
 DROP TABLE CELL;
 DROP TABLE WORKER;
+DROP TABLE RECEIVED_STO;
 
 PRAGMA foreign_keys = ON;
 
@@ -51,9 +52,22 @@ CREATE TABLE STO_CELL
 CREATE TABLE WORKER
 (
     id              INTEGER PRIMARY KEY AUTOINCREMENT,
-    name            TEXT        NOT NULL,
+    nameWorker      TEXT        NOT NULL,
     personnelNumber TEXT UNIQUE NOT NULL
 );
+
+CREATE TABLE RECEIVED_STO
+(
+    id                      INTEGER PRIMARY KEY AUTOINCREMENT,
+    amount                  TEXT NOT NULL,
+    operationDate           INTEGER,
+    receivedNameSto         TEXT NOT NULL,
+    receivedNameDetail      TEXT NOT NULL,
+    receivedOperationNumber TEXT NOT NULL,
+    cell_id                 INTEGER REFERENCES CELL (id),
+    worker_id               INTEGER REFERENCES WORKER (id)
+);
+
 
 
 INSERT INTO STO (nameSto)
@@ -64,7 +78,7 @@ VALUES ('STO2');
 INSERT INTO DETAIL (nameDetail, operationNumber)
 VALUES ('DETAIL1', '1');
 INSERT INTO DETAIL (nameDetail, operationNumber)
-VALUES ('DETAIL2', 'OPER2');
+VALUES ('DETAIL2', '2');
 
 INSERT INTO STO_DETAIL (STO_ID, DETAIL_ID)
 VALUES (1, 1); -- sto1 detail1
@@ -85,12 +99,17 @@ VALUES (1, 2, 2); -- sto1 cell11 remainder2
 INSERT INTO STO_CELL (sto_id, cell_id, remainder)
 VALUES (2, 1, 3); -- sto2 cell10 remainder3
 
-INSERT INTO WORKER (name, personnelNumber)
+INSERT INTO WORKER (nameWorker, personnelNumber)
 VALUES ('WORKER1', '1');
-INSERT INTO WORKER (name, personnelNumber)
+INSERT INTO WORKER (nameWorker, personnelNumber)
 VALUES ('WORKER1', '2');
-INSERT INTO WORKER (name, personnelNumber)
+INSERT INTO WORKER (nameWorker, personnelNumber)
 VALUES ('WORKER2', '3');
+
+INSERT INTO RECEIVED_STO (amount, receivedNameSto, receivedNameDetail, receivedOperationNumber, cell_id, worker_id)
+VALUES (4, 'sto1', 'detail1', '1', 1, 1);
+INSERT INTO RECEIVED_STO (amount, receivedNameSto, receivedNameDetail, receivedOperationNumber, cell_id, worker_id)
+VALUES (1, 'sto2', 'detail2', '2', 2, 1);
 
 
 

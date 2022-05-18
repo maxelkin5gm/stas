@@ -9,22 +9,18 @@ import java.util.Map;
 
 @Repository
 @AllArgsConstructor
-public class StoPanelDao {
+public class CellPanelDao {
     JdbcTemplate jdbcTemplate;
 
     private final String sql = """
             SELECT nameSto, remainder, side, cellNumber, status, note
             FROM STO, CELL, STO_CELL
             WHERE STO_CELL.sto_id = STO.id AND STO_CELL.cell_id = CELL.id
-                AND nameSto = ?""";
+                AND side = ? AND cellNumber = ? AND stasIndex = ?;""";
 
-    public List<Map<String, Object>> findAllByStoAndStas(String nameSto, int stasIndex) {
-        String sqlWithStasIndex = sql + " AND stasIndex = ?;";
-        return jdbcTemplate.queryForList(sqlWithStasIndex, nameSto, stasIndex);
+    public List<Map<String, Object>> findAllByCellAndStas(String side, int cellNumber, int stasIndex) {
+        return jdbcTemplate.queryForList(sql, side, cellNumber, stasIndex);
     }
 
-    public List<Map<String, Object>> findAllBySto(String nameSto) {
-        return jdbcTemplate.queryForList(sql, nameSto);
-    }
 
 }
