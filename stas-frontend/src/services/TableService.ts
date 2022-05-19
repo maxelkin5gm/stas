@@ -57,7 +57,21 @@ export class TableService {
             params: {nameSto}
         }).then(res => res.data);
         return this.validateAndPrepareArray(data)
-    } // Sto END //
+    }
+
+    static async findAllReceivedBySto(nameSto: string) {
+        const data = await axios.get<any[]>("/api/table/findAllReceivedBySto", {
+            params: {nameSto}
+        }).then(res => res.data);
+        return this.validateAndPrepareArray(data)
+    }
+
+    static async findAllByStoAndRemainder(nameSto: string, remainder: number) {
+        const data = await axios.get<any[]>("/api/table/findAllByStoAndRemainder", {
+            params: {nameSto, remainder}
+        }).then(res => res.data);
+        return this.validateAndPrepareArray(data)
+    }// Sto END //
 
 
     // Cell START //
@@ -82,7 +96,7 @@ export class TableService {
 
     static addKeyProperty(data: any[]) {
         return data.map((item: any, i: number) => {
-            item.key = i
+            item.key = i + 1
             return item;
         })
     }

@@ -9,11 +9,12 @@ interface BaseTableProps {
         data: any[]
     }
     onClickRow?: (row: any, index: number | undefined) => void
-    onDoubleClickRow?: (row: any, index: number | undefined) => void,
-    isLoading?: boolean,
+    onDoubleClickRow?: (row: any, index: number | undefined) => void
+    onContextMenuRow?: (row: any, index: number | undefined) => void
+    isLoading?: boolean
 }
 
-const BaseTable = ({tableState, onClickRow, onDoubleClickRow, isLoading}: BaseTableProps) => {
+const BaseTable = ({tableState, onClickRow, onDoubleClickRow, onContextMenuRow, isLoading}: BaseTableProps) => {
     const [selectedRow, setSelectedRow] = useState(0)
 
 
@@ -30,6 +31,12 @@ const BaseTable = ({tableState, onClickRow, onDoubleClickRow, isLoading}: BaseTa
                     onDoubleClickRow(row, index)
                 }
             },
+            onContextMenu: (e: any) => {
+                e.preventDefault()
+                if (onContextMenuRow) {
+                    onContextMenuRow(row, index)
+                }
+            }
         };
     }
 

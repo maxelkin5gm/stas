@@ -15,28 +15,28 @@ export async function fillStasTable({type, query}: TableQuery, stasIndex: number
             setTableState({columns: [], data: []})
             return;
 
-        case TableTypeEnum.WORKER:
+        case TableTypeEnum.BY_WORKER:
             setTableState({
                 columns: receivedStoColumns,
                 data: await TableService.findAllByWorkerAndStas(query.personnelNumber, stasIndex),
             })
             return;
 
-        case TableTypeEnum.DETAIL:
+        case TableTypeEnum.BY_DETAIL:
             setTableState({
                 columns: detailColumns,
                 data: await TableService.findAllByDetailAndStas(query.detail, query.operationNumber, stasIndex)
             })
             return;
 
-        case TableTypeEnum.STO:
+        case TableTypeEnum.BY_STO:
             setTableState({
                 columns: stoColumns,
-                data: await TableService.findAllByStoAndStas(query.sto, stasIndex)
+                data: await TableService.findAllByStoAndStas(query.nameSto, stasIndex)
             })
             return;
 
-        case TableTypeEnum.CELL:
+        case TableTypeEnum.BY_CELL:
             setTableState({
                 columns: cellColumns,
                 data: await TableService.findAllByCellAndStas(query.side, query.cellNumber, stasIndex)

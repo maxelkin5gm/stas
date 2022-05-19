@@ -8,7 +8,7 @@ export class WorkerService {
             .then(res => res.data)
     }
 
-    static async findByPersonnelNumber(personnelNumber: string) {
+    static findByPersonnelNumber(personnelNumber: string) {
         return axios.get<Worker>("/api/workerPanel/findByPersonnelNumber", {params: {personnelNumber}})
             .then(res => res.data)
     }

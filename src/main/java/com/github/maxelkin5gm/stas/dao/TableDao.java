@@ -26,7 +26,7 @@ public class TableDao {
     public List<Map<String, Object>> findAllByWorker(String personnelNumber) {
         String sql = """
                 SELECT receivedNameSto, amount, receivedNameDetail, receivedOperationNumber, operationDate, side,
-                    cellNumber, status, note
+                    cellNumber, stasIndex, status, note
                 FROM CELL, WORKER, RECEIVED_STO
                 WHERE RECEIVED_STO.cell_id = CELL.id AND RECEIVED_STO.worker_id = WORKER.id
                     AND personnelNumber = ?;""";
@@ -48,7 +48,7 @@ public class TableDao {
 
     public List<Map<String, Object>> findAllByDetail(String nameDetail, String operationNumber) {
         String sql = """
-                SELECT nameDetail, operationNumber, nameSto, remainder, side, cellNumber, status, note
+                SELECT nameDetail, operationNumber, nameSto, remainder, side, cellNumber, stasIndex, status, note
                 FROM STO, DETAIL, CELL, STO_DETAIL, STO_CELL
                 WHERE STO_DETAIL.sto_id = STO.id AND STO_DETAIL.detail_id = DETAIL.id
                   AND STO_CELL.sto_id = STO.id AND STO_CELL.cell_id = CELL.id
@@ -59,7 +59,7 @@ public class TableDao {
 
 
     // Sto START //
-    public List<Map<String, Object>> findAllByStoAndStas(String nameSto, int stasIndex) {
+    public List<Map<String, Object>> findAllCellByStoAndStas(String nameSto, int stasIndex) {
         String sql = """
                 SELECT nameSto, remainder, side, cellNumber, status, note
                 FROM STO, CELL, STO_CELL
@@ -68,13 +68,32 @@ public class TableDao {
         return jdbcTemplate.queryForList(sql, nameSto, stasIndex);
     }
 
-    public List<Map<String, Object>> findAllBySto(String nameSto) {
+    public List<Map<String, Object>> findAllCellBySto(String nameSto) {
         String sql = """
-                SELECT nameSto, remainder, side, cellNumber, status, note
+                SELECT nameSto, remainder, side, cellNumber, stasIndex, status, note
                 FROM STO, CELL, STO_CELL
                 WHERE STO_CELL.sto_id = STO.id AND STO_CELL.cell_id = CELL.id
                     AND nameSto = ?;""";
         return jdbcTemplate.queryForList(sql, nameSto);
+    }
+
+    public List<Map<String, Object>> findAllReceivedBySto(String nameSto) {
+        String sql = """
+                SELECT receivedNameSto, nameWorker, personnelNumber, amount, receivedNameDetail,
+                    receivedOperationNumber, operationDate, side, cellNumber, stasIndex, status, note
+                FROM RECEIVED_STO, CELL, WORKER
+                WHERE RECEIVED_STO.cell_id = CELL.id AND RECEIVED_STO.worker_id = WORKER.id
+                    AND receivedNameSto = ?""";
+        return jdbcTemplate.queryForList(sql, nameSto);
+    }
+
+    public List<Map<String, Object>> findAllByStoAndRemainder(String nameSto, int remainder) {
+        String sql = """
+                SELECT nameSto, remainder, side, cellNumber, stasIndex, status, note
+                FROM STO, CELL, STO_CELL
+                WHERE STO_CELL.sto_id = STO.id AND STO_CELL.cell_id = CELL.id
+                    AND nameSto = ? AND remainder <= ?;""";
+        return jdbcTemplate.queryForList(sql, nameSto, remainder);
     }
     // Sto END //
 

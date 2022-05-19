@@ -9,7 +9,7 @@ import SelectWorkerModal from "../../modals/SelectWorkerModal";
 import {Worker} from "../../../store/stasReducer/types/worker.types";
 import {TableTypeEnum} from "../../../store/stasReducer/types/table.types";
 import {StasStateEnum} from "../../../store/stasReducer/types/state.types";
-import {WorkerPanelService} from "../../../services/WorkerPanelService";
+import {WorkerPanelService} from "../../../services/panels/WorkerPanelService";
 import {UtilsStore} from "../../../store/UtilsStore";
 
 interface WorkerPanelProps {
@@ -42,7 +42,7 @@ const WorkerPanel = ({stasIndex}: WorkerPanelProps) => {
 
     function tableHandler() {
         if (worker.personnelNumber) {
-            UtilsStore.setTable(dispatch, stasIndex, {type: TableTypeEnum.WORKER, query: worker})
+            UtilsStore.setTable(dispatch, stasIndex, {type: TableTypeEnum.BY_WORKER, query: worker})
         } else {
             UtilsStore.showError(dispatch, "Сотрудник не выбран")
         }

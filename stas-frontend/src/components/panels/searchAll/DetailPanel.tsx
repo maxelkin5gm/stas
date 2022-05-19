@@ -1,10 +1,30 @@
 import React, {useState} from 'react';
-import InputCustom from "../../Input/InputCustom";
 import {Button} from "antd";
+import {useTypeDispatch} from "../../../hooks/useTypeDispatch";
+
+import {SearchAllStateActionTypes} from "../../../store/searchAllReducer/searchAllReducer.type";
+import {SearchAllTableTypeEnum} from "../../../store/searchAllReducer/types/table.types";
+import InputCustom from "../../Input/InputCustom";
+
 
 const DetailPanel = () => {
+    const dispatch = useTypeDispatch();
+
     const detailInputState = useState("");
     const numberInputState = useState("");
+
+    function tableHandler() {
+        dispatch({
+            type: SearchAllStateActionTypes.SET_SEARCH_ALL_TABLE,
+            table: {
+                type: SearchAllTableTypeEnum.BY_DETAIL,
+                query: {
+                    detail: detailInputState[0],
+                    operationNumber: numberInputState[0]
+                }
+            }
+        })
+    }
 
     return (
         <>
@@ -17,7 +37,7 @@ const DetailPanel = () => {
             </div>
 
             <div>
-                <Button type="primary" size="large">Показать</Button>
+                <Button type="primary" size="large" onClick={tableHandler}>Показать</Button>
             </div>
         </>
     );

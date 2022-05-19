@@ -21,7 +21,7 @@ const CellPanel = ({stasIndex}: CellPanelProps) => {
 
     function tableHandler() {
         UtilsStore.setTable(dispatch, stasIndex, {
-            type: TableTypeEnum.CELL,
+            type: TableTypeEnum.BY_CELL,
             query: {side: radioValue, cellNumber: Number(cellInputState[0])}
         })
     }

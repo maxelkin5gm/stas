@@ -21,7 +21,7 @@ const DetailPanel = ({stasIndex}: DetailPanelProps) => {
 
     function tableHandler() {
         UtilsStore.setTable(dispatch, stasIndex, {
-            type: TableTypeEnum.DETAIL,
+            type: TableTypeEnum.BY_DETAIL,
             query: {detail: detailInputState[0], operationNumber: numberInputState[0]}
         })
     }

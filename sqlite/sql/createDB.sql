@@ -107,9 +107,9 @@ INSERT INTO WORKER (nameWorker, personnelNumber)
 VALUES ('WORKER2', '3');
 
 INSERT INTO RECEIVED_STO (amount, receivedNameSto, receivedNameDetail, receivedOperationNumber, cell_id, worker_id)
-VALUES (4, 'sto1', 'detail1', '1', 1, 1);
+VALUES (4, 'STO1', 'DETAIL1', '1', 1, 1);
 INSERT INTO RECEIVED_STO (amount, receivedNameSto, receivedNameDetail, receivedOperationNumber, cell_id, worker_id)
-VALUES (1, 'sto2', 'detail2', '2', 2, 1);
+VALUES (1, 'STO2', 'DETAIL2', '2', 2, 1);
 
 
 

@@ -2,6 +2,7 @@ package com.github.maxelkin5gm.stas.controllers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Map;
 
@@ -45,12 +46,22 @@ public class TableController {
     @GetMapping("/findAllByStoAndStas")
     public List<Map<String, Object>> findAllByStoAndStas(@RequestParam String nameSto,
                                                          @RequestParam int stasIndex) {
-        return tableDao.findAllByStoAndStas(nameSto, stasIndex);
+        return tableDao.findAllCellByStoAndStas(nameSto, stasIndex);
     }
 
     @GetMapping("/findAllBySto")
     public List<Map<String, Object>> findAllBySto(@RequestParam String nameSto) {
-        return tableDao.findAllBySto(nameSto);
+        return tableDao.findAllCellBySto(nameSto);
+    }
+
+    @GetMapping("/findAllReceivedBySto")
+    public List<Map<String, Object>> findAllReceivedBySto(@RequestParam String nameSto) {
+        return tableDao.findAllReceivedBySto(nameSto);
+    }
+
+    @GetMapping("/findAllByStoAndRemainder")
+    public List<Map<String, Object>> findAllByStoAndRemainder(@RequestParam String nameSto, @RequestParam int remainder) {
+        return tableDao.findAllByStoAndRemainder(nameSto, remainder);
     }
     // Sto END //
 

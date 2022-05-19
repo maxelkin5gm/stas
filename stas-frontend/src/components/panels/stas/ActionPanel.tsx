@@ -4,8 +4,8 @@ import {useTypeSelector} from "../../../hooks/useTypeSelector";
 import {useTypeDispatch} from "../../../hooks/useTypeDispatch";
 
 import {StasStateEnum} from "../../../store/stasReducer/types/state.types";
-import {StasService} from "../../../services/StasService";
 import {SelectedCell, StatusCell} from "../../../store/stasReducer/types/selectedCell";
+import {ActionPanelService} from "../../../services/panels/ActionPanelService";
 
 interface ActionPanelProps {
     stasIndex: number,
@@ -16,16 +16,18 @@ const ActionPanel = ({stasIndex}: ActionPanelProps) => {
     const stasState = useTypeSelector(state => state.stasList[stasIndex].state);
     const dispatch = useTypeDispatch()
 
+    const actionPanelService = new ActionPanelService(dispatch, stasIndex, selectedCell as SelectedCell);
+
     function bringCellHandler() {
-        StasService.bringCell(selectedCell as SelectedCell, stasIndex, dispatch);
+        actionPanelService.bringCell();
     }
 
-    async function bringBackCellHandler() {
-        StasService.bringBackCell(selectedCell as SelectedCell, stasIndex, dispatch)
+    function bringBackCellHandler() {
+        actionPanelService.bringBackCell()
     }
 
     function removeCellHandler() {
-        StasService.removeCell(selectedCell as SelectedCell, stasIndex, dispatch)
+        actionPanelService.removeCell()
     }
 
     return (

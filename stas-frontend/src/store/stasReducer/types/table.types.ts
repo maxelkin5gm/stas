@@ -2,27 +2,33 @@ import {Worker} from "./worker.types";
 
 export enum TableTypeEnum {
     CLEAR = "CLEAR",
-    WORKER = "WORKER",
-    DETAIL = "DETAIL",
-    STO = "STO",
-    CELL = "CELL",
+    BY_WORKER = "BY_WORKER",
+    BY_DETAIL = "BY_DETAIL",
+    BY_STO = "BY_STO",
+    BY_CELL = "BY_CELL",
 }
 
-/**
- * Query table types
- */
-interface InitTableQuery {
+export type TableQuery =
+    ClearTableQuery
+    | WorkerTableQuery
+    | DetailTableQuery
+    | StoTableQuery
+    | CellTableQuery;
+
+
+// Queries START //
+interface ClearTableQuery {
     type: TableTypeEnum.CLEAR
     query: undefined
 }
 
 interface WorkerTableQuery {
-    type: TableTypeEnum.WORKER,
+    type: TableTypeEnum.BY_WORKER,
     query: Worker
 }
 
 interface DetailTableQuery {
-    type: TableTypeEnum.DETAIL,
+    type: TableTypeEnum.BY_DETAIL,
     query: {
         detail: string,
         operationNumber: string
@@ -30,23 +36,17 @@ interface DetailTableQuery {
 }
 
 interface StoTableQuery {
-    type: TableTypeEnum.STO,
+    type: TableTypeEnum.BY_STO,
     query: {
-        sto: string
+        nameSto: string
     }
 }
 
 interface CellTableQuery {
-    type: TableTypeEnum.CELL,
+    type: TableTypeEnum.BY_CELL,
     query: {
         side: string,
         cellNumber: number
     }
 }
-
-export type TableQuery =
-    InitTableQuery
-    | WorkerTableQuery
-    | DetailTableQuery
-    | StoTableQuery
-    | CellTableQuery;
+// Queries END //

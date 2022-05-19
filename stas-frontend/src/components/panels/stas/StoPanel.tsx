@@ -20,8 +20,8 @@ const StoPanel = ({stasIndex}: StoPanelProps) => {
 
     function tableHandler() {
         UtilsStore.setTable(dispatch, stasIndex, {
-            type: TableTypeEnum.STO,
-            query: {sto: stoInputState[0]}
+            type: TableTypeEnum.BY_STO,
+            query: {nameSto: stoInputState[0]}
         })
     }
 
