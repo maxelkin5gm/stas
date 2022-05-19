@@ -4,7 +4,7 @@ import {useTypeDispatch} from "../../hooks/useTypeDispatch";
 import BaseModal from "./BaseModal";
 import {StasStateActionTypes} from "../../store/stasReducer/stasReducer.type";
 import cl from "./SelectWorkerModal.module.scss";
-import {Worker} from "../../store/stasReducer/types/worker.types";
+import {Worker} from "../../store/stasReducer/types/worker";
 
 interface SelectWorkerModalProps {
     modalState: {

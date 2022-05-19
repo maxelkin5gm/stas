@@ -1,8 +1,8 @@
 export const cartColumns = [
     {
         title: 'СТО',
-        dataIndex: 'sto',
-        key: 'sto',
+        dataIndex: 'nameSto',
+        key: 'nameSto',
     },
     {
         title: 'Количество',
@@ -11,8 +11,8 @@ export const cartColumns = [
     },
     {
         title: 'Обозначение детали',
-        dataIndex: 'detail',
-        key: 'detail',
+        dataIndex: 'nameDetail',
+        key: 'nameDetail',
     },
     {
         title: 'Номер операции',

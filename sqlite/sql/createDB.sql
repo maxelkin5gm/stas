@@ -38,7 +38,8 @@ CREATE TABLE CELL
     side       TEXT    NOT NULL,
     cellNumber INTEGER NOT NULL,
     status     TEXT    NOT NULL,
-    note       TEXT
+    note       TEXT DEFAULT '',
+    UNIQUE (stasIndex, side, cellNumber)
 );
 
 CREATE TABLE STO_CELL

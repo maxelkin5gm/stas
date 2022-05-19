@@ -1,4 +1,4 @@
-import {Worker} from "./worker.types";
+import {Worker} from "./worker";
 
 export enum TableTypeEnum {
     CLEAR = "CLEAR",

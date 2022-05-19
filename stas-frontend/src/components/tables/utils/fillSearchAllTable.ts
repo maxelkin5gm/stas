@@ -1,5 +1,5 @@
 import {TableService} from "../../../services/TableService";
-import {SearchAllTableQuery, SearchAllTableTypeEnum} from "../../../store/searchAllReducer/types/table.types";
+import {SearchAllTableQuery, SearchAllTableTypeEnum} from "../../../store/searchAllReducer/types/table";
 // columns
 import {receivedStoColumns} from "../columns/searchAll/receivedStoColumns";
 import {detailColumns} from "../columns/searchAll/detailColumns";

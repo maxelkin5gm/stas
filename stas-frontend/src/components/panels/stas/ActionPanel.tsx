@@ -3,7 +3,7 @@ import {Button} from "antd";
 import {useTypeSelector} from "../../../hooks/useTypeSelector";
 import {useTypeDispatch} from "../../../hooks/useTypeDispatch";
 
-import {StasStateEnum} from "../../../store/stasReducer/types/state.types";
+import {StasStateEnum} from "../../../store/stasReducer/types/state";
 import {SelectedCell, StatusCell} from "../../../store/stasReducer/types/selectedCell";
 import {ActionPanelService} from "../../../services/panels/ActionPanelService";
 

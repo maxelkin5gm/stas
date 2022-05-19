@@ -1,6 +1,6 @@
 import {useTypeDispatch} from "../hooks/useTypeDispatch";
 import {AppStateActionTypes} from "./appReducer/appReducer.type";
-import {TableQuery, TableTypeEnum} from "./stasReducer/types/table.types";
+import {TableQuery} from "./stasReducer/types/table";
 import {StasStateActionTypes} from "./stasReducer/stasReducer.type";
 
 type Dispatch = ReturnType<typeof useTypeDispatch>

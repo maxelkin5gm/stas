@@ -1,7 +1,7 @@
 export interface Cart {
     key: string,
-    sto: string,
+    nameSto: string,
     amount: number,
-    detail: string,
+    nameDetail: string,
     operationNumber: string
 }

@@ -2,7 +2,7 @@ import React from "react";
 import {useTypeDispatch} from "../../hooks/useTypeDispatch";
 import {AxiosError} from "axios";
 
-import {Worker} from "../../store/stasReducer/types/worker.types";
+import {Worker} from "../../store/stasReducer/types/worker";
 import {WorkerService} from "../WorkerService";
 import {StasStateActionTypes} from "../../store/stasReducer/stasReducer.type";
 import {UtilsStore} from "../../store/UtilsStore";

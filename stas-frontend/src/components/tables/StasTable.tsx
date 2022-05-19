@@ -4,10 +4,10 @@ import {useTypeDispatch} from "../../hooks/useTypeDispatch";
 
 import BaseTable from "./BaseTable/BaseTable";
 import {StasStateActionTypes} from "../../store/stasReducer/stasReducer.type";
-import DoubleClickRowModal from "../modals/DoubleClickRowModal";
-import {AppStateActionTypes} from "../../store/appReducer/appReducer.type";
+import DoubleClickModal from "../modals/table/DoubleClickModal";
 import {fillStasTable} from "./utils/fillStasTable";
 import {UtilsStore} from "../../store/UtilsStore";
+import RightClickModal from "../modals/table/RightClickModal";
 
 interface MainTableProps {
     stasIndex: number,
@@ -18,7 +18,11 @@ const StasTable = ({stasIndex, isLoading}: MainTableProps) => {
     const tableQuery = useTypeSelector(state => state.stasList[stasIndex].table);
     const dispatch = useTypeDispatch();
 
-    const [modalState, setModalState] = useState({
+    const [doubleClickModalState, setDoubleClickModalState] = useState({
+        visible: false,
+        row: {} as any
+    })
+    const [rightClickModalState, setRightClickModalState] = useState({
         visible: false,
         row: {} as any
     })
@@ -40,8 +44,13 @@ const StasTable = ({stasIndex, isLoading}: MainTableProps) => {
     }
 
     function onDoubleClickHandler(row: any) {
-        setModalState({row, visible: true})
+        setDoubleClickModalState({row, visible: true})
     }
+
+    function onRightClickHandler(row: any) {
+        setRightClickModalState({row, visible: true})
+    }
+
 
     useEffect(() => {
         UtilsStore.setLoader(dispatch, true)
@@ -55,11 +64,26 @@ const StasTable = ({stasIndex, isLoading}: MainTableProps) => {
             <BaseTable tableState={tableState}
                        isLoading={isLoading}
                        onClickRow={onClickRowHandler}
-                       onDoubleClickRow={onDoubleClickHandler}/>
+                       onDoubleClickRow={onDoubleClickHandler}
+                       onContextMenuRow={onRightClickHandler}
+            />
 
 
-            <DoubleClickRowModal stasIndex={stasIndex} modalState={modalState}
-                                 onClose={() => setModalState({...modalState, visible: false})}/>
+            {doubleClickModalState.visible
+                ? <DoubleClickModal stasIndex={stasIndex} modalState={doubleClickModalState}
+                                    onClose={() => setDoubleClickModalState({
+                                        ...doubleClickModalState,
+                                        visible: false
+                                    })}/> : null}
+
+
+            {rightClickModalState.visible
+                ? <RightClickModal modalState={rightClickModalState}
+                                   onClose={() => setRightClickModalState({
+                                       ...rightClickModalState,
+                                       visible: false
+                                   })}/> : null}
+
 
         </>
     );

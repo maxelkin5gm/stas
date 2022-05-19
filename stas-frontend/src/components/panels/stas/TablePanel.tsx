@@ -1,7 +1,7 @@
 import React from 'react';
 import StasTable from "../../tables/StasTable";
 import {useTypeSelector} from "../../../hooks/useTypeSelector";
-import {StasStateEnum} from "../../../store/stasReducer/types/state.types";
+import {StasStateEnum} from "../../../store/stasReducer/types/state";
 
 interface TablePanelProps {
     stasIndex: number,

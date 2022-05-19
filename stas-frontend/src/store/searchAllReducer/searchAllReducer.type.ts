@@ -1,4 +1,4 @@
-import {SearchAllTableQuery} from "./types/table.types";
+import {SearchAllTableQuery} from "./types/table";
 
 
 export interface SearchAllState {

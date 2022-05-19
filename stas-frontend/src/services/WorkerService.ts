@@ -1,4 +1,4 @@
-import {Worker} from "../store/stasReducer/types/worker.types";
+import {Worker} from "../store/stasReducer/types/worker";
 import axios from "axios";
 
 export class WorkerService {

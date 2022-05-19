@@ -1,8 +1,8 @@
 import {useTypeDispatch} from "../../hooks/useTypeDispatch";
 import {SelectedCell} from "../../store/stasReducer/types/selectedCell";
-import {StasStateEnum} from "../../store/stasReducer/types/state.types";
+import {StasStateEnum} from "../../store/stasReducer/types/state";
 import {UtilsStore} from "../../store/UtilsStore";
-import {TableTypeEnum} from "../../store/stasReducer/types/table.types";
+import {TableTypeEnum} from "../../store/stasReducer/types/table";
 import {StasStateActionTypes} from "../../store/stasReducer/stasReducer.type";
 
 
@@ -22,7 +22,7 @@ export class ActionPanelService {
         // fetch
         setTimeout(() => {
             this.setState(StasStateEnum.WAIT)
-        }, 2000)
+        }, 1000)
     }
 
     bringBackCell() {

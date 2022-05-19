@@ -1,5 +1,5 @@
 import {SearchAllAction, SearchAllState, SearchAllStateActionTypes} from "./searchAllReducer.type";
-import {SearchAllTableTypeEnum} from "./types/table.types";
+import {SearchAllTableTypeEnum} from "./types/table";
 
 const searchAllInit: SearchAllState = {
     table: {

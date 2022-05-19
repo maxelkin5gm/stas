@@ -1,8 +1,8 @@
-import {Worker} from "./types/worker.types";
-import {TableQuery} from "./types/table.types";
-import {StasStateEnum} from "./types/state.types";
+import {Worker} from "./types/worker";
+import {TableQuery} from "./types/table";
+import {StasStateEnum} from "./types/state";
 import {SelectedCell} from "./types/selectedCell";
-import {Cart} from "./types/cart.types";
+import {Cart} from "./types/cart";
 
 // state => StasState[] - stas 1, stas 2..
 export interface StasState {

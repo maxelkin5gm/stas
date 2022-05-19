@@ -6,9 +6,9 @@ import {useTypeDispatch} from "../../../hooks/useTypeDispatch";
 import {StasStateActionTypes} from "../../../store/stasReducer/stasReducer.type";
 import InputCustom from "../../Input/InputCustom";
 import SelectWorkerModal from "../../modals/SelectWorkerModal";
-import {Worker} from "../../../store/stasReducer/types/worker.types";
-import {TableTypeEnum} from "../../../store/stasReducer/types/table.types";
-import {StasStateEnum} from "../../../store/stasReducer/types/state.types";
+import {Worker} from "../../../store/stasReducer/types/worker";
+import {TableTypeEnum} from "../../../store/stasReducer/types/table";
+import {StasStateEnum} from "../../../store/stasReducer/types/state";
 import {WorkerPanelService} from "../../../services/panels/WorkerPanelService";
 import {UtilsStore} from "../../../store/UtilsStore";
 

@@ -4,7 +4,7 @@ import {useTypeDispatch} from "../../../hooks/useTypeDispatch";
 
 import InputCustom from "../../Input/InputCustom";
 import {SearchAllStateActionTypes} from "../../../store/searchAllReducer/searchAllReducer.type";
-import {SearchAllTableTypeEnum} from "../../../store/searchAllReducer/types/table.types";
+import {SearchAllTableTypeEnum} from "../../../store/searchAllReducer/types/table";
 
 const RemainderStoPanel = () => {
     const dispatch = useTypeDispatch();

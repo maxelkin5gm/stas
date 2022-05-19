@@ -1,0 +1,14 @@
+.modal {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 10px;
+
+  p {
+    font-size: 18px;
+  }
+  
+  span {
+    font-weight: bold;
+  }
+}

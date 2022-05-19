@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import InputCustom from "../../Input/InputCustom";
 import {Button} from "antd";
 import {SearchAllStateActionTypes} from "../../../store/searchAllReducer/searchAllReducer.type";
-import {SearchAllTableTypeEnum} from "../../../store/searchAllReducer/types/table.types";
+import {SearchAllTableTypeEnum} from "../../../store/searchAllReducer/types/table";
 import {useTypeDispatch} from "../../../hooks/useTypeDispatch";
 
 const StoPanel = () => {

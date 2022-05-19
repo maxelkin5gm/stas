@@ -1,6 +1,6 @@
 import {StasAction, StasState, StasStateActionTypes} from "./stasReducer.type";
-import {StasStateEnum} from "./types/state.types";
-import {TableTypeEnum} from "./types/table.types";
+import {StasStateEnum} from "./types/state";
+import {TableTypeEnum} from "./types/table";
 
 const stasInit: StasState = {
     state: StasStateEnum.READY,

@@ -4,8 +4,8 @@ import {useTypeSelector} from "../../../hooks/useTypeSelector";
 import {useTypeDispatch} from "../../../hooks/useTypeDispatch";
 
 import InputCustom from "../../Input/InputCustom";
-import {StasStateEnum} from "../../../store/stasReducer/types/state.types";
-import {TableTypeEnum} from "../../../store/stasReducer/types/table.types";
+import {StasStateEnum} from "../../../store/stasReducer/types/state";
+import {TableTypeEnum} from "../../../store/stasReducer/types/table";
 import {UtilsStore} from "../../../store/UtilsStore";
 
 interface StoPanelProps {

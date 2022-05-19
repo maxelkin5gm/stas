@@ -1,14 +1,12 @@
 package com.github.maxelkin5gm.stas.dao;
 
-import com.github.maxelkin5gm.stas.models.Worker;
+import com.github.maxelkin5gm.stas.models.WorkerEntity;
 
 import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import java.sql.PreparedStatement;
+
 import java.util.*;
 
 @Repository
@@ -17,14 +15,14 @@ public class WorkerDao {
 
     JdbcTemplate jdbcTemplate;
 
-    public List<Worker> findAllByName(String name) {
+    public List<WorkerEntity> findAllByName(String name) {
         return jdbcTemplate.query("SELECT nameWorker, personnelNumber FROM WORKER WHERE nameWorker = ?;",
-                new BeanPropertyRowMapper<>(Worker.class), name);
+                new BeanPropertyRowMapper<>(WorkerEntity.class), name);
     }
 
-    public Optional<Worker> findByPersonnelNumber(String personnelNumber) {
-        return jdbcTemplate.query("SELECT nameWorker, personnelNumber FROM WORKER WHERE personnelNumber = ?;",
-                new BeanPropertyRowMapper<>(Worker.class), personnelNumber).stream().findAny();
+    public Optional<WorkerEntity> findByPersonnelNumber(String personnelNumber) {
+        return jdbcTemplate.query("SELECT * FROM WORKER WHERE personnelNumber = ?;",
+                new BeanPropertyRowMapper<>(WorkerEntity.class), personnelNumber).stream().findAny();
     }
 
 //    public int insert(Worker worker) {

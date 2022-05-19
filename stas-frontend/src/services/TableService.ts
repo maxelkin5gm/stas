@@ -1,4 +1,5 @@
 import axios from "axios";
+import {addKeyPropertyForArray} from "./utils/addKeyPropertyForArray";
 
 export class TableService {
 
@@ -84,25 +85,11 @@ export class TableService {
             }
         }).then(res => res.data);
         return this.validateAndPrepareArray(data)
-    }
-
-    static async findAllByCell(side: string, cellNumber: number) {
-        const data = await axios.get<any[]>("/api/table/findAllByCell", {
-            params: {side, cellNumber}
-        }).then(res => res.data);
-        return this.validateAndPrepareArray(data)
     }// Cell END //
 
 
-    static addKeyProperty(data: any[]) {
-        return data.map((item: any, i: number) => {
-            item.key = i + 1
-            return item;
-        })
-    }
-
     static validateAndPrepareArray(data: any[]) {
         if (!data || data.length === 0) throw Error("По запросу ничего не найдено")
-        return this.addKeyProperty(data)
+        return addKeyPropertyForArray(data)
     }
 }

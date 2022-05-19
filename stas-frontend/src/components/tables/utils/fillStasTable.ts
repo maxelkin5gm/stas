@@ -1,4 +1,4 @@
-import {TableQuery, TableTypeEnum} from "../../../store/stasReducer/types/table.types";
+import {TableQuery, TableTypeEnum} from "../../../store/stasReducer/types/table";
 import {TableService} from "../../../services/TableService";
 
 // columns
