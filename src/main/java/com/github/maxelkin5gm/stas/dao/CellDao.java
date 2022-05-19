@@ -19,4 +19,9 @@ public class CellDao {
                 WHERE stasIndex = ? AND side = ? AND cellNumber = ?""",
                 new BeanPropertyRowMapper<>(CellEntity.class), stasIndex, side, cellNumber).stream().findAny();
     }
+
+    public void updateNoteByCell(int stasIndex, String side, int cellNumber, String note) {
+        var cellEntity = findByCell(stasIndex, side, cellNumber).orElseThrow();
+        jdbcTemplate.update("UPDATE CELL SET note = ? WHERE CELL.id = ?;", note, cellEntity.getId());
+    }
 }

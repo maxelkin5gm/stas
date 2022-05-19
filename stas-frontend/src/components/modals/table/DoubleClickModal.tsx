@@ -12,6 +12,7 @@ import {StasStateActionTypes} from "../../../store/stasReducer/stasReducer.type"
 import {DetailService} from "../../../services/DetailService";
 import {Detail} from "../../../types/models";
 import {UtilsStore} from "../../../store/UtilsStore";
+import {CellService} from "../../../services/CellService";
 
 interface DoubleClickRowModalProps {
     modalState: {
@@ -49,7 +50,14 @@ const DoubleClickModal = ({modalState, onClose, stasIndex}: DoubleClickRowModalP
     }
 
     function saveNoteHandler() {
-        UtilsStore.showError(dispatch, "Функция пока не доступна")
+        UtilsStore.setLoader(dispatch, true)
+        CellService.updateNoteByCell(stasIndex, modalState.row.side, modalState.row.cellNumber, noteInputState)
+            .then(() => {
+                dispatch({type: StasStateActionTypes.REFRESH_TABLE, stasIndex})
+                onClose()
+            })
+            .catch(() => UtilsStore.showError(dispatch))
+            .finally(() => UtilsStore.setLoader(dispatch, false))
     }
 
     function addToCartHandler() {
