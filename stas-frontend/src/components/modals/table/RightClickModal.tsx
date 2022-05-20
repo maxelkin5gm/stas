@@ -4,7 +4,7 @@ import {useTypeDispatch} from "../../../hooks/useTypeDispatch";
 import cl from "./RightClickModal.module.scss"
 import BaseModal from "../BaseModal";
 import {DetailService} from "../../../services/DetailService";
-import {Detail} from "../../../types/models";
+import {DetailEntity} from "../../../types/models";
 import {UtilsStore} from "../../../store/UtilsStore";
 
 interface DetailsByStoModalProps {
@@ -18,7 +18,7 @@ interface DetailsByStoModalProps {
 const RightClickModal = ({onClose, modalState}: DetailsByStoModalProps) => {
     const dispatch = useTypeDispatch();
 
-    const [optionsState, setOptionsState] = useState([] as Detail[])
+    const [optionsState, setOptionsState] = useState([] as DetailEntity[])
 
     useEffect(() => {
         UtilsStore.setLoader(dispatch, true)

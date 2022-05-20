@@ -1,9 +1,9 @@
 import {Cart} from "../../store/stasReducer/types/cart";
-import {Detail} from "../../types/models";
+import {DetailEntity} from "../../types/models";
 
 export class CartPanelService {
 
-    static addToCart(cart: Cart[],row: any, countSto: number, selectedOptionState: Detail) {
+    static addToCart(cart: Cart[],row: any, countSto: number, selectedOptionState: DetailEntity) {
         const newItem: Cart = {
             key: row.nameSto,
             nameSto: row.nameSto,

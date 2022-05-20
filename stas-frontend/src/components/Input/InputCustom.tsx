@@ -5,10 +5,11 @@ interface InputCustomProps {
     valueState: [string, React.Dispatch<React.SetStateAction<string>>],
     type?: HTMLInputTypeAttribute,
     placeholder?: string,
-    required?: boolean
+    required?: boolean,
+    onFocus?: () => void
 }
 
-const InputCustom = ({type = "text", placeholder = "", valueState, required}: InputCustomProps) => {
+const InputCustom = ({type = "text", placeholder = "", valueState, required, onFocus}: InputCustomProps) => {
 
     const [value, setValue] = valueState;
 
@@ -18,7 +19,9 @@ const InputCustom = ({type = "text", placeholder = "", valueState, required}: In
     }
 
     return (
-        <input required={required} type={type} className={cl.input} value={value} onChange={handler} placeholder={placeholder}/>
+        <input required={required} type={type} className={cl.input} value={value} onChange={handler}
+               placeholder={placeholder} onFocus={onFocus}
+        />
     );
 };
 

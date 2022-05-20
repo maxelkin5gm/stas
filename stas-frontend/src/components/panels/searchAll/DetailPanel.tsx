@@ -4,7 +4,7 @@ import {useTypeDispatch} from "../../../hooks/useTypeDispatch";
 
 import {SearchAllStateActionTypes} from "../../../store/searchAllReducer/searchAllReducer.type";
 import {SearchAllTableTypeEnum} from "../../../store/searchAllReducer/types/table";
-import InputCustom from "../../Input/InputCustom";
+import InputAutocomplete from "../../Input/InputAutocomplete";
 
 
 const DetailPanel = () => {
@@ -29,11 +29,11 @@ const DetailPanel = () => {
     return (
         <>
             <div>
-                <InputCustom valueState={detailInputState} placeholder={"Обозначение детали"}/>
+                <InputAutocomplete valueState={detailInputState} placeholder={"Обозначение детали"} autocompleteType={"nameDetail"}/>
             </div>
 
             <div>
-                <InputCustom valueState={numberInputState} placeholder={"Номер операции"}/>
+                <InputAutocomplete valueState={numberInputState} placeholder={"Номер операции"} autocompleteType={"operationNumber"}/>
             </div>
 
             <div>

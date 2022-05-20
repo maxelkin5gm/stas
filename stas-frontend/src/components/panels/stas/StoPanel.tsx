@@ -3,10 +3,10 @@ import {Button} from "antd";
 import {useTypeSelector} from "../../../hooks/useTypeSelector";
 import {useTypeDispatch} from "../../../hooks/useTypeDispatch";
 
-import InputCustom from "../../Input/InputCustom";
 import {StasStateEnum} from "../../../store/stasReducer/types/state";
 import {TableTypeEnum} from "../../../store/stasReducer/types/table";
 import {UtilsStore} from "../../../store/UtilsStore";
+import InputAutocomplete from "../../Input/InputAutocomplete";
 
 interface StoPanelProps {
     stasIndex: number,
@@ -31,7 +31,8 @@ const StoPanel = ({stasIndex}: StoPanelProps) => {
             tableHandler()
         }}>
             <div>
-                <InputCustom required valueState={stoInputState} placeholder={"Обозначение СТО"}/>
+                <InputAutocomplete required placeholder={"Обозначение СТО"} valueState={stoInputState}
+                                   autocompleteType={"nameSto"}/>
             </div>
 
             <div style={{textAlign: "center"}}>

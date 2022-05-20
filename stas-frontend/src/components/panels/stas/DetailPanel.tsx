@@ -3,10 +3,10 @@ import {Button} from "antd";
 import {useTypeDispatch} from "../../../hooks/useTypeDispatch";
 import {useTypeSelector} from "../../../hooks/useTypeSelector";
 
-import InputCustom from "../../Input/InputCustom";
 import {TableTypeEnum} from "../../../store/stasReducer/types/table";
 import {StasStateEnum} from "../../../store/stasReducer/types/state";
 import {UtilsStore} from "../../../store/UtilsStore";
+import InputAutocomplete from "../../Input/InputAutocomplete";
 
 interface DetailPanelProps {
     stasIndex: number,
@@ -32,16 +32,17 @@ const DetailPanel = ({stasIndex}: DetailPanelProps) => {
             tableHandler()
         }}>
             <div>
-                <InputCustom required valueState={detailInputState} placeholder={"Обозначение детали"}/>
+                <InputAutocomplete required valueState={detailInputState} placeholder={"Обозначение детали"}
+                                   autocompleteType={"nameDetail"}/>
             </div>
 
             <div>
-                <InputCustom required valueState={numberInputState} placeholder={"Номер операции"}/>
+                <InputAutocomplete required valueState={numberInputState} placeholder={"Номер операции"}
+                                   autocompleteType={"personnelNumber"}/>
             </div>
 
-
             <div style={{textAlign: "center"}}>
-                <Button disabled={stasState !== StasStateEnum.READY} htmlType={"submit"} type="primary"
+                <Button disabled={stasState !== StasStateEnum.READY} htmlType="submit" type="primary"
                         size="middle">Показать</Button>
             </div>
         </form>

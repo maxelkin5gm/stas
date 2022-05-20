@@ -4,13 +4,13 @@ import {useTypeSelector} from "../../../hooks/useTypeSelector";
 import {useTypeDispatch} from "../../../hooks/useTypeDispatch";
 
 import {StasStateActionTypes} from "../../../store/stasReducer/stasReducer.type";
-import InputCustom from "../../Input/InputCustom";
 import SelectWorkerModal from "../../modals/SelectWorkerModal";
 import {Worker} from "../../../store/stasReducer/types/worker";
 import {TableTypeEnum} from "../../../store/stasReducer/types/table";
 import {StasStateEnum} from "../../../store/stasReducer/types/state";
 import {WorkerPanelService} from "../../../services/panels/WorkerPanelService";
 import {UtilsStore} from "../../../store/UtilsStore";
+import InputAutocomplete from "../../Input/InputAutocomplete";
 
 interface WorkerPanelProps {
     stasIndex: number
@@ -55,8 +55,8 @@ const WorkerPanel = ({stasIndex}: WorkerPanelProps) => {
                     e.preventDefault();
                     selectByNumberHandler()
                 }}>
-                    <InputCustom required placeholder={"Табельный номер"} type={"number"}
-                                 valueState={numberInputState}/>
+                    <InputAutocomplete required placeholder={"Табельный номер"} type={"number"}
+                                       valueState={numberInputState} autocompleteType={"personnelNumber"}/>
                 </form>
             </div>
 
@@ -74,7 +74,7 @@ const WorkerPanel = ({stasIndex}: WorkerPanelProps) => {
                     e.preventDefault();
                     selectByNameHandler()
                 }}>
-                    <InputCustom required placeholder={"ФИО"} valueState={nameInputState}/>
+                    <InputAutocomplete required placeholder={"ФИО"} valueState={nameInputState} autocompleteType={"nameWorker"}/>
                 </form>
             </div>
 

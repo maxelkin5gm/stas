@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import InputCustom from "../../Input/InputCustom";
 import {Button} from "antd";
 import {SearchAllStateActionTypes} from "../../../store/searchAllReducer/searchAllReducer.type";
 import {SearchAllTableTypeEnum} from "../../../store/searchAllReducer/types/table";
 import {useTypeDispatch} from "../../../hooks/useTypeDispatch";
+import InputAutocomplete from "../../Input/InputAutocomplete";
 
 const StoPanel = () => {
     const dispatch = useTypeDispatch();
@@ -37,7 +37,8 @@ const StoPanel = () => {
     return (
         <>
             <div>
-                <InputCustom valueState={stoInputState} placeholder={"Обозначение СТО"}/>
+                <InputAutocomplete required valueState={stoInputState} placeholder={"Обозначение СТО"}
+                                   autocompleteType={"nameSto"}/>
             </div>
 
             <div>

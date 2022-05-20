@@ -25,6 +25,19 @@ public class WorkerDao {
                 new BeanPropertyRowMapper<>(WorkerEntity.class), personnelNumber).stream().findAny();
     }
 
+    public List<String> findAllByNameWorkerLike(String partNameWorker) {
+        return jdbcTemplate.queryForList("""
+                SELECT DISTINCT nameWorker FROM WORKER WHERE nameWorker LIKE ? LIMIT 10;
+                """, String.class, '%' + partNameWorker + '%');
+    }
+
+    public List<String> findAllByPersonnelNumberLike(String partPersonnelNumber) {
+        return jdbcTemplate.queryForList("""
+                SELECT personnelNumber FROM WORKER WHERE personnelNumber LIKE ? LIMIT 10;
+                """, String.class, '%' + partPersonnelNumber + '%');
+    }
+
+
 //    public int insert(Worker worker) {
 //        KeyHolder keyHolder = new GeneratedKeyHolder();
 //        jdbcTemplate.update(connection -> {

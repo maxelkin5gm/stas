@@ -1,0 +1,27 @@
+.wrapper {
+  position: relative;
+
+  ul {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    max-height: 200px;
+    overflow: auto;
+    z-index: 999999;
+
+    text-align: left;
+    list-style: none;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+    li {
+      padding: 10px;
+      //font-weight: bold;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+      }
+    }
+  }
+}

@@ -10,7 +10,7 @@ import {StasStateEnum} from "../../../store/stasReducer/types/state";
 import {CartPanelService} from "../../../services/panels/CartPanelService";
 import {StasStateActionTypes} from "../../../store/stasReducer/stasReducer.type";
 import {DetailService} from "../../../services/DetailService";
-import {Detail} from "../../../types/models";
+import {DetailEntity} from "../../../types/models";
 import {UtilsStore} from "../../../store/UtilsStore";
 import {CellService} from "../../../services/CellService";
 
@@ -30,8 +30,8 @@ const DoubleClickModal = ({modalState, onClose, stasIndex}: DoubleClickRowModalP
 
     const [countStoInputState, setCountStoInputState] = useState(1);
     const [noteInputState, setNoteInputState] = useState(modalState.row.note)
-    const [optionsState, setOptionsState] = useState([] as Detail[])
-    const [selectedOptionState, setSelectedOptionState] = useState({} as Detail)
+    const [optionsState, setOptionsState] = useState([] as DetailEntity[])
+    const [selectedOptionState, setSelectedOptionState] = useState({} as DetailEntity)
 
     useEffect(() => {
         UtilsStore.setLoader(dispatch, true)

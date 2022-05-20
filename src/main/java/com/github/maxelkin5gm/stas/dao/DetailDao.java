@@ -20,4 +20,16 @@ public class DetailDao {
                     AND nameSto = ?;""";
         return jdbcTemplate.queryForList(sql, nameSto);
     }
+
+    public List<String> findAllByNameDetailLike(String partNameDetail) {
+        return jdbcTemplate.queryForList("""
+                SELECT nameDetail FROM DETAIL WHERE nameDetail LIKE ? LIMIT 10;
+                """, String.class, '%' + partNameDetail + '%');
+    }
+
+    public List<String> findAllByOperationNumberLike(String partOperationNumber) {
+        return jdbcTemplate.queryForList("""
+                SELECT operationNumber FROM DETAIL WHERE operationNumber LIKE ? LIMIT 10;
+                """, String.class, '%' + partOperationNumber + '%');
+    }
 }

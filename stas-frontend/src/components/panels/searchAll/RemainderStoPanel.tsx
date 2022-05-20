@@ -5,6 +5,7 @@ import {useTypeDispatch} from "../../../hooks/useTypeDispatch";
 import InputCustom from "../../Input/InputCustom";
 import {SearchAllStateActionTypes} from "../../../store/searchAllReducer/searchAllReducer.type";
 import {SearchAllTableTypeEnum} from "../../../store/searchAllReducer/types/table";
+import InputAutocomplete from "../../Input/InputAutocomplete";
 
 const RemainderStoPanel = () => {
     const dispatch = useTypeDispatch();
@@ -28,7 +29,8 @@ const RemainderStoPanel = () => {
     return (
         <>
             <div>
-                <InputCustom valueState={stoInputState} placeholder={"Обозначение СТО"}/>
+                <InputAutocomplete required valueState={stoInputState} placeholder={"Обозначение СТО"}
+                                   autocompleteType={"nameSto"}/>
             </div>
 
             <div>
