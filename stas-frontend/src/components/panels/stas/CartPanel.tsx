@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button} from "antd";
 import {useTypeDispatch} from "../../../hooks/useTypeDispatch";
 import {useTypeSelector} from "../../../hooks/useTypeSelector";
@@ -8,6 +8,7 @@ import CartTable from "../../tables/CartTable";
 import {StasStateActionTypes} from "../../../store/stasReducer/stasReducer.type";
 import {CartService} from "../../../services/CartService";
 import {UtilsStore} from "../../../store/UtilsStore";
+import TakeCartModal from "../../modals/TakeCartModal";
 
 interface CartPanelProps {
     stasIndex: number,
@@ -18,8 +19,9 @@ const CartPanel = ({stasIndex}: CartPanelProps) => {
     const stasState = useTypeSelector(state => state.stasList[stasIndex].state);
     const selectedCell = useTypeSelector(state => state.stasList[stasIndex].selectedCell);
     const worker = useTypeSelector(state => state.stasList[stasIndex].worker);
-
     const dispatch = useTypeDispatch();
+
+    const [modalState, setModalState] = useState({visible: false})
 
     async function giveHandler() {
         if (!selectedCell || !worker.personnelNumber) {
@@ -30,6 +32,7 @@ const CartPanel = ({stasIndex}: CartPanelProps) => {
             UtilsStore.showError(dispatch, "Корзина пустая")
             return;
         }
+        if (!window.confirm('Подтверждение выдачи')) return;
         try {
             UtilsStore.setLoader(dispatch, true)
             await CartService.give(cart, stasIndex, selectedCell, worker)
@@ -41,6 +44,14 @@ const CartPanel = ({stasIndex}: CartPanelProps) => {
         }
         dispatch({type: StasStateActionTypes.REFRESH_TABLE, stasIndex})
         clearCartHandler()
+    }
+
+    function takeHandler() {
+        if (!worker.personnelNumber || !selectedCell) {
+            UtilsStore.showError(dispatch, "Не выбран сотрудник или ячейка");
+            return
+        }
+        setModalState({visible: true})
     }
 
     function clearCartHandler() {
@@ -66,8 +77,15 @@ const CartPanel = ({stasIndex}: CartPanelProps) => {
                         onClick={giveHandler}>Выдать</Button>
                 <Button disabled={stasState !== StasStateEnum.WAIT} onClick={clearCartHandler}
                         type="primary" size="middle">Очистить</Button>
-                <Button disabled type="primary" size="middle">Положить</Button>
+                <Button disabled={stasState !== StasStateEnum.WAIT} type="primary" size="middle" onClick={takeHandler}>Положить</Button>
             </div>
+
+            {modalState.visible
+                ? <TakeCartModal modalState={modalState}
+                                 stasIndex={stasIndex}
+                                 onClose={() => setModalState({...modalState, visible: false})}
+                /> : null}
+
         </>
     );
 };

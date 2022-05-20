@@ -63,8 +63,8 @@ CREATE TABLE RECEIVED_STO
     amount                  TEXT NOT NULL,
     operationDate           INTEGER,
     receivedNameSto         TEXT NOT NULL,
-    receivedNameDetail      TEXT NOT NULL,
-    receivedOperationNumber TEXT NOT NULL,
+    receivedNameDetail      TEXT NOT NULL DEFAULT '',
+    receivedOperationNumber TEXT NOT NULL DEFAULT '',
     cell_id                 INTEGER REFERENCES CELL (id),
     worker_id               INTEGER REFERENCES WORKER (id)
 );

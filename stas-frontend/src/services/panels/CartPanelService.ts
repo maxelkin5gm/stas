@@ -8,8 +8,8 @@ export class CartPanelService {
             key: row.nameSto,
             nameSto: row.nameSto,
             amount: countSto,
-            nameDetail: selectedOptionState.nameDetail,
-            operationNumber: selectedOptionState.operationNumber
+            nameDetail: selectedOptionState.nameDetail || "",
+            operationNumber: selectedOptionState.operationNumber || ""
         }
         const fullAmount = row.remainder;
 

@@ -38,7 +38,8 @@ const RightClickModal = ({onClose, modalState}: DetailsByStoModalProps) => {
                     ?
                     <div>
                         {optionsState.map(option =>
-                            <p>Деталь: <span>{option.nameDetail}</span> Операция: <span>{option.operationNumber}</span>
+                            <p key={option.nameDetail + option.operationNumber}>
+                                Деталь: <span>{option.nameDetail}</span> Операция: <span>{option.operationNumber}</span>
                             </p>
                         )}
                     </div>
