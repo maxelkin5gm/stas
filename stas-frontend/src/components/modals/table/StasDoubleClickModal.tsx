@@ -7,12 +7,12 @@ import cl from "../style/DoubleClickModal.module.scss";
 import BaseModal from "../BaseModal";
 import InputNumber from "../../Input/InputNumber";
 import {StasStateEnum} from "../../../store/stasReducer/types/state";
-import {CartPanelService} from "../../../services/panels/CartPanelService";
 import {StasStateActionTypes} from "../../../store/stasReducer/stasReducer.type";
 import {DetailService} from "../../../services/DetailService";
 import {DetailEntity} from "../../../types/models";
 import {UtilsStore} from "../../../store/UtilsStore";
 import {CellService} from "../../../services/CellService";
+import {CartService} from "../../../services/CartService";
 
 interface DoubleClickRowModalProps {
     modalState: {
@@ -67,7 +67,7 @@ const StasDoubleClickModal = ({modalState, onClose, stasIndex}: DoubleClickRowMo
             return;
         }
 
-        const newCart = CartPanelService.addToCart(cart, modalState.row, countStoInputState, selectedOptionState);
+        const newCart = CartService.addToCart(cart, modalState.row, countStoInputState, selectedOptionState);
         if (newCart) {
             dispatch({
                 type: StasStateActionTypes.SET_CART,

@@ -17,9 +17,11 @@ const ReceivedPanel = () => {
         try {
             const worker = await WorkerService.findByPersonnelNumber(personnelNumberInputState[0])
             setWorker(worker)
-        } catch (e) {
-            UtilsStore.showError(dispatch, "Сотрудник не найдет")
-            return
+        } catch (e: any) {
+            if (e.response.status === 404)
+                UtilsStore.showError(dispatch, "Сотрудник с таким табельным номером не найден")
+            else
+                UtilsStore.showError(dispatch)
         }
     }
 

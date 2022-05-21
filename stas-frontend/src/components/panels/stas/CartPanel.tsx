@@ -32,7 +32,6 @@ const CartPanel = ({stasIndex}: CartPanelProps) => {
             UtilsStore.showError(dispatch, "Корзина пустая")
             return;
         }
-        if (!window.confirm('Подтверждение выдачи')) return;
         try {
             UtilsStore.setLoader(dispatch, true)
             await CartService.give(cart, stasIndex, selectedCell, worker)

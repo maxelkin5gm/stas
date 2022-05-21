@@ -8,9 +8,9 @@ import SelectWorkerModal from "../../modals/SelectWorkerModal";
 import {Worker} from "../../../store/stasReducer/types/worker";
 import {TableTypeEnum} from "../../../store/stasReducer/types/table";
 import {StasStateEnum} from "../../../store/stasReducer/types/state";
-import {WorkerPanelService} from "../../../services/panels/WorkerPanelService";
 import {UtilsStore} from "../../../store/UtilsStore";
 import InputAutocomplete from "../../Input/InputAutocomplete";
+import {WorkerService} from "../../../services/WorkerService";
 
 interface WorkerPanelProps {
     stasIndex: number
@@ -25,15 +25,32 @@ const WorkerPanel = ({stasIndex}: WorkerPanelProps) => {
     const numberInputState = useState("");
     const nameInputState = useState("");
 
-    const workerPanelService = new WorkerPanelService(dispatch, stasIndex);
-
-
     function selectByNumberHandler() {
-        workerPanelService.selectByNumberHandler(numberInputState[0])
+        UtilsStore.setLoader(dispatch, true)
+        WorkerService.findByPersonnelNumber(numberInputState[0])
+            .then(worker => dispatch({type: StasStateActionTypes.SET_WORKER, worker, stasIndex}))
+            .catch((e) => {
+                if (e.response.status === 404)
+                    UtilsStore.showError(dispatch, "Сотрудник с таким табельным номером не найден")
+                else
+                    UtilsStore.showError(dispatch)
+            })
+            .finally(() => UtilsStore.setLoader(dispatch, false))
     }
 
     function selectByNameHandler() {
-        workerPanelService.selectByNameHandler(nameInputState[0], setModalState);
+        UtilsStore.setLoader(dispatch, true)
+        WorkerService.findAllByName(nameInputState[0])
+            .then(workers => {
+                if (workers.length > 1)
+                    setModalState({visible: true, workers})
+                else if (workers.length === 1)
+                    dispatch({type: StasStateActionTypes.SET_WORKER, worker: workers[0], stasIndex})
+                else
+                    UtilsStore.showError(dispatch, "Сотрудник с таким ФИО не найден")
+            })
+            .catch(() => UtilsStore.showError(dispatch))
+            .finally(() => UtilsStore.setLoader(dispatch, false))
     }
 
     async function resetHandler() {
@@ -74,7 +91,8 @@ const WorkerPanel = ({stasIndex}: WorkerPanelProps) => {
                     e.preventDefault();
                     selectByNameHandler()
                 }}>
-                    <InputAutocomplete required placeholder={"ФИО"} valueState={nameInputState} autocompleteType={"nameWorker"}/>
+                    <InputAutocomplete required placeholder={"ФИО"} valueState={nameInputState}
+                                       autocompleteType={"nameWorker"}/>
                 </form>
             </div>
 
