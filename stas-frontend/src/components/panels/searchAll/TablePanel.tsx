@@ -1,5 +1,5 @@
 import React from 'react';
-import SearchAllTable from "../../../tables/SearchAllTable";
+import SearchAllTable from "../../tables/SearchAllTable";
 
 
 const TablePanel = () => {

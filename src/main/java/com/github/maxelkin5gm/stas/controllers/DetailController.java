@@ -15,7 +15,6 @@ import java.util.Map;
 @RequestMapping("/api/detail/")
 @AllArgsConstructor
 public class DetailController {
-
     DetailDao detailDao;
 
     @GetMapping("/findAllBySto")

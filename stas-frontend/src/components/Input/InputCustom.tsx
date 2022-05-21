@@ -1,4 +1,4 @@
-import React, {ChangeEvent, HTMLInputTypeAttribute} from 'react';
+import React, {ChangeEvent, CSSProperties, HTMLInputTypeAttribute} from 'react';
 import cl from './InputcCustom.module.scss'
 
 interface InputCustomProps {
@@ -6,10 +6,11 @@ interface InputCustomProps {
     type?: HTMLInputTypeAttribute,
     placeholder?: string,
     required?: boolean,
-    onFocus?: () => void
+    onFocus?: () => void,
+    style?: CSSProperties
 }
 
-const InputCustom = ({type = "text", placeholder = "", valueState, required, onFocus}: InputCustomProps) => {
+const InputCustom = ({type = "text", placeholder = "", valueState, required, onFocus, style}: InputCustomProps) => {
 
     const [value, setValue] = valueState;
 
@@ -19,7 +20,7 @@ const InputCustom = ({type = "text", placeholder = "", valueState, required, onF
     }
 
     return (
-        <input required={required} type={type} className={cl.input} value={value} onChange={handler}
+        <input style={style} required={required} type={type} className={cl.input} value={value} onChange={handler}
                placeholder={placeholder} onFocus={onFocus}
         />
     );

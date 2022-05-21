@@ -23,8 +23,11 @@ const SearchAllTable = () => {
             .finally(() => UtilsStore.setLoader(dispatch, false))
     }, [tableQuery, dispatch])
 
+
     return (
-        <BaseTable tableState={tableState}/>
+        <>
+            <BaseTable tableState={tableState}/>
+        </>
     );
 }
 

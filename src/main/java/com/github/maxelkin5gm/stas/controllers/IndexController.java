@@ -1,6 +1,7 @@
 package com.github.maxelkin5gm.stas.controllers;
 
 import com.github.maxelkin5gm.stas.services.FileService;
+
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ public class IndexController {
     public String indexHtmlReact() {
         var fileData = fileService.readFile(indexPath);
 
-        if (fileData == null) throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        if (fileData == null) throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Не найден файл index.html");
         return fileData;
     }
 

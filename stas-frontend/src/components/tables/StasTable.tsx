@@ -7,7 +7,6 @@ import {StasStateActionTypes} from "../../store/stasReducer/stasReducer.type";
 import DoubleClickModal from "../modals/table/DoubleClickModal";
 import {fillStasTable} from "./utils/fillStasTable";
 import {UtilsStore} from "../../store/UtilsStore";
-import RightClickModal from "../modals/table/RightClickModal";
 
 interface MainTableProps {
     stasIndex: number,
@@ -19,10 +18,6 @@ const StasTable = ({stasIndex, isLoading}: MainTableProps) => {
     const dispatch = useTypeDispatch();
 
     const [doubleClickModalState, setDoubleClickModalState] = useState({
-        visible: false,
-        row: {} as any
-    })
-    const [rightClickModalState, setRightClickModalState] = useState({
         visible: false,
         row: {} as any
     })
@@ -47,10 +42,6 @@ const StasTable = ({stasIndex, isLoading}: MainTableProps) => {
         setDoubleClickModalState({row, visible: true})
     }
 
-    function onRightClickHandler(row: any) {
-        setRightClickModalState({row, visible: true})
-    }
-
 
     useEffect(() => {
         UtilsStore.setLoader(dispatch, true)
@@ -65,7 +56,6 @@ const StasTable = ({stasIndex, isLoading}: MainTableProps) => {
                        isLoading={isLoading}
                        onClickRow={onClickRowHandler}
                        onDoubleClickRow={onDoubleClickHandler}
-                       onContextMenuRow={onRightClickHandler}
             />
 
 
@@ -75,15 +65,6 @@ const StasTable = ({stasIndex, isLoading}: MainTableProps) => {
                                         ...doubleClickModalState,
                                         visible: false
                                     })}/> : null}
-
-
-            {rightClickModalState.visible
-                ? <RightClickModal modalState={rightClickModalState}
-                                   onClose={() => setRightClickModalState({
-                                       ...rightClickModalState,
-                                       visible: false
-                                   })}/> : null}
-
 
         </>
     );

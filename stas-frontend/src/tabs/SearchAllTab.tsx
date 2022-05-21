@@ -6,7 +6,7 @@ import WorkerPanel from "../components/panels/searchAll/WorkerPanel";
 import DetailPanel from "../components/panels/searchAll/DetailPanel";
 import StoPanel from "../components/panels/searchAll/StoPanel";
 import RemainderStoPanel from "../components/panels/searchAll/RemainderStoPanel";
-import TablePanel from "../components/panels/searchAll/table/TablePanel";
+import TablePanel from "../components/panels/searchAll/TablePanel";
 
 const SearchAllTab = () => {
     const tabIndex = useTypeSelector(state => state.app.tabIndex)

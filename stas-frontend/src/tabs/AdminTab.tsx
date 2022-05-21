@@ -1,20 +1,46 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useTypeSelector} from "../hooks/useTypeSelector";
-import InputAutocomplete from "../components/Input/InputAutocomplete";
+import cl from "./AdminTab.module.scss"
+import StoDetailPanel from "../components/panels/admin/StoDetailPanel";
+import ReceivedPanel from "../components/panels/admin/ReceivedPanel";
 
 
 const AdminTab = () => {
     const tabIndex = useTypeSelector(state => state.app.tabIndex)
     const displayStyle = (tabIndex === 4) ? {} : {display: "none"}
 
-    const inputState = useState("");
 
     return (
-        <div style={displayStyle}>
-            <h1>Admin</h1>
+        <div className={cl.tab} style={displayStyle}>
 
-            <InputAutocomplete valueState={inputState} autocompleteType="nameSto"/>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad dolorem eaque eius eos excepturi, itaque maxime molestias rerum sed. Ad dolorem dolorum illum laboriosam optio porro reprehenderit voluptas? Animi consectetur distinctio fugiat ipsum perspiciatis placeat praesentium quaerat quidem quisquam, quod quos recusandae ullam voluptatum. Doloremque expedita fugit natus quam tenetur?</p>
+            <div className={cl.accordion}>
+
+                <div className={cl.accordion__item}>
+                    <input type="radio" defaultChecked name="accordion" id="accordion1"/>
+                    <label className={cl.accordion__header} htmlFor="accordion1">СТО и детали</label>
+                    <div className={cl.accordion__content}>
+                        <StoDetailPanel />
+                    </div>
+                </div>
+
+                <div className={cl.accordion__item}>
+                    <input type="radio" name="accordion" id="accordion2"/>
+                    <label className={cl.accordion__header} htmlFor="accordion2">Выданные СТО</label>
+                    <div className={cl.accordion__content}>
+                        <ReceivedPanel />
+                    </div>
+                </div>
+
+                <div className={cl.accordion__item}>
+                    <input type="radio" name="accordion" id="accordion3"/>
+                    <label className={cl.accordion__header} htmlFor="accordion3">Изменение ячейки</label>
+                    <div className={cl.accordion__content}>
+                        content3
+                    </div>
+                </div>
+
+            </div>
+
 
         </div>
     );

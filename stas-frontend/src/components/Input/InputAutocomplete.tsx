@@ -1,4 +1,4 @@
-import React, {HTMLInputTypeAttribute, useEffect, useState} from 'react';
+import React, {CSSProperties, HTMLInputTypeAttribute, useEffect, useState} from 'react';
 import cl from "./InputAutocomplete.module.scss";
 import InputCustom from "./InputCustom";
 import {AutocompleteService} from "../../services/AutocompleteService";
@@ -12,10 +12,11 @@ interface InputAutocompleteProps {
     autocompleteType: AutocompleteType
     type?: HTMLInputTypeAttribute
     placeholder?: string
-    required?: boolean
+    required?: boolean,
+    style?: CSSProperties
 }
 
-const InputAutocomplete = ({valueState, required, type, placeholder, autocompleteType}: InputAutocompleteProps) => {
+const InputAutocomplete = ({valueState, required, type, placeholder, autocompleteType, style}: InputAutocompleteProps) => {
     const dispatch = useTypeDispatch();
 
     const [isOpen, setIpOpen] = useState(false);
@@ -48,6 +49,7 @@ const InputAutocomplete = ({valueState, required, type, placeholder, autocomplet
     return (
         <div className={cl.wrapper} onBlur={closeHandler}>
             <InputCustom
+                style={style}
                 onFocus={() => setIpOpen(true)}
                 valueState={valueState}
                 required={required}

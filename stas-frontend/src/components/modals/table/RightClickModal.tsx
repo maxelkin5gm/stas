@@ -15,17 +15,24 @@ interface DetailsByStoModalProps {
     onClose: () => void,
 }
 
+/**
+ *  Show all details by sto
+ */
 const RightClickModal = ({onClose, modalState}: DetailsByStoModalProps) => {
     const dispatch = useTypeDispatch();
 
     const [optionsState, setOptionsState] = useState([] as DetailEntity[])
 
     useEffect(() => {
+        let nameSto = modalState.row.nameSto || modalState.row.receivedNameSto
+        if (!nameSto) {
+            UtilsStore.showError(dispatch, "СТО не найдено")
+        }
         UtilsStore.setLoader(dispatch, true)
-        DetailService.findAllBySto(modalState.row.nameSto)
+        DetailService.findAllBySto(nameSto)
             .then((options) => setOptionsState(options))
             .finally(() => UtilsStore.setLoader(dispatch, false))
-    }, [modalState.row.nameSto, dispatch])
+    }, [modalState.row, dispatch])
 
 
     return (
