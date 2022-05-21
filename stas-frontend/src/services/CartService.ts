@@ -54,7 +54,6 @@ export class CartService {
             operationNumber: selectedOptionState.operationNumber || ""
         }
         const fullAmount = row.remainder;
-
         const newCart = [...cart];
 
         if (newItem.amount > fullAmount) return null;
@@ -62,7 +61,6 @@ export class CartService {
         const index = cart.findIndex((value) =>
             value.nameSto === newItem.nameSto
         )
-
         if (index === -1) {
             newCart.push(newItem);
             return newCart;

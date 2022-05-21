@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StoEntity {
+public class DetailEntity {
     int id;
-    String nameSto;
+    String nameDetail;
+    String operationNumber;
 }

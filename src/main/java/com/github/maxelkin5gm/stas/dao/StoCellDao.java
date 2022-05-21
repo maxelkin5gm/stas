@@ -22,4 +22,11 @@ public class StoCellDao {
                         UPDATE STO_CELL SET remainder = ? WHERE sto_id = ? AND cell_id = ?""",
                 remainder, stoId, cellId);
     }
+
+    public Integer countBySto(String nameSto) {
+        return jdbcTemplate.queryForObject("""
+                SELECT count(*) FROM STO, STO_CELL
+                WHERE STO_CELL.sto_id = STO.id AND nameSto = ?;
+                """, Integer.class, nameSto);
+    }
 }

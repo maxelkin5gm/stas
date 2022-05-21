@@ -28,7 +28,7 @@ public class CartService {
         var cellEntity = cellDao.findByCell(stasIndex, side, cellNumber).orElseThrow();
         cart.forEach(cartItem -> {
             var workerEntity = workerDao.findByPersonnelNumber(personnelNumber).orElseThrow();
-            var stoEntity = stoDao.findByName(cartItem.getNameSto()).orElseThrow();
+            var stoEntity = stoDao.findBySto(cartItem.getNameSto()).orElseThrow();
             var remainder = stoCellDao.findRemainderByStoIdAndCellId(stoEntity.getId(), cellEntity.getId());
 
             var newRemainder = remainder - cartItem.getAmount();
@@ -56,7 +56,7 @@ public class CartService {
                      int cellNumber, String personnelNumber) {
         if (amount < 1) throw new RuntimeException("Количество не должно быть меньше < 1");
 
-        var stoEntity = stoDao.findByName(nameSto).orElseThrow();
+        var stoEntity = stoDao.findBySto(nameSto).orElseThrow();
         var cellEntity = cellDao.findByCell(stasIndex, side, cellNumber).orElseThrow();
         var remainder = stoCellDao.findRemainderByStoIdAndCellId(stoEntity.getId(), cellEntity.getId());
 
