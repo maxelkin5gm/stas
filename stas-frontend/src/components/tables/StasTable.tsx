@@ -4,16 +4,16 @@ import {useTypeDispatch} from "../../hooks/useTypeDispatch";
 
 import BaseTable from "./BaseTable/BaseTable";
 import {StasStateActionTypes} from "../../store/stasReducer/stasReducer.type";
-import DoubleClickModal from "../modals/table/DoubleClickModal";
+import StasDoubleClickModal from "../modals/table/StasDoubleClickModal";
 import {fillStasTable} from "./utils/fillStasTable";
 import {UtilsStore} from "../../store/UtilsStore";
 
-interface MainTableProps {
+interface StasTableProps {
     stasIndex: number,
     isLoading?: boolean
 }
 
-const StasTable = ({stasIndex, isLoading}: MainTableProps) => {
+const StasTable = ({stasIndex, isLoading}: StasTableProps) => {
     const tableQuery = useTypeSelector(state => state.stasList[stasIndex].table);
     const dispatch = useTypeDispatch();
 
@@ -42,7 +42,6 @@ const StasTable = ({stasIndex, isLoading}: MainTableProps) => {
         setDoubleClickModalState({row, visible: true})
     }
 
-
     useEffect(() => {
         UtilsStore.setLoader(dispatch, true)
         fillStasTable(tableQuery, stasIndex, setTableState)
@@ -60,8 +59,8 @@ const StasTable = ({stasIndex, isLoading}: MainTableProps) => {
 
 
             {doubleClickModalState.visible
-                ? <DoubleClickModal stasIndex={stasIndex} modalState={doubleClickModalState}
-                                    onClose={() => setDoubleClickModalState({
+                ? <StasDoubleClickModal stasIndex={stasIndex} modalState={doubleClickModalState}
+                                        onClose={() => setDoubleClickModalState({
                                         ...doubleClickModalState,
                                         visible: false
                                     })}/> : null}

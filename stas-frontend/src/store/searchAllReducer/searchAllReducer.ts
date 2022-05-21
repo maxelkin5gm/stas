@@ -15,6 +15,9 @@ export const searchAllReducer = (state: SearchAllState = searchAllInit, action: 
         case SearchAllStateActionTypes.SET_SEARCH_ALL_TABLE:
             return {...state, table: action.table};
 
+        case SearchAllStateActionTypes.REFRESH_SEARCH_ALL_TABLE:
+            return {...state, table: {...state.table}};
+
         default:
             return state;
     }

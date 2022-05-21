@@ -54,8 +54,6 @@ const AdminReceivedTable = ({worker}: AdminReceivedTableProps) => {
                                            visible: false
                                        })}
                 /> : null}
-
-
         </>
     );
 };

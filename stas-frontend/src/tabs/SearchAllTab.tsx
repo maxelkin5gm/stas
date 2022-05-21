@@ -1,7 +1,7 @@
 import React from 'react';
 import {useTypeSelector} from "../hooks/useTypeSelector";
 
-import cl from "./SearchAllTab.module.scss";
+import cl from "./style/SearchAllTab.module.scss";
 import WorkerPanel from "../components/panels/searchAll/WorkerPanel";
 import DetailPanel from "../components/panels/searchAll/DetailPanel";
 import StoPanel from "../components/panels/searchAll/StoPanel";

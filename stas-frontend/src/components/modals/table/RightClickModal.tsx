@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useTypeDispatch} from "../../../hooks/useTypeDispatch";
 
-import cl from "./RightClickModal.module.scss"
+import cl from "../style/RightClickModal.module.scss"
 import BaseModal from "../BaseModal";
 import {DetailService} from "../../../services/DetailService";
 import {DetailEntity} from "../../../types/models";

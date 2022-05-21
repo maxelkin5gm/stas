@@ -1,8 +1,9 @@
 import React from 'react';
 import {useTypeSelector} from "../hooks/useTypeSelector";
-import cl from "./AdminTab.module.scss"
+import cl from "./style/AdminTab.module.scss"
 import StoDetailPanel from "../components/panels/admin/StoDetailPanel";
 import ReceivedPanel from "../components/panels/admin/ReceivedPanel";
+import CellPanel from "../components/panels/admin/CellPanel";
 
 
 const AdminTab = () => {
@@ -19,7 +20,7 @@ const AdminTab = () => {
                     <input type="radio" defaultChecked name="accordion" id="accordion1"/>
                     <label className={cl.accordion__header} htmlFor="accordion1">СТО и детали</label>
                     <div className={cl.accordion__content}>
-                        <StoDetailPanel />
+                        <StoDetailPanel/>
                     </div>
                 </div>
 
@@ -27,7 +28,7 @@ const AdminTab = () => {
                     <input type="radio" name="accordion" id="accordion2"/>
                     <label className={cl.accordion__header} htmlFor="accordion2">Выданные СТО</label>
                     <div className={cl.accordion__content}>
-                        <ReceivedPanel />
+                        <ReceivedPanel/>
                     </div>
                 </div>
 
@@ -35,7 +36,7 @@ const AdminTab = () => {
                     <input type="radio" name="accordion" id="accordion3"/>
                     <label className={cl.accordion__header} htmlFor="accordion3">Изменение ячейки</label>
                     <div className={cl.accordion__content}>
-                        content3
+                        <CellPanel/>
                     </div>
                 </div>
 

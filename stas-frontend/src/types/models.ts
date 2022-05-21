@@ -4,7 +4,11 @@ export interface DetailEntity {
     operationNumber: string
 }
 
-export interface StoEntity {
+export interface CellEntity {
     id?: number
-    nameSto:string
+    stasIndex: number
+    side: string
+    cellNumber: number
+    status: string
+    note: string
 }

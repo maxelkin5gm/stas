@@ -3,7 +3,7 @@ import {Button} from "antd";
 import {useTypeSelector} from "../../../hooks/useTypeSelector";
 import {useTypeDispatch} from "../../../hooks/useTypeDispatch";
 
-import cl from "./DoubleClickModal.module.scss";
+import cl from "../style/DoubleClickModal.module.scss";
 import BaseModal from "../BaseModal";
 import InputNumber from "../../Input/InputNumber";
 import {StasStateEnum} from "../../../store/stasReducer/types/state";
@@ -23,7 +23,7 @@ interface DoubleClickRowModalProps {
     stasIndex: number
 }
 
-const DoubleClickModal = ({modalState, onClose, stasIndex}: DoubleClickRowModalProps) => {
+const StasDoubleClickModal = ({modalState, onClose, stasIndex}: DoubleClickRowModalProps) => {
     const dispatch = useTypeDispatch();
     const stasState = useTypeSelector(state => state.stasList[stasIndex].state)
     const cart = useTypeSelector(state => state.stasList[stasIndex].cart)
@@ -34,11 +34,12 @@ const DoubleClickModal = ({modalState, onClose, stasIndex}: DoubleClickRowModalP
     const [selectedOptionState, setSelectedOptionState] = useState({} as DetailEntity)
 
     useEffect(() => {
+        if (stasState !== StasStateEnum.WAIT) return;
         UtilsStore.setLoader(dispatch, true)
         DetailService.findAllBySto(modalState.row.nameSto)
             .then((options) => setOptionsState(options))
             .finally(() => UtilsStore.setLoader(dispatch, false))
-    }, [modalState.row.nameSto, dispatch])
+    }, [stasState, modalState.row.nameSto, dispatch])
 
     function selectOptionHandler(e: React.MouseEvent<HTMLOptionElement, MouseEvent>) {
         const value = e.currentTarget.value;
@@ -67,7 +68,6 @@ const DoubleClickModal = ({modalState, onClose, stasIndex}: DoubleClickRowModalP
         }
 
         const newCart = CartPanelService.addToCart(cart, modalState.row, countStoInputState, selectedOptionState);
-
         if (newCart) {
             dispatch({
                 type: StasStateActionTypes.SET_CART,
@@ -112,4 +112,4 @@ const DoubleClickModal = ({modalState, onClose, stasIndex}: DoubleClickRowModalP
     );
 };
 
-export default DoubleClickModal;
+export default StasDoubleClickModal;

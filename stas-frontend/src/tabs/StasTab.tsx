@@ -1,7 +1,7 @@
 import React from 'react';
 import {useTypeSelector} from "../hooks/useTypeSelector";
 
-import cl from "./StasTab.module.scss"
+import cl from "./style/StasTab.module.scss"
 import WorkerPanel from "../components/panels/stas/WorkerPanel";
 import TablePanel from "../components/panels/stas/TablePanel";
 import DetailPanel from "../components/panels/stas/DetailPanel";

@@ -16,7 +16,14 @@ interface InputAutocompleteProps {
     style?: CSSProperties
 }
 
-const InputAutocomplete = ({valueState, required, type, placeholder, autocompleteType, style}: InputAutocompleteProps) => {
+const InputAutocomplete = ({
+                               valueState,
+                               required,
+                               type,
+                               placeholder,
+                               autocompleteType,
+                               style
+                           }: InputAutocompleteProps) => {
     const dispatch = useTypeDispatch();
 
     const [isOpen, setIpOpen] = useState(false);

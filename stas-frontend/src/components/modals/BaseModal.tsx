@@ -1,6 +1,6 @@
 import React from 'react';
 
-import cl from "./BaseModal.module.scss"
+import cl from "./style/BaseModal.module.scss"
 import {Button} from "antd";
 
 interface BaseModalProps {
