@@ -37,9 +37,11 @@ export async function fillStasTable({type, query}: TableQuery, stasIndex: number
             return;
 
         case TableTypeEnum.BY_CELL:
+            const data = await TableService.findAllByCellAndStas(query.side, query.cellNumber, stasIndex)
+            TableService.validateAndPrepareArray(data)
             setTableState({
                 columns: cellColumns,
-                data: await TableService.findAllByCellAndStas(query.side, query.cellNumber, stasIndex)
+                data: TableService.validateAndPrepareArray(data)
             })
             return;
     }

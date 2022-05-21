@@ -51,7 +51,7 @@ const ReceivedPanel = () => {
                 <Button disabled type="primary" size="middle">Изменить</Button>
             </div>
 
-            <div>
+            <div style={{boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)", marginTop: 10}}>
                 <AdminReceivedTable worker={worker}/>
             </div>
         </div>

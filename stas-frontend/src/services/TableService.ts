@@ -77,14 +77,13 @@ export class TableService {
 
     // Cell START //
     static async findAllByCellAndStas(side: string, cellNumber: number, stasIndex: number) {
-        const data = await axios.get<any[]>("/api/table/findAllByCellAndStas", {
+        return await axios.get<any[]>("/api/table/findAllByCellAndStas", {
             params: {
                 side,
                 cellNumber,
                 stasIndex: stasIndex + 1
             }
         }).then(res => res.data);
-        return this.validateAndPrepareArray(data)
     }// Cell END //
 
 

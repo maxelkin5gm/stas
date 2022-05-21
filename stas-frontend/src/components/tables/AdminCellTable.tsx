@@ -1,35 +1,36 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import BaseTable from "./BaseTable/BaseTable";
-import {receivedStoColumns} from "./columns/searchAll/receivedStoColumns";
 import {useTypeDispatch} from "../../hooks/useTypeDispatch";
-import {CellEntity} from "../../types/models";
+import {stoColumns} from "./columns/admin/stoColumns";
+import {UtilsStore} from "../../store/UtilsStore";
+import {TableService} from "../../services/TableService";
+import {Cell} from "../panels/admin/CellPanel";
+import {addKeyPropertyForArray} from "../../services/utils/addKeyPropertyForArray";
 
 
 interface AdminCellTableProps {
-    cellEntity: CellEntity
+    cell: Cell | null
 }
 
-const AdminCellTable = ({cellEntity}: AdminCellTableProps) => {
+const AdminCellTable = ({cell}: AdminCellTableProps) => {
     const dispatch = useTypeDispatch();
 
     const [tableState, setTableState] = useState({
-        columns: receivedStoColumns,
+        columns: stoColumns,
         data: [] as any[]
     })
 
-    // useEffect(() => {
-    //     if (!personnelNumber) return
-    //
-    //     UtilsStore.setLoader(dispatch, true)
-    //     TableService.findAllByWorker(personnelNumber)
-    //         .then(data => setTableState({
-    //             columns: receivedStoColumns,
-    //             data
-    //         }))
-    //         .catch((e: Error) => UtilsStore.showError(dispatch, e.message))
-    //         .finally(() => UtilsStore.setLoader(dispatch, false))
-    //
-    // }, [personnelNumber, dispatch])
+    useEffect(() => {
+        if (!cell) return
+        UtilsStore.setLoader(dispatch, true)
+        TableService.findAllByCellAndStas(cell.side, cell.cellNumber, cell.stasIndex)
+            .then(data => setTableState({
+                columns: stoColumns,
+                data: addKeyPropertyForArray(data)
+            }))
+            .catch(() => UtilsStore.showError(dispatch))
+            .finally(() => UtilsStore.setLoader(dispatch, false))
+    }, [cell, dispatch])
 
     return (
         <>
