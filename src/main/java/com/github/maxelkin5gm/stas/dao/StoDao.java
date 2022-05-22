@@ -17,12 +17,12 @@ import java.util.Optional;
 public class StoDao {
     JdbcTemplate jdbcTemplate;
 
-    public Optional<StoEntity> findBySto(String nameSto) {
+    public Optional<StoEntity> findBy(String nameSto) {
         return jdbcTemplate.query("SELECT * FROM STO WHERE nameSto = ?",
                 new BeanPropertyRowMapper<>(StoEntity.class), nameSto).stream().findAny();
     }
 
-    public List<String> findByNameStoLike(String partNameSto) {
+    public List<String> findByLike(String partNameSto) {
         return jdbcTemplate.queryForList("""
                 SELECT nameSto FROM STO WHERE nameSto LIKE ? LIMIT 10;
                 """, String.class, '%' + partNameSto + '%');
@@ -39,7 +39,7 @@ public class StoDao {
         return Objects.requireNonNull(keyHolder.getKey()).intValue();
     }
 
-    public void deleteBySto(String nameSto) {
+    public void deleteBy(String nameSto) {
         jdbcTemplate.update("DELETE FROM STO WHERE nameSto = ?;", nameSto);
     }
 }

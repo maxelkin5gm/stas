@@ -25,7 +25,7 @@ public class CartController {
     }
 
     @PostMapping("/take")
-    public void give(@RequestParam String nameSto,
+    public void take(@RequestParam String nameSto,
                      @RequestParam int amount,
                      @RequestParam String nameDetail,
                      @RequestParam String operationNumber,
@@ -36,11 +36,11 @@ public class CartController {
         cartService.take(nameSto, amount, nameDetail, operationNumber, stasIndex, side, cellNumber, personnelNumber);
     }
 
-    @GetMapping("/findAllMatchStoByCellAndReceivedSto")
-    public List<Map<String, Object>> findAllMatchStoByCellAndReceivedSto(@RequestParam int stasIndex,
-                                                                         @RequestParam String side,
-                                                                         @RequestParam int cellNumber,
-                                                                         @RequestParam String personnelNumber) {
-        return cartService.findAllMatchStoByCellAndReceivedSto(stasIndex, side, cellNumber, personnelNumber);
+    @GetMapping("/findAllMatchStoBy")
+    public List<Map<String, Object>> findAllMatchStoBy(@RequestParam int stasIndex,
+                                                       @RequestParam String side,
+                                                       @RequestParam int cellNumber,
+                                                       @RequestParam String personnelNumber) {
+        return cartService.findAllMatchStoBy(stasIndex, side, cellNumber, personnelNumber);
     }
 }

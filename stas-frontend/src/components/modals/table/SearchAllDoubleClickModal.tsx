@@ -24,7 +24,7 @@ const SearchAllDoubleClickModal = ({modalState, onClose}: NoteChangeModalProps) 
 
     function saveNoteHandler() {
         UtilsStore.setLoader(dispatch, true)
-        CellService.updateNoteByCell(modalState.row.stasIndex - 1, modalState.row.side, modalState.row.cellNumber, noteInputState)
+        CellService.updateNoteBy(modalState.row.stasIndex - 1, modalState.row.side, modalState.row.cellNumber, noteInputState)
             .then(() => {
                 dispatch({type: SearchAllStateActionTypes.REFRESH_SEARCH_ALL_TABLE})
                 onClose()

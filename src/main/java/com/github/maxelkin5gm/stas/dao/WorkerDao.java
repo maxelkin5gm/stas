@@ -15,12 +15,12 @@ public class WorkerDao {
 
     JdbcTemplate jdbcTemplate;
 
-    public List<WorkerEntity> findAllByName(String name) {
+    public List<WorkerEntity> findAllBy(String nameWorker) {
         return jdbcTemplate.query("SELECT nameWorker, personnelNumber FROM WORKER WHERE nameWorker = ?;",
-                new BeanPropertyRowMapper<>(WorkerEntity.class), name);
+                new BeanPropertyRowMapper<>(WorkerEntity.class), nameWorker);
     }
 
-    public Optional<WorkerEntity> findByPersonnelNumber(String personnelNumber) {
+    public Optional<WorkerEntity> findBy(String personnelNumber) {
         return jdbcTemplate.query("SELECT * FROM WORKER WHERE personnelNumber = ?;",
                 new BeanPropertyRowMapper<>(WorkerEntity.class), personnelNumber).stream().findAny();
     }
@@ -36,17 +36,4 @@ public class WorkerDao {
                 SELECT personnelNumber FROM WORKER WHERE personnelNumber LIKE ? LIMIT 10;
                 """, String.class, '%' + partPersonnelNumber + '%');
     }
-
-
-//    public int insert(Worker worker) {
-//        KeyHolder keyHolder = new GeneratedKeyHolder();
-//        jdbcTemplate.update(connection -> {
-//                    PreparedStatement ps = connection.prepareStatement(
-//                            "INSERT INTO WORKER (nameWorker, personnelNumber) VALUES (?, ?);");
-//                    ps.setString(1, worker.getName());
-//                    ps.setString(2, worker.getPersonnelNumber());
-//                    return ps;
-//                }, keyHolder);
-//        return Objects.requireNonNull(keyHolder.getKey()).intValue();
-//    }
 }

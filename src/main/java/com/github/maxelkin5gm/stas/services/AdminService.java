@@ -22,54 +22,54 @@ public class AdminService {
 
     @Transactional
     public void addStoAndDetail(String nameSto, String nameDetail, String operationNumber) {
-        var stoEntity = stoDao.findBySto(nameSto).orElse(null);
+        var stoEntity = stoDao.findBy(nameSto).orElse(null);
         if (stoEntity == null) {
             var id = stoDao.insert(nameSto);
             stoEntity = new StoEntity(id, nameSto);
         }
 
-        var detailEntity = detailDao.findByDetail(nameDetail, operationNumber).orElse(null);
+        var detailEntity = detailDao.findBy(nameDetail, operationNumber).orElse(null);
         if (detailEntity == null) {
             var id = detailDao.insert(nameDetail, operationNumber);
             detailEntity = new DetailEntity(id, nameDetail, operationNumber);
         }
 
-        var stoDetail = stoDetailDao.countById(stoEntity.getId(), detailEntity.getId());
+        var stoDetail = stoDetailDao.countBy(stoEntity.getId(), detailEntity.getId());
         if (stoDetail == 0) {
-            stoDetailDao.insertById(stoEntity.getId(), detailEntity.getId());
+            stoDetailDao.insert(stoEntity.getId(), detailEntity.getId());
         } else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Такая связь уже существует");
     }
 
     @Transactional
     public void deleteRelationshipByStoAndDetail(String nameSto, String nameDetail, String operationNumber) {
-        var stoEntity = stoDao.findBySto(nameSto).orElse(null);
+        var stoEntity = stoDao.findBy(nameSto).orElse(null);
         if (stoEntity == null) {
             var id = stoDao.insert(nameSto);
             stoEntity = new StoEntity(id, nameSto);
         }
 
-        var detailEntity = detailDao.findByDetail(nameDetail, operationNumber).orElse(null);
+        var detailEntity = detailDao.findBy(nameDetail, operationNumber).orElse(null);
         if (detailEntity == null) {
             var id = detailDao.insert(nameDetail, operationNumber);
             detailEntity = new DetailEntity(id, nameDetail, operationNumber);
         }
 
-        var stoDetail = stoDetailDao.countById(stoEntity.getId(), detailEntity.getId());
+        var stoDetail = stoDetailDao.countBy(stoEntity.getId(), detailEntity.getId());
         if (stoDetail != 0) {
-            stoDetailDao.deleteById(stoEntity.getId(), detailEntity.getId());
+            stoDetailDao.deleteBy(stoEntity.getId(), detailEntity.getId());
         } else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Такой связи не существует");
     }
 
     @Transactional
     public void deleteSto(String nameSto) {
-        stoDao.findBySto(nameSto)
+        stoDao.findBy(nameSto)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Такого СТО не найдено"));
 
-        if (stoCellDao.countBySto(nameSto) > 0)
+        if (stoCellDao.countBy(nameSto) > 0)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "СТО нельзя удалить, пока оно находится в ячейке. Удалите сначала из ячейки.");
 
-        stoDao.deleteBySto(nameSto);
+        stoDao.deleteBy(nameSto);
     }
 
 

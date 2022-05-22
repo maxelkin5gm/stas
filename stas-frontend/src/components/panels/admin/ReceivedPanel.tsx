@@ -25,14 +25,25 @@ const ReceivedPanel = () => {
         }
     }
 
-    function deleteHandler() {
+    function deleteWorkerHandler() {
         if (!worker.personnelNumber) {
-            UtilsStore.showError(dispatch, "Сотрудник выбран")
+            UtilsStore.showError(dispatch, "Сотрудник не выбран")
             return
         }
         UtilsStore.showError(dispatch, "Данная функция недоступна")
     }
 
+    function changeWorkerHandler() {
+        if (!worker.personnelNumber) {
+            UtilsStore.showError(dispatch, "Сотрудник не выбран")
+            return
+        }
+        UtilsStore.showError(dispatch, "Данная функция недоступна")
+    }
+
+    function createWorkerHandler() {
+        UtilsStore.showError(dispatch, "Данная функция недоступна")
+    }
 
     return (
         <div style={{margin: 10}}>
@@ -40,18 +51,20 @@ const ReceivedPanel = () => {
                 <InputAutocomplete valueState={personnelNumberInputState} autocompleteType={"personnelNumber"}
                                    placeholder={"Табельный номер"}/>
                 <Button style={{margin: "0 10px"}} type="primary" size="middle" onClick={showHandler}>Показать</Button>
-                <Button disabled type="primary" size="middle">Добавить сотрудника</Button>
+                <Button type="primary" size="middle" onClick={createWorkerHandler}>Добавить сотрудника</Button>
 
             </div>
 
-            <div style={{display: "flex", alignItems: "center", padding: 5}}>
+            {worker.personnelNumber && worker.nameWorker
+                ? <div style={{display: "flex", alignItems: "center", padding: 5}}>
                 <span style={{fontSize: 16}}>
                     Выбран: <span style={{fontWeight: "bold"}}>{worker.nameWorker}({worker.personnelNumber})</span>
                 </span>
-                <Button disabled={!worker.personnelNumber} style={{margin: "0 10px"}} type="primary" size="middle"
-                        onClick={deleteHandler}>Удалить</Button>
-                <Button disabled type="primary" size="middle">Изменить</Button>
-            </div>
+                    <Button style={{margin: "0 10px"}} type="primary" size="middle"
+                            onClick={deleteWorkerHandler}>Изменить</Button>
+                    <Button type="primary" size="middle" onClick={changeWorkerHandler}>Удалить</Button>
+                </div>
+                : null}
 
             <div style={{boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)", marginTop: 10}}>
                 <AdminReceivedTable worker={worker}/>

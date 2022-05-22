@@ -22,7 +22,7 @@ public class AutocompleteController {
 
     @GetMapping("/nameSto")
     public List<String> sto(@RequestParam String part) {
-        return stoDao.findByNameStoLike(part);
+        return stoDao.findByLike(part);
     }
 
     @GetMapping("/nameDetail")

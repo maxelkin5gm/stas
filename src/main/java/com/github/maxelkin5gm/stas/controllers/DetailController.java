@@ -17,8 +17,8 @@ import java.util.Map;
 public class DetailController {
     DetailDao detailDao;
 
-    @GetMapping("/findAllBySto")
+    @GetMapping("/findAllBy")
     public List<Map<String, Object>> findAllBySto(@RequestParam String nameSto) {
-        return detailDao.findAllBySto(nameSto);
+        return detailDao.findAllBy(nameSto);
     }
 }

@@ -50,7 +50,7 @@ const InputAutocomplete = ({
         setTimeout(() => {
             setDataList([])
             setIpOpen(false)
-        }, 100);
+        }, 300);
     }
 
     return (

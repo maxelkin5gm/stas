@@ -21,12 +21,12 @@ import java.util.Optional;
 public class DetailDao {
     JdbcTemplate jdbcTemplate;
 
-    public Optional<DetailEntity> findByDetail(String nameDetail, String operationNumber) {
+    public Optional<DetailEntity> findBy(String nameDetail, String operationNumber) {
         return jdbcTemplate.query("SELECT * FROM DETAIL WHERE nameDetail = ? AND operationNumber = ?",
                 new BeanPropertyRowMapper<>(DetailEntity.class), nameDetail, operationNumber).stream().findAny();
     }
 
-    public List<Map<String, Object>> findAllBySto(String nameSto) {
+    public List<Map<String, Object>> findAllBy(String nameSto) {
         String sql = """
                 SELECT nameDetail, operationNumber
                 FROM STO, DETAIL, STO_DETAIL
@@ -59,7 +59,7 @@ public class DetailDao {
         return Objects.requireNonNull(keyHolder.getKey()).intValue();
     }
 
-    public void deleteByDetail(String nameDetail, String operationNumber) {
+    public void deleteBy(String nameDetail, String operationNumber) {
         var count = jdbcTemplate.update("DELETE FROM DETAIL WHERE nameDetail = ? AND operationNumber = ?;",
                 nameDetail, operationNumber);
         if (count == 0)

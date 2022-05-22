@@ -15,13 +15,13 @@ import java.util.List;
 public class WorkerController {
     WorkerDao workerDao;
 
-    @GetMapping("/findAllByName")
-    public List<WorkerEntity> findAllByName(@RequestParam String nameWorker) {
-        return workerDao.findAllByName(nameWorker);
+    @GetMapping("/findAllBy")
+    public List<WorkerEntity> findAllBy(@RequestParam String nameWorker) {
+        return workerDao.findAllBy(nameWorker);
     }
 
-    @GetMapping("/findByPersonnelNumber")
-    public WorkerEntity findByPersonnelNumber(@RequestParam String personnelNumber) {
-        return workerDao.findByPersonnelNumber(personnelNumber).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    @GetMapping("/findBy")
+    public WorkerEntity findBy(@RequestParam String personnelNumber) {
+        return workerDao.findBy(personnelNumber).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 }

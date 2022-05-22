@@ -36,7 +36,7 @@ const StasDoubleClickModal = ({modalState, onClose, stasIndex}: DoubleClickRowMo
     useEffect(() => {
         if (stasState !== StasStateEnum.WAIT) return;
         UtilsStore.setLoader(dispatch, true)
-        DetailService.findAllBySto(modalState.row.nameSto)
+        DetailService.findAllBy(modalState.row.nameSto)
             .then((options) => setOptionsState(options))
             .finally(() => UtilsStore.setLoader(dispatch, false))
     }, [stasState, modalState.row.nameSto, dispatch])
@@ -52,7 +52,7 @@ const StasDoubleClickModal = ({modalState, onClose, stasIndex}: DoubleClickRowMo
 
     function saveNoteHandler() {
         UtilsStore.setLoader(dispatch, true)
-        CellService.updateNoteByCell(stasIndex, modalState.row.side, modalState.row.cellNumber, noteInputState)
+        CellService.updateNoteBy(stasIndex, modalState.row.side, modalState.row.cellNumber, noteInputState)
             .then(() => {
                 dispatch({type: StasStateActionTypes.REFRESH_TABLE, stasIndex})
                 onClose()

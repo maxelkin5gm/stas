@@ -29,7 +29,7 @@ const RightClickModal = ({onClose, modalState}: DetailsByStoModalProps) => {
             UtilsStore.showError(dispatch, "СТО не найдено")
         }
         UtilsStore.setLoader(dispatch, true)
-        DetailService.findAllBySto(nameSto)
+        DetailService.findAllBy(nameSto)
             .then((options) => setOptionsState(options))
             .finally(() => UtilsStore.setLoader(dispatch, false))
     }, [modalState.row, dispatch])

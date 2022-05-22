@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 public class StoCellDao {
     JdbcTemplate jdbcTemplate;
 
-    public int findRemainderByStoIdAndCellId(int stoId, int cellId) {
+    public int findRemainderBy(int stoId, int cellId) {
         var remainder = jdbcTemplate.queryForObject(
                 "SELECT remainder FROM STO_CELL WHERE sto_id = ? AND cell_id = ?", Integer.class, stoId, cellId);
         if (remainder == null || remainder < 0)
@@ -23,7 +23,7 @@ public class StoCellDao {
                 remainder, stoId, cellId);
     }
 
-    public Integer countBySto(String nameSto) {
+    public Integer countBy(String nameSto) {
         return jdbcTemplate.queryForObject("""
                 SELECT count(*) FROM STO, STO_CELL
                 WHERE STO_CELL.sto_id = STO.id AND nameSto = ?;

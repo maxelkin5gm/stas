@@ -13,15 +13,15 @@ import java.util.Optional;
 public class CellDao {
     JdbcTemplate jdbcTemplate;
 
-    public Optional<CellEntity> findByCell(int stasIndex, String side, int cellNumber) {
+    public Optional<CellEntity> findBy(int stasIndex, String side, int cellNumber) {
         return jdbcTemplate.query("""
                 SELECT * FROM CELL
                 WHERE stasIndex = ? AND side = ? AND cellNumber = ?""",
                 new BeanPropertyRowMapper<>(CellEntity.class), stasIndex, side, cellNumber).stream().findAny();
     }
 
-    public void updateNoteByCell(int stasIndex, String side, int cellNumber, String note) {
-        var cellEntity = findByCell(stasIndex, side, cellNumber).orElseThrow();
+    public void updateNoteBy(int stasIndex, String side, int cellNumber, String note) {
+        var cellEntity = findBy(stasIndex, side, cellNumber).orElseThrow();
         jdbcTemplate.update("UPDATE CELL SET note = ? WHERE CELL.id = ?;", note, cellEntity.getId());
     }
 }

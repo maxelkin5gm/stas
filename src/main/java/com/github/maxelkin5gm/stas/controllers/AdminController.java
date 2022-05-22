@@ -38,7 +38,19 @@ public class AdminController {
     @PostMapping("/deleteDetail")
     public void deleteDetail(@RequestParam String nameDetail,
                              @RequestParam String operationNumber) {
-        detailDao.deleteByDetail(nameDetail, operationNumber);
+        detailDao.deleteBy(nameDetail, operationNumber);
     }
     // Sto and Detail END //
+
+
+    // Received Sto START //
+//    @PostMapping("/deleteReceivedSto")
+//    public void deleteReceivedSto(@RequestParam String nameSto) {
+//        adminService.deleteSto(nameSto);
+//    }
+
+
+    // Received Sto END //
+
+
 }

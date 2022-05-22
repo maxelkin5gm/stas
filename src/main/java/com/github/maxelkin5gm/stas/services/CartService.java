@@ -25,11 +25,11 @@ public class CartService {
 
     @Transactional
     public void give(int stasIndex, String side, int cellNumber, String personnelNumber, List<CartGiveQuery> cart) {
-        var cellEntity = cellDao.findByCell(stasIndex, side, cellNumber).orElseThrow();
+        var cellEntity = cellDao.findBy(stasIndex, side, cellNumber).orElseThrow();
         cart.forEach(cartItem -> {
-            var workerEntity = workerDao.findByPersonnelNumber(personnelNumber).orElseThrow();
-            var stoEntity = stoDao.findBySto(cartItem.getNameSto()).orElseThrow();
-            var remainder = stoCellDao.findRemainderByStoIdAndCellId(stoEntity.getId(), cellEntity.getId());
+            var workerEntity = workerDao.findBy(personnelNumber).orElseThrow();
+            var stoEntity = stoDao.findBy(cartItem.getNameSto()).orElseThrow();
+            var remainder = stoCellDao.findRemainderBy(stoEntity.getId(), cellEntity.getId());
 
             var newRemainder = remainder - cartItem.getAmount();
             if (newRemainder < 0) {
@@ -38,11 +38,11 @@ public class CartService {
             stoCellDao.update(newRemainder, stoEntity.getId(), cellEntity.getId());
 
 
-            Optional<ReceivedStoEntity> receivedStoEntity = receivedStoDao.find(cartItem.getNameSto(),
+            Optional<ReceivedStoEntity> receivedStoEntity = receivedStoDao.findBy(cartItem.getNameSto(),
                     cartItem.getNameDetail(), cartItem.getOperationNumber(), personnelNumber);
             if (receivedStoEntity.isPresent()) {
                 var newAmount = receivedStoEntity.get().getAmount() + cartItem.getAmount();
-                receivedStoDao.updateReceivedById(receivedStoEntity.get().getId(), newAmount);
+                receivedStoDao.updateReceivedBy(receivedStoEntity.get().getId(), newAmount);
             } else {
                 receivedStoDao.insert(new ReceivedStoEntity(null, cartItem.getAmount(), 228,
                         cellEntity.getId(), workerEntity.getId(), cartItem.getNameSto(), cartItem.getNameDetail(),
@@ -56,26 +56,26 @@ public class CartService {
                      int cellNumber, String personnelNumber) {
         if (amount < 1) throw new RuntimeException("Количество не должно быть меньше < 1");
 
-        var stoEntity = stoDao.findBySto(nameSto).orElseThrow();
-        var cellEntity = cellDao.findByCell(stasIndex, side, cellNumber).orElseThrow();
-        var remainder = stoCellDao.findRemainderByStoIdAndCellId(stoEntity.getId(), cellEntity.getId());
+        var stoEntity = stoDao.findBy(nameSto).orElseThrow();
+        var cellEntity = cellDao.findBy(stasIndex, side, cellNumber).orElseThrow();
+        var remainder = stoCellDao.findRemainderBy(stoEntity.getId(), cellEntity.getId());
 
         var newRemainder = remainder + amount;
         stoCellDao.update(newRemainder, stoEntity.getId(), cellEntity.getId());
 
-        var receivedStoEntity = receivedStoDao.find(nameSto, nameDetail, operationNumber,
+        var receivedStoEntity = receivedStoDao.findBy(nameSto, nameDetail, operationNumber,
                 personnelNumber).orElseThrow();
 
         var newAmount = receivedStoEntity.getAmount() - amount;
         if (newAmount < 0) throw new RuntimeException("Выданные СТО не могут быть меньше нуля");
         if (newAmount == 0)
-            receivedStoDao.deleteById(receivedStoEntity.getId());
+            receivedStoDao.deleteBy(receivedStoEntity.getId());
         else
-            receivedStoDao.updateReceivedById(receivedStoEntity.getId(), newAmount);
+            receivedStoDao.updateReceivedBy(receivedStoEntity.getId(), newAmount);
     }
 
-    public List<Map<String, Object>> findAllMatchStoByCellAndReceivedSto(int stasIndex, String side, int cellNumber,
-                                                                         String personnelNumber) {
+    public List<Map<String, Object>> findAllMatchStoBy(int stasIndex, String side, int cellNumber,
+                                                       String personnelNumber) {
         String sql = """
                 SELECT receivedNameSto, amount, receivedNameDetail, receivedOperationNumber, operationDate, CELL.side,
                     CELL.cellNumber, CELL.stasIndex

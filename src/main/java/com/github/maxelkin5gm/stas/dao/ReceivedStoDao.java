@@ -13,8 +13,8 @@ import java.util.Optional;
 public class ReceivedStoDao {
     JdbcTemplate jdbcTemplate;
 
-    public Optional<ReceivedStoEntity> find(String receivedNameSto, String receivedNameDetail,
-                                            String receivedOperationNumber, String personnelNumber) {
+    public Optional<ReceivedStoEntity> findBy(String receivedNameSto, String receivedNameDetail,
+                                              String receivedOperationNumber, String personnelNumber) {
         return jdbcTemplate.query("""
                 SELECT RECEIVED_STO.id, amount, operationDate, cell_id, worker_id, receivedNameSto, receivedNameDetail,
                        receivedOperationNumber
@@ -38,14 +38,14 @@ public class ReceivedStoDao {
                 receivedSto.getWorker_id());
     }
 
-    public int updateReceivedById(int receivedStoId, int received) {
+    public int updateReceivedBy(int receivedStoId, int received) {
         return jdbcTemplate.update("""
                 UPDATE RECEIVED_STO SET amount = ?
                 WHERE RECEIVED_STO.id = ?;
                 """, received, receivedStoId);
     }
 
-    public int deleteById(int receivedStoId) {
+    public int deleteBy(int receivedStoId) {
         return jdbcTemplate.update("""
                 DELETE FROM RECEIVED_STO WHERE RECEIVED_STO.id = ?;
                 """, receivedStoId);

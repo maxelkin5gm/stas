@@ -34,7 +34,7 @@ export class CartService {
     }
 
     static async findAllMatchStoByCellAndReceivedSto(stasIndex: number, selectedCell: SelectedCell, worker: Worker) {
-        const data = await axios.get("/api/cart/findAllMatchStoByCellAndReceivedSto", {
+        const data = await axios.get("/api/cart/findAllMatchStoBy", {
             params: {
                 stasIndex: stasIndex + 1,
                 side: selectedCell.side,
