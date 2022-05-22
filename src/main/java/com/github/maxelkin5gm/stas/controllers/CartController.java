@@ -1,5 +1,6 @@
 package com.github.maxelkin5gm.stas.controllers;
 
+import com.github.maxelkin5gm.stas.dao.CartDao;
 import com.github.maxelkin5gm.stas.dto.CartGiveQuery;
 import com.github.maxelkin5gm.stas.services.CartService;
 import lombok.AllArgsConstructor;
@@ -14,6 +15,7 @@ import java.util.Map;
 public class CartController {
 
     CartService cartService;
+    CartDao cartDao;
 
     @PostMapping("/give")
     public void give(@RequestParam int stasIndex,
@@ -41,6 +43,6 @@ public class CartController {
                                                        @RequestParam String side,
                                                        @RequestParam int cellNumber,
                                                        @RequestParam String personnelNumber) {
-        return cartService.findAllMatchStoBy(stasIndex, side, cellNumber, personnelNumber);
+        return cartDao.findAllMatchStoBy(stasIndex, side, cellNumber, personnelNumber);
     }
 }

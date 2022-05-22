@@ -72,5 +72,11 @@ public class AdminService {
         stoDao.deleteBy(nameSto);
     }
 
+    @Transactional
+    public void updateReceivedSto(String receivedNameSto, String receivedNameDetail,
+                                  String receivedOperationNumber, String personnelNumber) {
+
+    }
+
 
 }
