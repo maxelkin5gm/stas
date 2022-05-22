@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useTypeDispatch} from "../../hooks/useTypeDispatch";
 import {UtilsStore} from "../../store/UtilsStore";
 import BaseTable from "./BaseTable/BaseTable";
@@ -24,7 +24,7 @@ const AdminReceivedTable = ({worker}: AdminReceivedTableProps) => {
     })
     const personnelNumber = worker.personnelNumber;
 
-    useEffect(() => {
+    const fillTable = useCallback(() => {
         if (!personnelNumber) return
 
         UtilsStore.setLoader(dispatch, true)
@@ -35,8 +35,12 @@ const AdminReceivedTable = ({worker}: AdminReceivedTableProps) => {
             }))
             .catch((e: Error) => UtilsStore.showError(dispatch, e.message))
             .finally(() => UtilsStore.setLoader(dispatch, false))
-
     }, [personnelNumber, dispatch])
+
+
+    useEffect(() => {
+        fillTable()
+    }, [fillTable])
 
     function onDoubleClickHandler(row: any) {
         setChangeReceivedModalState({row, visible: true})
@@ -49,6 +53,7 @@ const AdminReceivedTable = ({worker}: AdminReceivedTableProps) => {
             {changeReceivedModalState.visible
                 ? <ChangeReceivedModal modalState={changeReceivedModalState}
                                        worker={worker}
+                                       fillTable={fillTable}
                                        onClose={() => setChangeReceivedModalState({
                                            ...changeReceivedModalState,
                                            visible: false

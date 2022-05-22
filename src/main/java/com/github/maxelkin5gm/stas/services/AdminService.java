@@ -1,9 +1,6 @@
 package com.github.maxelkin5gm.stas.services;
 
-import com.github.maxelkin5gm.stas.dao.DetailDao;
-import com.github.maxelkin5gm.stas.dao.StoCellDao;
-import com.github.maxelkin5gm.stas.dao.StoDao;
-import com.github.maxelkin5gm.stas.dao.StoDetailDao;
+import com.github.maxelkin5gm.stas.dao.*;
 import com.github.maxelkin5gm.stas.models.DetailEntity;
 import com.github.maxelkin5gm.stas.models.StoEntity;
 import lombok.AllArgsConstructor;
@@ -19,7 +16,9 @@ public class AdminService {
     DetailDao detailDao;
     StoDetailDao stoDetailDao;
     StoCellDao stoCellDao;
+    ReceivedStoDao receivedStoDao;
 
+    // Sto and Detail START //
     @Transactional
     public void addStoAndDetail(String nameSto, String nameDetail, String operationNumber) {
         var stoEntity = stoDao.findBy(nameSto).orElse(null);
@@ -71,12 +70,28 @@ public class AdminService {
 
         stoDao.deleteBy(nameSto);
     }
+    // Sto and Detail END //
+
+
+    // Received Sto START //
+    @Transactional
+    public void updateAmountReceivedSto(String receivedNameSto, String receivedNameDetail,
+                                        String receivedOperationNumber, String personnelNumber, int amount) {
+        var receivedStoEntity = receivedStoDao.findBy(receivedNameSto, receivedNameDetail,
+                receivedOperationNumber, personnelNumber).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.BAD_REQUEST, "Такой позиции выданного СТО не найдено"));
+        receivedStoDao.updateAmountBy(receivedStoEntity.getId(), amount);
+    }
 
     @Transactional
-    public void updateReceivedSto(String receivedNameSto, String receivedNameDetail,
-                                  String receivedOperationNumber, String personnelNumber) {
-
+    public void deleteReceivedSto(String receivedNameSto, String receivedNameDetail, String receivedOperationNumber,
+                                  String personnelNumber) {
+        var receivedStoEntity = receivedStoDao.findBy(receivedNameSto, receivedNameDetail,
+                receivedOperationNumber, personnelNumber).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.BAD_REQUEST, "Такой позиции выданного СТО не найдено"));
+        receivedStoDao.deleteBy(receivedStoEntity.getId());
     }
+    // Received Sto END //
 
 
 }

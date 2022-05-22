@@ -38,11 +38,11 @@ public class ReceivedStoDao {
                 receivedSto.getWorker_id());
     }
 
-    public int updateReceivedBy(int receivedStoId, int received) {
+    public int updateAmountBy(int receivedStoId, int amount) {
         return jdbcTemplate.update("""
                 UPDATE RECEIVED_STO SET amount = ?
                 WHERE RECEIVED_STO.id = ?;
-                """, received, receivedStoId);
+                """, amount, receivedStoId);
     }
 
     public int deleteBy(int receivedStoId) {

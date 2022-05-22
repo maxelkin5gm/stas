@@ -51,7 +51,7 @@ const ReceivedPanel = () => {
                 <InputAutocomplete valueState={personnelNumberInputState} autocompleteType={"personnelNumber"}
                                    placeholder={"Табельный номер"}/>
                 <Button style={{margin: "0 10px"}} type="primary" size="middle" onClick={showHandler}>Показать</Button>
-                <Button type="primary" size="middle" onClick={createWorkerHandler}>Добавить сотрудника</Button>
+                <Button disabled type="primary" size="middle" onClick={createWorkerHandler}>Добавить сотрудника</Button>
 
             </div>
 
@@ -60,9 +60,9 @@ const ReceivedPanel = () => {
                 <span style={{fontSize: 16}}>
                     Выбран: <span style={{fontWeight: "bold"}}>{worker.nameWorker}({worker.personnelNumber})</span>
                 </span>
-                    <Button style={{margin: "0 10px"}} type="primary" size="middle"
+                    <Button disabled style={{margin: "0 10px"}} type="primary" size="middle"
                             onClick={deleteWorkerHandler}>Изменить</Button>
-                    <Button type="primary" size="middle" onClick={changeWorkerHandler}>Удалить</Button>
+                    <Button disabled type="primary" size="middle" onClick={changeWorkerHandler}>Удалить</Button>
                 </div>
                 : null}
 

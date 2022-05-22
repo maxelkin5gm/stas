@@ -44,12 +44,23 @@ public class AdminController {
 
 
     // Received Sto START //
-//    @PostMapping("/deleteReceivedSto")
-//    public void deleteReceivedSto(@RequestParam String nameSto) {
-//        adminService.deleteSto(nameSto);
-//    }
+    @PostMapping("/updateAmountReceivedSto")
+    public void updateAmountReceivedSto(@RequestParam String receivedNameSto,
+                                        @RequestParam String receivedNameDetail,
+                                        @RequestParam String receivedOperationNumber,
+                                        @RequestParam String personnelNumber,
+                                        @RequestParam int amount) {
+        adminService.updateAmountReceivedSto(receivedNameSto, receivedNameDetail, receivedOperationNumber,
+                personnelNumber, amount);
+    }
 
-
+    @PostMapping("/deleteReceivedSto")
+    public void deleteReceivedSto(@RequestParam String receivedNameSto,
+                                  @RequestParam String receivedNameDetail,
+                                  @RequestParam String receivedOperationNumber,
+                                  @RequestParam String personnelNumber) {
+        adminService.deleteReceivedSto(receivedNameSto, receivedNameDetail, receivedOperationNumber, personnelNumber);
+    }
     // Received Sto END //
 
 

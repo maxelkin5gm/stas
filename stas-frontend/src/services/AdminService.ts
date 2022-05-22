@@ -38,4 +38,26 @@ export class AdminService {
             }
         })
     }
+
+    static updateAmountReceivedSto(row: any, personnelNumber: string, amount: number) {
+        return axios.post("/api/admin/updateAmountReceivedSto", null, {
+            params: {
+                receivedNameSto: row.receivedNameSto,
+                receivedNameDetail: row.receivedNameDetail,
+                receivedOperationNumber: row.receivedOperationNumber,
+                personnelNumber,
+                amount
+            }
+        })
+    }
+    static deleteReceivedSto(row: any, personnelNumber: string) {
+        return axios.post("/api/admin/deleteReceivedSto", null, {
+            params: {
+                receivedNameSto: row.receivedNameSto,
+                receivedNameDetail: row.receivedNameDetail,
+                receivedOperationNumber: row.receivedOperationNumber,
+                personnelNumber
+            }
+        })
+    }
 }

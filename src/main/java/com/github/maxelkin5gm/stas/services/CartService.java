@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -42,7 +41,7 @@ public class CartService {
                     cartItem.getNameDetail(), cartItem.getOperationNumber(), personnelNumber);
             if (receivedStoEntity.isPresent()) {
                 var newAmount = receivedStoEntity.get().getAmount() + cartItem.getAmount();
-                receivedStoDao.updateReceivedBy(receivedStoEntity.get().getId(), newAmount);
+                receivedStoDao.updateAmountBy(receivedStoEntity.get().getId(), newAmount);
             } else {
                 receivedStoDao.insert(new ReceivedStoEntity(null, cartItem.getAmount(), 228,
                         cellEntity.getId(), workerEntity.getId(), cartItem.getNameSto(), cartItem.getNameDetail(),
@@ -71,6 +70,6 @@ public class CartService {
         if (newAmount == 0)
             receivedStoDao.deleteBy(receivedStoEntity.getId());
         else
-            receivedStoDao.updateReceivedBy(receivedStoEntity.getId(), newAmount);
+            receivedStoDao.updateAmountBy(receivedStoEntity.getId(), newAmount);
     }
 }
