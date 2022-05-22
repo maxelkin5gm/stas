@@ -29,6 +29,7 @@ export const receivedStoColumns = [
         title: 'Дата',
         dataIndex: 'operationDate',
         key: 'operationDate',
+        ellipsis: true,
     },
     {
         title: 'Сторона',

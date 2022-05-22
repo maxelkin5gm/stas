@@ -61,7 +61,7 @@ CREATE TABLE RECEIVED_STO
 (
     id                      INTEGER PRIMARY KEY AUTOINCREMENT,
     amount                  TEXT NOT NULL,
-    operationDate           INTEGER NOT NULL DEFAULT '',
+    operationDate           TEXT NOT NULL default 'Отсутсвует',
     receivedNameSto         TEXT NOT NULL,
     receivedNameDetail      TEXT NOT NULL DEFAULT '',
     receivedOperationNumber TEXT NOT NULL DEFAULT '',

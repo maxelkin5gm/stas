@@ -9,6 +9,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,13 +39,14 @@ public class CartService {
             stoCellDao.update(newRemainder, stoEntity.getId(), cellEntity.getId());
 
 
-            Optional<ReceivedStoEntity> receivedStoEntity = receivedStoDao.findBy(cartItem.getNameSto(),
+            var receivedStoEntity = receivedStoDao.findBy(cartItem.getNameSto(),
                     cartItem.getNameDetail(), cartItem.getOperationNumber(), personnelNumber);
             if (receivedStoEntity.isPresent()) {
                 var newAmount = receivedStoEntity.get().getAmount() + cartItem.getAmount();
                 receivedStoDao.updateAmountBy(receivedStoEntity.get().getId(), newAmount);
             } else {
-                receivedStoDao.insert(new ReceivedStoEntity(null, cartItem.getAmount(), 228,
+                var dateStr = new SimpleDateFormat("dd.MM.yyyy").format(new Date());
+                receivedStoDao.insert(new ReceivedStoEntity(null, cartItem.getAmount(), dateStr,
                         cellEntity.getId(), workerEntity.getId(), cartItem.getNameSto(), cartItem.getNameDetail(),
                         cartItem.getOperationNumber()));
             }

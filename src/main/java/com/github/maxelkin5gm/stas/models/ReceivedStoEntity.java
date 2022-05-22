@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class ReceivedStoEntity {
     Integer id;
     int amount;
-    int operationDate;
+    String operationDate;
     int cell_id;
     int worker_id;
     String receivedNameSto;
