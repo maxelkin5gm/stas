@@ -38,7 +38,7 @@ const DetailPanel = ({stasIndex}: DetailPanelProps) => {
 
             <div>
                 <InputAutocomplete required valueState={numberInputState} placeholder={"Номер операции"}
-                                   autocompleteType={"personnelNumber"}/>
+                                   autocompleteType={"operationNumber"}/>
             </div>
 
             <div style={{textAlign: "center"}}>

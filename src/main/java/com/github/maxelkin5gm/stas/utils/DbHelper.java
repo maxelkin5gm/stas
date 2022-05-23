@@ -2,6 +2,8 @@ package com.github.maxelkin5gm.stas.utils;
 
 import javax.swing.*;
 import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 public class DbHelper {
 
@@ -18,8 +20,9 @@ public class DbHelper {
             return;
         }
 
-        JOptionPane.showMessageDialog(new JFrame(),
-                "Файл базы данных не обнаружен", "Ошибка", JOptionPane.ERROR_MESSAGE);
+        var message = "Файл базы данных не обнаружен в директориях:\n" + new File(RELATIVE_PATH_TO_DATABASE).toURI() +
+                "\n" + new File(pathToDatabase).toURI();
+        JOptionPane.showMessageDialog(new JFrame(), message, "Ошибка", JOptionPane.ERROR_MESSAGE);
         System.exit(0);
     }
 
