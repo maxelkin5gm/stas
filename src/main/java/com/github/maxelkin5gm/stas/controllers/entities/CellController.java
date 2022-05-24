@@ -1,9 +1,8 @@
-package com.github.maxelkin5gm.stas.controllers;
+package com.github.maxelkin5gm.stas.controllers.entities;
 
 import com.github.maxelkin5gm.stas.dao.CellDao;
 
 import lombok.AllArgsConstructor;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

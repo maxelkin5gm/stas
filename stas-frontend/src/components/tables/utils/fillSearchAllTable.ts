@@ -16,9 +16,10 @@ export async function fillSearchAllTable({type, query}: SearchAllTableQuery, set
             return;
 
         case SearchAllTableTypeEnum.BY_WORKER:
+            const data = await TableService.findAllByWorker(query.personnelNumber);
             setTableState({
                 columns: receivedStoColumns,
-                data: await TableService.findAllByWorker(query.personnelNumber),
+                data: TableService.validateAndPrepareArray(data),
             })
             return;
 

@@ -6,9 +6,10 @@ import {receivedStoColumns} from "./columns/searchAll/receivedStoColumns";
 import {TableService} from "../../services/TableService";
 import {Worker} from "../../store/stasReducer/types/worker";
 import ChangeReceivedModal from "../modals/admin/ChangeReceivedModal";
+import {addKeyPropertyForArray} from "../../services/utils/addKeyPropertyForArray";
 
 interface AdminReceivedTableProps {
-    worker: Worker
+    worker: Worker | null
 }
 
 const AdminReceivedTable = ({worker}: AdminReceivedTableProps) => {
@@ -22,20 +23,19 @@ const AdminReceivedTable = ({worker}: AdminReceivedTableProps) => {
         visible: false,
         row: {} as any
     })
-    const personnelNumber = worker.personnelNumber;
 
     const fillTable = useCallback(() => {
-        if (!personnelNumber) return
+        if (!worker) return
 
         UtilsStore.setLoader(dispatch, true)
-        TableService.findAllByWorker(personnelNumber)
+        TableService.findAllByWorker(worker.personnelNumber)
             .then(data => setTableState({
                 columns: receivedStoColumns,
-                data
+                data: addKeyPropertyForArray(data)
             }))
-            .catch((e: Error) => UtilsStore.showError(dispatch, e.message))
+            .catch(() => UtilsStore.showError(dispatch))
             .finally(() => UtilsStore.setLoader(dispatch, false))
-    }, [personnelNumber, dispatch])
+    }, [worker, dispatch])
 
 
     useEffect(() => {
@@ -50,7 +50,7 @@ const AdminReceivedTable = ({worker}: AdminReceivedTableProps) => {
         <>
             <BaseTable onDoubleClickRow={onDoubleClickHandler} tableState={tableState}/>
 
-            {changeReceivedModalState.visible
+            {changeReceivedModalState.visible && worker
                 ? <ChangeReceivedModal modalState={changeReceivedModalState}
                                        worker={worker}
                                        fillTable={fillTable}

@@ -15,10 +15,7 @@ public class AdminService {
     StoDao stoDao;
     DetailDao detailDao;
     StoDetailDao stoDetailDao;
-    StoCellDao stoCellDao;
-    ReceivedStoDao receivedStoDao;
 
-    // Sto and Detail START //
     @Transactional
     public void addStoAndDetail(String nameSto, String nameDetail, String operationNumber) {
         var stoEntity = stoDao.findBy(nameSto).orElse(null);
@@ -40,58 +37,17 @@ public class AdminService {
     }
 
     @Transactional
-    public void deleteRelationshipByStoAndDetail(String nameSto, String nameDetail, String operationNumber) {
-        var stoEntity = stoDao.findBy(nameSto).orElse(null);
-        if (stoEntity == null) {
-            var id = stoDao.insert(nameSto);
-            stoEntity = new StoEntity(id, nameSto);
-        }
+    public void deleteRelationshipStoAndDetail(String nameSto, String nameDetail, String operationNumber) {
+        var stoEntity = stoDao.findBy(nameSto)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Такого СТО не существует"));
 
-        var detailEntity = detailDao.findBy(nameDetail, operationNumber).orElse(null);
-        if (detailEntity == null) {
-            var id = detailDao.insert(nameDetail, operationNumber);
-            detailEntity = new DetailEntity(id, nameDetail, operationNumber);
-        }
+        var detailEntity = detailDao.findBy(nameDetail, operationNumber)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "Такой детели и номера операции не существует"));
 
         var stoDetail = stoDetailDao.countBy(stoEntity.getId(), detailEntity.getId());
         if (stoDetail != 0) {
             stoDetailDao.deleteBy(stoEntity.getId(), detailEntity.getId());
         } else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Такой связи не существует");
     }
-
-    @Transactional
-    public void deleteSto(String nameSto) {
-        stoDao.findBy(nameSto)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Такого СТО не найдено"));
-
-        if (stoCellDao.countBy(nameSto) > 0)
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "СТО нельзя удалить, пока оно находится в ячейке. Удалите сначала из ячейки.");
-
-        stoDao.deleteBy(nameSto);
-    }
-    // Sto and Detail END //
-
-
-    // Received Sto START //
-    @Transactional
-    public void updateAmountReceivedSto(String receivedNameSto, String receivedNameDetail,
-                                        String receivedOperationNumber, String personnelNumber, int amount) {
-        var receivedStoEntity = receivedStoDao.findBy(receivedNameSto, receivedNameDetail,
-                receivedOperationNumber, personnelNumber).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.BAD_REQUEST, "Такой позиции выданного СТО не найдено"));
-        receivedStoDao.updateAmountBy(receivedStoEntity.getId(), amount);
-    }
-
-    @Transactional
-    public void deleteReceivedSto(String receivedNameSto, String receivedNameDetail, String receivedOperationNumber,
-                                  String personnelNumber) {
-        var receivedStoEntity = receivedStoDao.findBy(receivedNameSto, receivedNameDetail,
-                receivedOperationNumber, personnelNumber).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.BAD_REQUEST, "Такой позиции выданного СТО не найдено"));
-        receivedStoDao.deleteBy(receivedStoEntity.getId());
-    }
-    // Received Sto END //
-
-
 }

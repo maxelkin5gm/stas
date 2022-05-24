@@ -6,12 +6,21 @@ import {Worker} from "../../../store/stasReducer/types/worker";
 import {WorkerService} from "../../../services/WorkerService";
 import {UtilsStore} from "../../../store/UtilsStore";
 import {useTypeDispatch} from "../../../hooks/useTypeDispatch";
+import CreateWorkerModal from "../../modals/admin/CreateWorkerModal";
+import {AdminService} from "../../../services/AdminService";
+import ChangeWorkerModal from "../../modals/admin/ChangeWorkerModal";
 
 const ReceivedPanel = () => {
     const dispatch = useTypeDispatch();
 
     const personnelNumberInputState = useState("")
-    const [worker, setWorker] = useState({} as Worker)
+    const [worker, setWorker] = useState(null as Worker | null)
+    const [createWorkerModalState, setCreateWorkerModalState] = useState({
+        visible: false,
+    })
+    const [changeWorkerModalState, setChangeWorkerModalState] = useState({
+        visible: false,
+    })
 
     async function showHandler() {
         try {
@@ -26,23 +35,27 @@ const ReceivedPanel = () => {
     }
 
     function deleteWorkerHandler() {
-        if (!worker.personnelNumber) {
+        if (!worker) {
             UtilsStore.showError(dispatch, "Сотрудник не выбран")
             return
         }
-        UtilsStore.showError(dispatch, "Данная функция недоступна")
+        AdminService.deleteWorker(worker.personnelNumber)
+            .then(() => {
+                setWorker(null)
+            })
+            .catch((e) => UtilsStore.showError(dispatch, e.response?.data?.message))
     }
 
     function changeWorkerHandler() {
-        if (!worker.personnelNumber) {
+        if (!worker) {
             UtilsStore.showError(dispatch, "Сотрудник не выбран")
             return
         }
-        UtilsStore.showError(dispatch, "Данная функция недоступна")
+        setChangeWorkerModalState({visible: true});
     }
 
     function createWorkerHandler() {
-        UtilsStore.showError(dispatch, "Данная функция недоступна")
+        setCreateWorkerModalState({visible: true});
     }
 
     return (
@@ -51,24 +64,33 @@ const ReceivedPanel = () => {
                 <InputAutocomplete valueState={personnelNumberInputState} autocompleteType={"personnelNumber"}
                                    placeholder={"Табельный номер"}/>
                 <Button style={{margin: "0 10px"}} type="primary" size="middle" onClick={showHandler}>Показать</Button>
-                <Button disabled type="primary" size="middle" onClick={createWorkerHandler}>Добавить сотрудника</Button>
+                <Button type="primary" size="middle" onClick={createWorkerHandler}>Добавить сотрудника</Button>
 
             </div>
 
-            {worker.personnelNumber && worker.nameWorker
+            {worker
                 ? <div style={{display: "flex", alignItems: "center", padding: 5}}>
                 <span style={{fontSize: 16}}>
-                    Выбран: <span style={{fontWeight: "bold"}}>{worker.nameWorker}({worker.personnelNumber})</span>
+                    Выбран: <span style={{fontWeight: "bold"}}>{worker.nameWorker} ({worker.personnelNumber})</span>
                 </span>
-                    <Button disabled style={{margin: "0 10px"}} type="primary" size="middle"
-                            onClick={deleteWorkerHandler}>Изменить</Button>
-                    <Button disabled type="primary" size="middle" onClick={changeWorkerHandler}>Удалить</Button>
+                    <Button style={{margin: "0 10px"}} type="primary" size="middle"
+                            onClick={changeWorkerHandler}>Изменить</Button>
+                    <Button type="primary" size="middle" onClick={deleteWorkerHandler}>Удалить</Button>
                 </div>
                 : null}
 
             <div style={{boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)", marginTop: 10}}>
                 <AdminReceivedTable worker={worker}/>
             </div>
+
+
+            {createWorkerModalState.visible
+                ? <CreateWorkerModal onClose={() => setCreateWorkerModalState({visible: false})}/>
+                : null}
+
+            {changeWorkerModalState.visible && worker
+                ? <ChangeWorkerModal onClose={() => setChangeWorkerModalState({visible: false})} worker={worker} setWorker={setWorker}/>
+                : null}
         </div>
     );
 };

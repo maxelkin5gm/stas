@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -20,6 +21,7 @@ public class CellDao {
                 new BeanPropertyRowMapper<>(CellEntity.class), stasIndex, side, cellNumber).stream().findAny();
     }
 
+    @Transactional
     public void updateNoteBy(int stasIndex, String side, int cellNumber, String note) {
         var cellEntity = findBy(stasIndex, side, cellNumber).orElseThrow();
         jdbcTemplate.update("UPDATE CELL SET note = ? WHERE CELL.id = ?;", note, cellEntity.getId());

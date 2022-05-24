@@ -13,11 +13,11 @@ public class IndexController {
 
     @GetMapping("/")
     public String indexHtmlReact() {
-
         var fileData = FileSystemHelper.readFile(indexPath);
 
         if (fileData == null)
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Не найден файл index.html");
+
         return fileData;
     }
 

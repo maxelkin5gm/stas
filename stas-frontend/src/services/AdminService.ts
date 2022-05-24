@@ -2,6 +2,7 @@ import axios from "axios";
 
 export class AdminService {
 
+    // Sto and Detail //
     static addStoAndDetail(nameSto: string, nameDetail: string, operationNumber: string) {
         return axios.post("/api/admin/addStoAndDetail", null, {
             params: {
@@ -12,8 +13,8 @@ export class AdminService {
         })
     }
 
-    static deleteRelationshipByStoAndDetail(nameSto: string, nameDetail: string, operationNumber: string) {
-        return axios.post("/api/admin/deleteRelationshipByStoAndDetail", null, {
+    static deleteRelationshipStoAndDetail(nameSto: string, nameDetail: string, operationNumber: string) {
+        return axios.post("/api/admin/deleteRelationshipStoAndDetail", null, {
             params: {
                 nameSto,
                 nameDetail,
@@ -23,7 +24,7 @@ export class AdminService {
     }
 
     static deleteSto(nameSto: string) {
-        return axios.post("/api/admin/deleteSto", null, {
+        return axios.post("/api/sto/delete", null, {
             params: {
                 nameSto
             }
@@ -31,7 +32,7 @@ export class AdminService {
     }
 
     static deleteDetail(nameDetail: string, operationNumber: string) {
-        return axios.post("/api/admin/deleteDetail", null, {
+        return axios.post("/api/detail/deleteBy", null, {
             params: {
                 nameDetail,
                 operationNumber
@@ -39,8 +40,9 @@ export class AdminService {
         })
     }
 
+    // Received STO //
     static updateAmountReceivedSto(row: any, personnelNumber: string, amount: number) {
-        return axios.post("/api/admin/updateAmountReceivedSto", null, {
+        return axios.post("/api/receivedSto/updateAmount", null, {
             params: {
                 receivedNameSto: row.receivedNameSto,
                 receivedNameDetail: row.receivedNameDetail,
@@ -50,13 +52,41 @@ export class AdminService {
             }
         })
     }
+
     static deleteReceivedSto(row: any, personnelNumber: string) {
-        return axios.post("/api/admin/deleteReceivedSto", null, {
+        return axios.post("/api/receivedSto/delete", null, {
             params: {
                 receivedNameSto: row.receivedNameSto,
                 receivedNameDetail: row.receivedNameDetail,
                 receivedOperationNumber: row.receivedOperationNumber,
                 personnelNumber
+            }
+        })
+    }
+
+    static createWorker(nameWorker: string, personnelNumber: string) {
+        return axios.post("/api/worker/create", null, {
+            params: {
+                nameWorker,
+                personnelNumber
+            }
+        })
+    }
+
+    static deleteWorker(personnelNumber: string) {
+        return axios.post("/api/worker/delete", null, {
+            params: {
+                personnelNumber
+            }
+        })
+    }
+
+    static updateWorker(personnelNumber: string, newNameWorker: string, newPersonnelNumber: string) {
+        return axios.post("/api/worker/update", null, {
+            params: {
+                personnelNumber,
+                newNameWorker,
+                newPersonnelNumber
             }
         })
     }

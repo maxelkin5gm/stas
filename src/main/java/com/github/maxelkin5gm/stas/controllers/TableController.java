@@ -9,7 +9,7 @@ import java.util.Map;
 import com.github.maxelkin5gm.stas.dao.TableDao;
 
 @RestController
-@RequestMapping("/api/table")
+@RequestMapping("/api/table/")
 @AllArgsConstructor
 public class TableController {
     TableDao tableDao;

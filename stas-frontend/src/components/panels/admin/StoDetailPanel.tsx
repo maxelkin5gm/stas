@@ -31,7 +31,7 @@ const StoDetailPanel = () => {
             return
         }
         UtilsStore.setLoader(dispatch, true)
-        AdminService.deleteRelationshipByStoAndDetail(nameStoState[0], nameDetailState[0], operationNumberState[0])
+        AdminService.deleteRelationshipStoAndDetail(nameStoState[0], nameDetailState[0], operationNumberState[0])
             .catch((e) => UtilsStore.showError(dispatch, e.response?.data?.message))
             .finally(() => UtilsStore.setLoader(dispatch, false))
     }

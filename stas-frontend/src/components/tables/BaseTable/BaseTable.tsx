@@ -48,6 +48,7 @@ const BaseTable = ({tableState, onClickRow, onDoubleClickRow, isLoading}: BaseTa
                 tableLayout={"auto"}
                 pagination={false}
                 size={"small"}
+                showSorterTooltip={false}
 
                 dataSource={tableState.data}
                 columns={tableState.columns}

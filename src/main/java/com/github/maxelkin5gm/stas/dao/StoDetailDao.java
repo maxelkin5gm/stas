@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 public class StoDetailDao {
     JdbcTemplate jdbcTemplate;
 
-
     public void insert(int stoId, int detailId) {
         jdbcTemplate.update("INSERT INTO STO_DETAIL (sto_id, detail_id) VALUES (?,?);", stoId, detailId);
     }

@@ -15,10 +15,9 @@ export class TableService {
     }
 
     static async findAllByWorker(personnelNumber: string) {
-        const data = await axios.get<any[]>("/api/table/findAllByWorker", {
+        return await axios.get<any[]>("/api/table/findAllByWorker", {
             params: {personnelNumber}
         }).then(res => res.data);
-        return this.validateAndPrepareArray(data)
     } // Worker END //
 
 

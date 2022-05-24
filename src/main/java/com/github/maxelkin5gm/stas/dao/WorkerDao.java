@@ -5,8 +5,10 @@ import com.github.maxelkin5gm.stas.models.WorkerEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
 import java.util.*;
 
 @Repository
@@ -26,14 +28,36 @@ public class WorkerDao {
     }
 
     public List<String> findAllByNameWorkerLike(String partNameWorker) {
-        return jdbcTemplate.queryForList("""
-                SELECT DISTINCT nameWorker FROM WORKER WHERE nameWorker LIKE ? LIMIT 10;
-                """, String.class, '%' + partNameWorker + '%');
+        return jdbcTemplate.queryForList(
+                "SELECT DISTINCT nameWorker FROM WORKER WHERE nameWorker LIKE ? LIMIT 10;",
+                String.class, '%' + partNameWorker + '%');
     }
 
     public List<String> findAllByPersonnelNumberLike(String partPersonnelNumber) {
-        return jdbcTemplate.queryForList("""
-                SELECT personnelNumber FROM WORKER WHERE personnelNumber LIKE ? LIMIT 10;
-                """, String.class, '%' + partPersonnelNumber + '%');
+        return jdbcTemplate.queryForList(
+                "SELECT personnelNumber FROM WORKER WHERE personnelNumber LIKE ? LIMIT 10;",
+                String.class, '%' + partPersonnelNumber + '%');
     }
+
+    public int insert(String nameWorker, String personnelNumber) {
+        var keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(
+                    "INSERT INTO WORKER (nameWorker, personnelNumber) VALUES (?, ?);");
+            ps.setString(1, nameWorker);
+            ps.setString(2, personnelNumber);
+            return ps;
+        }, keyHolder);
+        return Objects.requireNonNull(keyHolder.getKey()).intValue();
+    }
+
+    public void deleteBy(String personnelNumber) {
+        jdbcTemplate.update("DELETE FROM WORKER WHERE personnelNumber = ?;", personnelNumber);
+    }
+
+    public void updateBy(String personnelNumber, String newNameWorker, String newPersonnelNumber) {
+        jdbcTemplate.update("UPDATE WORKER SET nameWorker = ?, personnelNumber = ? WHERE personnelNumber = ?;",
+                newNameWorker, newPersonnelNumber, personnelNumber);
+    }
+
 }
