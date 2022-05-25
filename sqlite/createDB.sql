@@ -37,7 +37,7 @@ CREATE TABLE CELL
     stasIndex  INTEGER NOT NULL,
     side       TEXT    NOT NULL,
     cellNumber INTEGER NOT NULL,
-    status     TEXT    NOT NULL,
+    status     TEXT    NOT NULL DEFAULT 'УСТАНОВЛЕНА',
     note       TEXT DEFAULT '',
     UNIQUE (stasIndex, side, cellNumber)
 );

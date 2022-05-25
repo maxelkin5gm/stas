@@ -101,7 +101,7 @@ public class TableDao {
     // Cell START //
     public List<Map<String, Object>> findAllByCellAndStas(String side, int cellNumber, int stasIndex) {
         String sql = """
-                SELECT nameSto, remainder, side, cellNumber, status, note
+                SELECT nameSto, remainder, side, cellNumber, stasIndex, status, note
                 FROM STO, CELL, STO_CELL
                 WHERE STO_CELL.sto_id = STO.id AND STO_CELL.cell_id = CELL.id
                     AND side = ? AND cellNumber = ? AND stasIndex = ?;""";

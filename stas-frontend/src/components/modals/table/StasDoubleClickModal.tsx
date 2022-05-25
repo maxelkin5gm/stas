@@ -95,7 +95,7 @@ const StasDoubleClickModal = ({modalState, onClose, stasIndex}: DoubleClickRowMo
                                 >{option.nameDetail + " " + option.operationNumber}</option>
                             )}
                         </select>
-                        <InputNumber valueState={[countStoInputState, setCountStoInputState]}/>
+                        <InputNumber min={1} valueState={[countStoInputState, setCountStoInputState]}/>
                         <Button type="primary" size="large" onClick={addToCartHandler}>Добавить в корзину</Button>
                     </div>
                     : null}

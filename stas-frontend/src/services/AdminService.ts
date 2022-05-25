@@ -1,4 +1,6 @@
 import axios from "axios";
+import {Cell} from "../components/panels/admin/CellPanel";
+import {StatusCell} from "../store/stasReducer/types/selectedCell";
 
 export class AdminService {
 
@@ -87,6 +89,44 @@ export class AdminService {
                 personnelNumber,
                 newNameWorker,
                 newPersonnelNumber
+            }
+        })
+    }
+
+    // Change Cell //
+    static changeCellAndRemainder(row: any, remainder: number, status: StatusCell, note: string) {
+        return axios.post("/api/admin/changeCellAndRemainder", null, {
+            params: {
+                stasIndex: row.stasIndex,
+                side: row.side,
+                cellNumber: row.cellNumber,
+                nameSto: row.nameSto,
+                remainder,
+                status,
+                note
+            }
+        })
+    }
+
+    static deleteStoFromCell(row: any) {
+        return axios.post("/api/admin/deleteStoFromCell", null, {
+            params: {
+                stasIndex: row.stasIndex,
+                side: row.side,
+                cellNumber: row.cellNumber,
+                nameSto: row.nameSto
+            }
+        })
+    }
+
+    static addStoInCell(cell: Cell, nameSto: string, remainder: number) {
+        return axios.post("/api/admin/addStoInCell", null, {
+            params: {
+                stasIndex: cell.stasIndex + 1,
+                side: cell.side,
+                cellNumber: cell.cellNumber,
+                nameSto,
+                remainder
             }
         })
     }

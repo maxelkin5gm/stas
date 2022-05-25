@@ -56,7 +56,7 @@ const TakeCartModal = ({onClose, stasIndex}: TakeCartModalProps) => {
                 <TakeCartTable selectedRowState={selectedRowState} stasIndex={stasIndex}/>
                 <div>
                     <span style={{fontSize: 18}}>Выбрано: <span style={{border: "1px solid black", padding: 5, fontWeight: "bold"}}>{selectedRowState[0].receivedNameSto}</span></span>
-                    <InputNumber style={{margin: 10}} valueState={inputAmountState}/>
+                    <InputNumber min={1} style={{margin: 10}} valueState={inputAmountState}/>
                     <Button type="primary" size="large" onClick={takeHandler}>Положить</Button>
                 </div>
             </div>

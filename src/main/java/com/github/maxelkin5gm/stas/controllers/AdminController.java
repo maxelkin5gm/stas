@@ -28,5 +28,33 @@ public class AdminController {
         adminService.deleteRelationshipStoAndDetail(nameSto, nameDetail, operationNumber);
     }
 
+    @PostMapping("/changeCellAndRemainder")
+    public void changeCellAndRemainder(@RequestParam int stasIndex,
+                                       @RequestParam String side,
+                                       @RequestParam int cellNumber,
+                                       @RequestParam String nameSto,
+                                       @RequestParam int remainder,
+                                       @RequestParam String status,
+                                       @RequestParam String note) {
+        adminService.changeCellAndRemainder(stasIndex, side, cellNumber, nameSto, remainder, status, note);
+    }
+
+    @PostMapping("/deleteStoFromCell")
+    public void deleteStoFromCell(@RequestParam int stasIndex,
+                                  @RequestParam String side,
+                                  @RequestParam int cellNumber,
+                                  @RequestParam String nameSto) {
+        adminService.deleteStoFromCell(stasIndex, side, cellNumber, nameSto);
+    }
+
+    @PostMapping("/addStoInCell")
+    public void addStoInCell(@RequestParam int stasIndex,
+                             @RequestParam String side,
+                             @RequestParam int cellNumber,
+                             @RequestParam String nameSto,
+                             @RequestParam int remainder) {
+        adminService.addStoInCell(stasIndex, side, cellNumber, nameSto, remainder);
+    }
+
 
 }

@@ -7,13 +7,14 @@ import {useTypeDispatch} from "../../../hooks/useTypeDispatch";
 import InputAutocomplete from "../../Input/InputAutocomplete";
 import InputNumber from "../../Input/InputNumber";
 import {UtilsStore} from "../../../store/UtilsStore";
+import {AdminService} from "../../../services/AdminService";
 
 export type Cell = { stasIndex: number, side: string, cellNumber: number }
 
 const CellPanel = () => {
     const dispatch = useTypeDispatch();
 
-    const [cellState, setCellState] = useState(null as Cell | null)
+    const [cell, setCell] = useState(null as Cell | null)
     const [sideRadioValue, setSideRadioValue] = useState("ПРАВО");
     const [stasRadioValue, setStasRadioValue] = useState("0");
     const cellNumberInputState = useState("");
@@ -31,11 +32,27 @@ const CellPanel = () => {
             return
         }
 
-        setCellState({
+        setCell({
             stasIndex: Number(stasRadioValue),
             side: sideRadioValue,
             cellNumber: Number(cellNumberInputState[0])
         })
+    }
+
+    function addHandler() {
+        if (!nameStoInputState[0] || remainderInputState[0] < 0) {
+            UtilsStore.showError(dispatch, "Введите корректные данные");
+            return
+        }
+        if (!cell) {
+            UtilsStore.showError(dispatch, "Ячейка не выбрана");
+            return
+        }
+        UtilsStore.setLoader(dispatch, true)
+        AdminService.addStoInCell(cell, nameStoInputState[0], remainderInputState[0])
+            .then(() => setCell({...cell}))
+            .catch((e) => UtilsStore.showError(dispatch, e.response?.data?.message))
+            .finally(() => UtilsStore.setLoader(dispatch, false))
     }
 
     return (
@@ -67,13 +84,13 @@ const CellPanel = () => {
                 </div>
             </div>
 
-            {cellState
+            {cell
                 ? <div style={{display: "flex", margin: "10px 5px", alignItems: "center"}}>
                     <div style={{marginRight: 10}}>
 
                         <span style={{border: "1px solid black", padding: 5, fontSize: 16}}>
                             Выбрано: <span style={{fontWeight: "bold"}}>
-                            СТАС: {cellState.stasIndex + 1} | Ячейка: {cellState.cellNumber} | Сторона: {cellState.side}
+                            СТАС: {cell.stasIndex + 1} | Ячейка: {cell.cellNumber} | Сторона: {cell.side}
                         </span>
                         </span>
                     </div>
@@ -82,13 +99,13 @@ const CellPanel = () => {
                                            placeholder="Обозначение СТО"/>
                         <InputNumber style={{fontSize: 15, width: 90, margin: "0 10px"}}
                                      valueState={remainderInputState}/>
-                        <Button type="primary" size="middle">Добавить в ячейку</Button>
+                        <Button type="primary" size="middle" onClick={addHandler}>Добавить в ячейку</Button>
                     </div>
                 </div>
                 : null}
 
             <div style={{boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)", marginTop: 20}}>
-                <AdminCellTable cell={cellState}/>
+                <AdminCellTable cell={cell}/>
             </div>
 
         </div>
