@@ -2,7 +2,7 @@ package com.github.maxelkin5gm.stas.services;
 
 import com.github.maxelkin5gm.stas.dao.*;
 import com.github.maxelkin5gm.stas.dto.CartGiveQuery;
-import com.github.maxelkin5gm.stas.models.ReceivedStoEntity;
+import com.github.maxelkin5gm.stas.entities.ReceivedStoEntity;
 
 import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor

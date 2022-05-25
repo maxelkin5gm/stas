@@ -1,4 +1,4 @@
-package com.github.maxelkin5gm.stas.models;
+package com.github.maxelkin5gm.stas.entities;
 
 import lombok.Data;
 

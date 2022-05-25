@@ -3,7 +3,7 @@ import {useTypeSelector} from "../hooks/useTypeSelector";
 import cl from "./style/AdminTab.module.scss"
 import StoDetailPanel from "../components/panels/admin/StoDetailPanel";
 import ReceivedPanel from "../components/panels/admin/ReceivedPanel";
-import CellPanel from "../components/panels/admin/CellPanel";
+import ChangeCellPanel from "../components/panels/admin/ChangeCellPanel";
 
 
 const AdminTab = () => {
@@ -36,7 +36,7 @@ const AdminTab = () => {
                     <input type="radio" name="accordion" id="accordion3"/>
                     <label className={cl.accordion__header} htmlFor="accordion3">Изменение ячейки</label>
                     <div className={cl.accordion__content}>
-                        <CellPanel/>
+                        <ChangeCellPanel/>
                     </div>
                 </div>
 

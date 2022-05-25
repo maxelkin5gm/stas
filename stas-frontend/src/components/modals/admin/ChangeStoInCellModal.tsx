@@ -1,38 +1,32 @@
 import React, {useState} from 'react';
 import BaseModal from "../BaseModal";
-import {Worker} from "../../../store/stasReducer/types/worker";
 import InputNumber from "../../Input/InputNumber";
 import {Button} from "antd";
-import {AdminService} from "../../../services/AdminService";
-import {UtilsStore} from "../../../store/UtilsStore";
 import {useTypeDispatch} from "../../../hooks/useTypeDispatch";
+import {UtilsStore} from "../../../store/UtilsStore";
+import {AdminService} from "../../../services/AdminService";
 
-interface ChangeReceivedModalProps {
+interface ChangeStoInCellModalProps {
     modalState: {
         visible: boolean,
         row: any
     }
-    worker: Worker
     onClose: () => void
     fillTable: () => void
 }
 
-const ChangeReceivedModal = ({onClose, modalState, worker, fillTable}: ChangeReceivedModalProps) => {
+const ChangeStoInCellModal = ({onClose, modalState, fillTable}: ChangeStoInCellModalProps) => {
     const dispatch = useTypeDispatch();
 
-    const inputAmountState = useState(modalState.row.amount)
+    const inputAmountState = useState(modalState.row.remainder as number)
 
     function saveHandler() {
-        if (!worker.personnelNumber) {
-            UtilsStore.showError(dispatch, "Сотрудник не выбран")
-            return
-        }
-        if (!inputAmountState[0] || inputAmountState[0] < 0) {
-            UtilsStore.showError(dispatch, "Неверно указано количество")
+        if (inputAmountState[0] < 0) {
+            UtilsStore.showError(dispatch, "Не правильно введен остаток");
             return
         }
         UtilsStore.setLoader(dispatch, true)
-        AdminService.updateAmountReceivedSto(modalState.row, worker.personnelNumber, inputAmountState[0])
+        AdminService.changeStoInCell(modalState.row, inputAmountState[0])
             .then(() => {
                 fillTable();
                 onClose()
@@ -42,12 +36,8 @@ const ChangeReceivedModal = ({onClose, modalState, worker, fillTable}: ChangeRec
     }
 
     function deleteHandler() {
-        if (!worker.personnelNumber) {
-            UtilsStore.showError(dispatch, "Сотрудник не выбран")
-            return
-        }
         UtilsStore.setLoader(dispatch, true)
-        AdminService.deleteReceivedSto(modalState.row, worker.personnelNumber)
+        AdminService.deleteStoFromCell(modalState.row)
             .then(() => {
                 fillTable();
                 onClose()
@@ -59,9 +49,11 @@ const ChangeReceivedModal = ({onClose, modalState, worker, fillTable}: ChangeRec
     return (
         <BaseModal onClose={onClose}>
             <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
-                <h2>Изменение выданной позиции: <span
-                    style={{fontWeight: "bold"}}>{modalState.row.receivedNameSto}</span></h2>
-                <InputNumber valueState={inputAmountState}/>
+                <h2>Изменение в ячейке: </h2>
+                <h2>STO: <span style={{fontWeight: "bold"}}>{modalState.row.nameSto}</span></h2>
+
+                <InputNumber style={{margin: 10, width: "100%"}} valueState={inputAmountState}/>
+
                 <div>
                     <Button type="primary" size="large" onClick={saveHandler}>Сохранить</Button>
                     <Button style={{margin: 10}} type="primary" size="large" onClick={deleteHandler}>Удалить</Button>
@@ -71,4 +63,4 @@ const ChangeReceivedModal = ({onClose, modalState, worker, fillTable}: ChangeRec
     );
 };
 
-export default ChangeReceivedModal;
+export default ChangeStoInCellModal;

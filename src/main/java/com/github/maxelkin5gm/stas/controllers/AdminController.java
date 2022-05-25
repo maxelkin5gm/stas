@@ -1,6 +1,5 @@
 package com.github.maxelkin5gm.stas.controllers;
 
-import com.github.maxelkin5gm.stas.dao.DetailDao;
 import com.github.maxelkin5gm.stas.services.AdminService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,15 +31,22 @@ public class AdminController {
 
 
     // Change Cell //
-    @PostMapping("/changeCellAndRemainder")
-    public void changeCellAndRemainder(@RequestParam int stasIndex,
-                                       @RequestParam String side,
-                                       @RequestParam int cellNumber,
-                                       @RequestParam String nameSto,
-                                       @RequestParam int remainder,
-                                       @RequestParam String status,
-                                       @RequestParam String note) {
-        adminService.changeCellAndRemainder(stasIndex, side, cellNumber, nameSto, remainder, status, note);
+    @PostMapping("/changeStoInCell")
+    public void changeStoInCell(@RequestParam int stasIndex,
+                                @RequestParam String side,
+                                @RequestParam int cellNumber,
+                                @RequestParam String nameSto,
+                                @RequestParam int remainder) {
+        adminService.changeStoInCell(stasIndex, side, cellNumber, nameSto, remainder);
+    }
+
+    @PostMapping("/changeCell")
+    public void changeCell(@RequestParam int stasIndex,
+                           @RequestParam String side,
+                           @RequestParam int cellNumber,
+                           @RequestParam String status,
+                           @RequestParam String note) {
+        adminService.changeCell(stasIndex, side, cellNumber, status, note);
     }
 
     @PostMapping("/deleteStoFromCell")

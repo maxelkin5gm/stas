@@ -6,6 +6,7 @@ import {receivedStoColumns} from "../columns/stas/receivedStoColumns";
 import {cellColumns} from "../columns/stas/cellColumns";
 import {detailColumns} from "../columns/stas/detailColumns";
 import {stoColumns} from "../columns/stas/stoColumns";
+import {addKeyPropertyForArray} from "../../../services/utils/addKeyPropertyForArray";
 
 
 export async function fillStasTable({type, query}: TableQuery, stasIndex: number, setTableState: Function) {
@@ -40,7 +41,7 @@ export async function fillStasTable({type, query}: TableQuery, stasIndex: number
             const data = await TableService.findAllByCellAndStas(query.side, query.cellNumber, stasIndex)
             setTableState({
                 columns: cellColumns,
-                data: TableService.validateAndPrepareArray(data)
+                data: addKeyPropertyForArray(data)
             })
             return;
     }

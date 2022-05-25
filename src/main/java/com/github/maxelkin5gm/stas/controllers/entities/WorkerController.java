@@ -1,17 +1,14 @@
 package com.github.maxelkin5gm.stas.controllers.entities;
 
 import com.github.maxelkin5gm.stas.dao.WorkerDao;
-import com.github.maxelkin5gm.stas.models.WorkerEntity;
+import com.github.maxelkin5gm.stas.entities.WorkerEntity;
 
-import com.github.maxelkin5gm.stas.services.AdminService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import org.sqlite.SQLiteException;
 
-import java.sql.SQLException;
 import java.util.List;
 
 @RestController

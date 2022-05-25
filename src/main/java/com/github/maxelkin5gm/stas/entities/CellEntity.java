@@ -1,4 +1,4 @@
-package com.github.maxelkin5gm.stas.models;
+package com.github.maxelkin5gm.stas.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CellEntity {
     int id;
-    int statIndex;
+    int stasIndex;
     String side;
     int cellNumber;
     String status;

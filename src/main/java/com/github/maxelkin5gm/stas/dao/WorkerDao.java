@@ -1,6 +1,6 @@
 package com.github.maxelkin5gm.stas.dao;
 
-import com.github.maxelkin5gm.stas.models.WorkerEntity;
+import com.github.maxelkin5gm.stas.entities.WorkerEntity;
 
 import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;

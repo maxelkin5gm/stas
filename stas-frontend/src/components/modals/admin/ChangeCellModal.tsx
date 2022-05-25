@@ -1,48 +1,29 @@
 import React, {useState} from 'react';
 import BaseModal from "../BaseModal";
-import InputNumber from "../../Input/InputNumber";
 import {Button} from "antd";
 import {useTypeDispatch} from "../../../hooks/useTypeDispatch";
 import {UtilsStore} from "../../../store/UtilsStore";
 import {AdminService} from "../../../services/AdminService";
 import {StatusCell} from "../../../store/stasReducer/types/selectedCell";
+import {CellEntity} from "../../../types/models";
 
 interface ChangeCellModalProps {
-    modalState: {
-        visible: boolean,
-        row: any
-    }
-    onClose: () => void
-    fillTable: () => void
+    onClose: () => void,
+    cellEntity: CellEntity,
+    setCellEntityState: React.Dispatch<React.SetStateAction<CellEntity | null>>
 }
 
-const ChangeCellAndRemainderModal = ({onClose, modalState, fillTable}: ChangeCellModalProps) => {
+const ChangeCellModal = ({onClose, cellEntity, setCellEntityState}: ChangeCellModalProps) => {
     const dispatch = useTypeDispatch();
 
-    const inputAmountState = useState(modalState.row.remainder as number)
-    const [noteInputState, setNoteInputState] = useState(modalState.row.note as string)
-    const [statusInputState, setStatusInputState] = useState(modalState.row.status as StatusCell)
+    const [noteInputState, setNoteInputState] = useState(cellEntity.note)
+    const [statusInputState, setStatusInputState] = useState(cellEntity.status)
 
     function saveHandler() {
-        if (inputAmountState[0] < 0) {
-            UtilsStore.showError(dispatch, "Не правильно введен остаток");
-            return
-        }
         UtilsStore.setLoader(dispatch, true)
-        AdminService.changeCellAndRemainder(modalState.row, inputAmountState[0], statusInputState, noteInputState)
+        AdminService.changeCell(cellEntity, statusInputState, noteInputState)
             .then(() => {
-                fillTable();
-                onClose()
-            })
-            .catch((e) => UtilsStore.showError(dispatch, e.response?.data?.message))
-            .finally(() => UtilsStore.setLoader(dispatch, false))
-    }
-
-    function deleteHandler() {
-        UtilsStore.setLoader(dispatch, true)
-        AdminService.deleteStoFromCell(modalState.row)
-            .then(() => {
-                fillTable();
+                setCellEntityState({...cellEntity, status: statusInputState, note: noteInputState})
                 onClose()
             })
             .catch((e) => UtilsStore.showError(dispatch, e.response?.data?.message))
@@ -53,9 +34,7 @@ const ChangeCellAndRemainderModal = ({onClose, modalState, fillTable}: ChangeCel
         <BaseModal onClose={onClose}>
             <div style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
                 <h2>Изменение ячейки: </h2>
-                <h2>STO: <span style={{fontWeight: "bold"}}>{modalState.row.nameSto}</span></h2>
 
-                <InputNumber style={{margin: 10, width: "100%"}} valueState={inputAmountState}/>
                 <select value={statusInputState}
                         onChange={(e) => setStatusInputState(e.target.value as StatusCell)}
                         style={{padding: 10, border: "1px solid black", width: "100%"}}>
@@ -71,14 +50,10 @@ const ChangeCellAndRemainderModal = ({onClose, modalState, fillTable}: ChangeCel
                     padding: 10,
                     resize: "none"
                 }} value={noteInputState} onChange={e => setNoteInputState(e.target.value)}></textarea>
-
-                <div>
-                    <Button type="primary" size="large" onClick={saveHandler}>Сохранить</Button>
-                    <Button style={{margin: 10}} type="primary" size="large" onClick={deleteHandler}>Удалить</Button>
-                </div>
             </div>
+            <Button style={{margin: 10}} type="primary" size="large" onClick={saveHandler}>Сохранить</Button>
         </BaseModal>
     );
 };
 
-export default ChangeCellAndRemainderModal;
+export default ChangeCellModal;

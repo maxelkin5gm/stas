@@ -1,13 +1,13 @@
 package com.github.maxelkin5gm.stas.services;
 
 import com.github.maxelkin5gm.stas.dao.*;
-import com.github.maxelkin5gm.stas.models.CellEntity;
-import com.github.maxelkin5gm.stas.models.DetailEntity;
-import com.github.maxelkin5gm.stas.models.StoEntity;
+import com.github.maxelkin5gm.stas.entities.DetailEntity;
+import com.github.maxelkin5gm.stas.entities.StoEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
@@ -54,9 +54,9 @@ public class AdminService {
         } else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Такой связи не существует");
     }
 
+
     @Transactional
-    public void changeCellAndRemainder(int stasIndex, String side, int cellNumber, String nameSto, int remainder,
-                                       String status, String note) {
+    public void changeStoInCell(int stasIndex, String side, int cellNumber, String nameSto, int remainder) {
         if (remainder < 0) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Остаток не может быть меньше 0");
 
         var stoEntity = stoDao.findBy(nameSto)
@@ -67,6 +67,12 @@ public class AdminService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Такого СТО в ячейке не найдено"));
 
         stoCellDao.update(remainder, stoEntity.getId(), cellEntity.getId());
+    }
+
+    @Transactional
+    public void changeCell(int stasIndex, String side, int cellNumber, String status, String note) {
+        var cellEntity = cellDao.findBy(stasIndex, side, cellNumber)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Такой ячейки не существует"));
 
         cellDao.updateStatusAndNoteBy(status, note, cellEntity.getId());
     }
@@ -87,13 +93,8 @@ public class AdminService {
     public void addStoInCell(int stasIndex, String side, int cellNumber, String nameSto, int remainder) {
         var stoEntity = stoDao.findBy(nameSto)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Такого СТО не существует"));
-
-        var cellEntity = cellDao.findBy(stasIndex, side, cellNumber).orElse(null);
-        if (cellEntity == null) {
-            var status = "УСТАНОВЛЕНА";
-            var id = cellDao.insert(stasIndex, side, cellNumber, status);
-            cellEntity = new CellEntity(id, stasIndex, side, cellNumber, status, "");
-        }
+        var cellEntity = cellDao.findBy(stasIndex, side, cellNumber)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Такой ячейки не существует"));
 
         if (stoCellDao.findBy(stoEntity.getId(), cellEntity.getId()).isPresent())
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Такое СТО уже есть в ячейке");

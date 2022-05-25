@@ -4,16 +4,16 @@ import {useTypeDispatch} from "../../hooks/useTypeDispatch";
 import {stoColumns} from "./columns/admin/stoColumns";
 import {UtilsStore} from "../../store/UtilsStore";
 import {TableService} from "../../services/TableService";
-import {Cell} from "../panels/admin/CellPanel";
 import {addKeyPropertyForArray} from "../../services/utils/addKeyPropertyForArray";
-import ChangeCellAndRemainderModal from "../modals/admin/ChangeCellAndRemainderModal";
+import ChangeStoInCellModal from "../modals/admin/ChangeStoInCellModal";
+import {CellEntity} from "../../types/models";
 
 
 interface AdminCellTableProps {
-    cell: Cell | null
+    cellEntityState: CellEntity | null
 }
 
-const AdminCellTable = ({cell}: AdminCellTableProps) => {
+const AdminCellTable = ({cellEntityState}: AdminCellTableProps) => {
     const dispatch = useTypeDispatch();
 
     const [tableState, setTableState] = useState({
@@ -26,26 +26,23 @@ const AdminCellTable = ({cell}: AdminCellTableProps) => {
     })
 
     const fillTable = useCallback(() => {
-        if (!cell) return
+        if (!cellEntityState) return
         UtilsStore.setLoader(dispatch, true)
-        TableService.findAllByCellAndStas(cell.side, cell.cellNumber, cell.stasIndex)
+        TableService.findAllByCellAndStas(cellEntityState.side, cellEntityState.cellNumber, cellEntityState.stasIndex)
             .then(data => setTableState({
                 columns: stoColumns,
                 data: addKeyPropertyForArray(data)
             }))
             .catch(() => UtilsStore.showError(dispatch))
             .finally(() => UtilsStore.setLoader(dispatch, false))
-    }, [cell, dispatch])
+    }, [cellEntityState, dispatch])
 
     useEffect(() => {
         fillTable()
     }, [fillTable])
 
     function doubleClickHandler(row: any) {
-        setChangeCellModalState({
-            visible: true,
-            row
-        })
+        setChangeCellModalState({visible: true, row})
     }
 
     return (
@@ -55,12 +52,12 @@ const AdminCellTable = ({cell}: AdminCellTableProps) => {
             />
 
             {changeCellModalState.visible
-                ? <ChangeCellAndRemainderModal modalState={changeCellModalState}
-                                               onClose={() => setChangeCellModalState({
+                ? <ChangeStoInCellModal modalState={changeCellModalState}
+                                        onClose={() => setChangeCellModalState({
                                                    ...changeCellModalState,
                                                    visible: false
                                                })}
-                                               fillTable={fillTable}
+                                        fillTable={fillTable}
                 /> : null}
         </>
     );

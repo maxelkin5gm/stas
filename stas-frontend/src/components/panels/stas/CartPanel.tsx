@@ -53,6 +53,10 @@ const CartPanel = ({stasIndex}: CartPanelProps) => {
         setModalState({visible: true})
     }
 
+    function refreshHandler() {
+        dispatch({type: StasStateActionTypes.REFRESH_TABLE, stasIndex})
+    }
+
     function clearCartHandler() {
         dispatch({type: StasStateActionTypes.SET_CART, stasIndex, cart: []})
     }
@@ -71,7 +75,7 @@ const CartPanel = ({stasIndex}: CartPanelProps) => {
 
 
             <div style={{display: "grid", gridTemplate: "1fr 1fr / 1fr 1fr", gridGap: "5px"}}>
-                <Button disabled type="primary" size="middle">Выбрать все</Button>
+                <Button type="primary" size="middle" onClick={refreshHandler}>Обновить основную таблицу</Button>
                 <Button disabled={stasState !== StasStateEnum.WAIT} type="primary" size="middle"
                         onClick={giveHandler}>Выдать</Button>
                 <Button disabled={stasState !== StasStateEnum.WAIT} onClick={clearCartHandler}

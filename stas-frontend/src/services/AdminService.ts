@@ -1,6 +1,6 @@
 import axios from "axios";
-import {Cell} from "../components/panels/admin/CellPanel";
 import {StatusCell} from "../store/stasReducer/types/selectedCell";
+import {CellEntity} from "../types/models";
 
 export class AdminService {
 
@@ -52,14 +52,23 @@ export class AdminService {
 
 
     // Change Cell //
-    static changeCellAndRemainder(row: any, remainder: number, status: StatusCell, note: string) {
-        return axios.post("/api/admin/changeCellAndRemainder", null, {
+    static changeStoInCell(row: any, remainder: number) {
+        return axios.post("/api/admin/changeStoInCell", null, {
             params: {
                 stasIndex: row.stasIndex,
                 side: row.side,
                 cellNumber: row.cellNumber,
                 nameSto: row.nameSto,
-                remainder,
+                remainder
+            }
+        })
+    }
+    static changeCell(cellEntity: CellEntity, status: StatusCell, note: string) {
+        return axios.post("/api/admin/changeCell", null, {
+            params: {
+                stasIndex: cellEntity.stasIndex + 1,
+                side: cellEntity.side,
+                cellNumber: cellEntity.cellNumber,
                 status,
                 note
             }
@@ -77,12 +86,12 @@ export class AdminService {
         })
     }
 
-    static addStoInCell(cell: Cell, nameSto: string, remainder: number) {
+    static addStoInCell(cellEntity: CellEntity, nameSto: string, remainder: number) {
         return axios.post("/api/admin/addStoInCell", null, {
             params: {
-                stasIndex: cell.stasIndex + 1,
-                side: cell.side,
-                cellNumber: cell.cellNumber,
+                stasIndex: cellEntity.stasIndex + 1,
+                side: cellEntity.side,
+                cellNumber: cellEntity.cellNumber,
                 nameSto,
                 remainder
             }

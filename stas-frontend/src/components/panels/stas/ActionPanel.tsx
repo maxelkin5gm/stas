@@ -16,6 +16,8 @@ const ActionPanel = ({stasIndex}: ActionPanelProps) => {
     const stasState = useTypeSelector(state => state.stasList[stasIndex].state);
     const dispatch = useTypeDispatch()
 
+    let statusText = selectedCell?.status === StatusCell.INSTALLED ? "УСТАН." : null
+    statusText = selectedCell?.status === StatusCell.REMOVED ? "СНЯТА" : statusText
     const actionPanelService = new ActionService(dispatch, stasIndex, selectedCell as SelectedCell);
 
     function bringCellHandler() {
@@ -41,7 +43,7 @@ const ActionPanel = ({stasIndex}: ActionPanelProps) => {
                     ? <h3>Выбрано: <span style={{
                         border: "1px solid black",
                         padding: 5
-                    }}>{selectedCell.cellNumber} {selectedCell.side}</span></h3>
+                    }}>{selectedCell.cellNumber} {selectedCell.side} {statusText}</span></h3>
                     : <h3>Ячейка не выбрана</h3>
                 }
             </div>

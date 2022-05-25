@@ -1,6 +1,6 @@
 package com.github.maxelkin5gm.stas.dao;
 
-import com.github.maxelkin5gm.stas.models.DetailEntity;
+import com.github.maxelkin5gm.stas.entities.DetailEntity;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
