@@ -10,7 +10,7 @@ import {TableTypeEnum} from "../../../store/stasReducer/types/table";
 import {StasStateEnum} from "../../../store/stasReducer/types/state";
 import {UtilsStore} from "../../../store/UtilsStore";
 import InputAutocomplete from "../../Input/InputAutocomplete";
-import {WorkerService} from "../../../services/WorkerService";
+import {WorkerService} from "../../../services/entities/WorkerService";
 
 interface WorkerPanelProps {
     stasIndex: number

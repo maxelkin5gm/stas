@@ -38,7 +38,7 @@ CREATE TABLE CELL
     side       TEXT    NOT NULL,
     cellNumber INTEGER NOT NULL,
     status     TEXT    NOT NULL DEFAULT 'УСТАНОВЛЕНА',
-    note       TEXT DEFAULT '',
+    note       TEXT             DEFAULT '',
     UNIQUE (stasIndex, side, cellNumber)
 );
 
@@ -78,7 +78,8 @@ VALUES ('ДРЕЛЬ'); -- 2
 INSERT INTO STO (nameSto)
 VALUES ('ПИЛА'); -- 3
 INSERT INTO STO (nameSto)
-VALUES ('ФРЕЗА'); -- 4
+VALUES ('ФРЕЗА');
+-- 4
 -------------------------------------------------------------------------
 INSERT INTO DETAIL (nameDetail, operationNumber)
 VALUES ('БОЕГОЛОВКА', '90'); -- 1
@@ -93,7 +94,8 @@ VALUES ('НАСОС', '110'); -- 5
 INSERT INTO DETAIL (nameDetail, operationNumber)
 VALUES ('ГИРОСКОП', '100'); -- 6
 INSERT INTO DETAIL (nameDetail, operationNumber)
-VALUES ('ГИРОСКОП', '110'); -- 7
+VALUES ('ГИРОСКОП', '110');
+-- 7
 -------------------------------------------------------------------------
 INSERT INTO STO_DETAIL (STO_ID, DETAIL_ID)
 VALUES (1, 1); -- НАПИЛЬНИК БОЕГОЛОВКА 90
@@ -117,7 +119,8 @@ VALUES (3, 1); -- ПИЛА БОЕГОЛОВКА 90
 INSERT INTO STO_DETAIL (STO_ID, DETAIL_ID)
 VALUES (4, 5); -- ФРЕЗА НАСОС 110
 INSERT INTO STO_DETAIL (STO_ID, DETAIL_ID)
-VALUES (4, 2); -- ФРЕЗА БОЕГОЛОВКА 100
+VALUES (4, 2);
+-- ФРЕЗА БОЕГОЛОВКА 100
 -------------------------------------------------------------------------
 INSERT INTO CELL (stasIndex, side, cellNumber, status)
 VALUES (1, 'ЛЕВО', 10, 'УСТАНОВЛЕНА'); -- 1
@@ -126,7 +129,8 @@ VALUES (1, 'ПРАВО', 10, 'УСТАНОВЛЕНА'); -- 2
 INSERT INTO CELL (stasIndex, side, cellNumber, status)
 VALUES (1, 'ЛЕВО', 11, 'УСТАНОВЛЕНА'); -- 3
 INSERT INTO CELL (stasIndex, side, cellNumber, status)
-VALUES (1, 'ПРАВО', 11, 'УСТАНОВЛЕНА'); -- 4
+VALUES (1, 'ПРАВО', 11, 'УСТАНОВЛЕНА');
+-- 4
 -------------------------------------------------------------------------
 INSERT INTO STO_CELL (sto_id, cell_id, remainder)
 VALUES (1, 1, 5); -- НАПИЛЬНИК 10ЛЕВО remainder5
@@ -150,14 +154,16 @@ VALUES (4, 2, 6); -- ФРЕЗА CELL11ЛЕВО remainder6
 INSERT INTO STO_CELL (sto_id, cell_id, remainder)
 VALUES (4, 3, 7); -- ФРЕЗА CELL11ЛЕВО remainder7
 INSERT INTO STO_CELL (sto_id, cell_id, remainder)
-VALUES (4, 4, 8); -- ФРЕЗА CELL11ЛЕВО remainder8
+VALUES (4, 4, 8);
+-- ФРЕЗА CELL11ЛЕВО remainder8
 -------------------------------------------------------------------------
 INSERT INTO WORKER (nameWorker, personnelNumber)
 VALUES ('ЕЛЬКИН М.В.', '1111'); -- 1
 INSERT INTO WORKER (nameWorker, personnelNumber)
 VALUES ('АНДРЕЕВА Н.Д.', '2222'); -- 2
 INSERT INTO WORKER (nameWorker, personnelNumber)
-VALUES ('ЛОГИНОВ Н.В.', '3333'); -- 3
+VALUES ('ЛОГИНОВ Н.В.', '3333');
+-- 3
 -------------------------------------------------------------------------
 INSERT INTO RECEIVED_STO (amount, receivedNameSto, receivedNameDetail, receivedOperationNumber, cell_id, worker_id)
 VALUES (3, 'НАПИЛЬНИК', 'БОЕГОЛОВКА', '100', 1, 1);

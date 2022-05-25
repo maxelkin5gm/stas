@@ -8,10 +8,10 @@ import BaseModal from "../BaseModal";
 import InputNumber from "../../Input/InputNumber";
 import {StasStateEnum} from "../../../store/stasReducer/types/state";
 import {StasStateActionTypes} from "../../../store/stasReducer/stasReducer.type";
-import {DetailService} from "../../../services/DetailService";
+import {DetailService} from "../../../services/entities/DetailService";
 import {DetailEntity} from "../../../types/models";
 import {UtilsStore} from "../../../store/UtilsStore";
-import {CellService} from "../../../services/CellService";
+import {CellService} from "../../../services/entities/CellService";
 import {CartService} from "../../../services/CartService";
 
 interface DoubleClickRowModalProps {

@@ -4,6 +4,8 @@ import InputAutocomplete from "../../Input/InputAutocomplete";
 import {AdminService} from "../../../services/AdminService";
 import {UtilsStore} from "../../../store/UtilsStore";
 import {useTypeDispatch} from "../../../hooks/useTypeDispatch";
+import {StoService} from "../../../services/entities/StoService";
+import {DetailService} from "../../../services/entities/DetailService";
 
 const StoDetailPanel = () => {
     const dispatch = useTypeDispatch();
@@ -36,24 +38,24 @@ const StoDetailPanel = () => {
             .finally(() => UtilsStore.setLoader(dispatch, false))
     }
 
-    function deleteSto() {
+    function deleteStoHandler() {
         if (!nameStoState[0]) {
             UtilsStore.showError(dispatch, "Не все данные заполнены")
             return
         }
         UtilsStore.setLoader(dispatch, true)
-        AdminService.deleteSto(nameStoState[0])
+        StoService.deleteBy(nameStoState[0])
             .catch((e) => UtilsStore.showError(dispatch, e.response?.data?.message))
             .finally(() => UtilsStore.setLoader(dispatch, false))
     }
 
-    function deleteDetail() {
+    function deleteDetailHandler() {
         if (!nameDetailState[0] || !nameDetailState[0]) {
             UtilsStore.showError(dispatch, "Не все данные заполнены")
             return
         }
         UtilsStore.setLoader(dispatch, true)
-        AdminService.deleteDetail(nameDetailState[0], operationNumberState[0])
+        DetailService.deleteBy(nameDetailState[0], operationNumberState[0])
             .catch((e) => UtilsStore.showError(dispatch, e.response?.data?.message))
             .finally(() => UtilsStore.setLoader(dispatch, false))
     }
@@ -84,9 +86,9 @@ const StoDetailPanel = () => {
 
             <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
                 <Button style={{width: 200, margin: "5px 20px"}} type="primary" size="middle"
-                        onClick={deleteSto}>Удалить СТО</Button>
+                        onClick={deleteStoHandler}>Удалить СТО</Button>
                 <Button style={{width: 200}} type="primary" size="middle"
-                        onClick={deleteDetail}>Удалить деталь</Button>
+                        onClick={deleteDetailHandler}>Удалить деталь</Button>
             </div>
 
         </div>

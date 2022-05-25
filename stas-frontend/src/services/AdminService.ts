@@ -25,22 +25,6 @@ export class AdminService {
         })
     }
 
-    static deleteSto(nameSto: string) {
-        return axios.post("/api/sto/delete", null, {
-            params: {
-                nameSto
-            }
-        })
-    }
-
-    static deleteDetail(nameDetail: string, operationNumber: string) {
-        return axios.post("/api/detail/deleteBy", null, {
-            params: {
-                nameDetail,
-                operationNumber
-            }
-        })
-    }
 
     // Received STO //
     static updateAmountReceivedSto(row: any, personnelNumber: string, amount: number) {
@@ -66,32 +50,6 @@ export class AdminService {
         })
     }
 
-    static createWorker(nameWorker: string, personnelNumber: string) {
-        return axios.post("/api/worker/create", null, {
-            params: {
-                nameWorker,
-                personnelNumber
-            }
-        })
-    }
-
-    static deleteWorker(personnelNumber: string) {
-        return axios.post("/api/worker/delete", null, {
-            params: {
-                personnelNumber
-            }
-        })
-    }
-
-    static updateWorker(personnelNumber: string, newNameWorker: string, newPersonnelNumber: string) {
-        return axios.post("/api/worker/update", null, {
-            params: {
-                personnelNumber,
-                newNameWorker,
-                newPersonnelNumber
-            }
-        })
-    }
 
     // Change Cell //
     static changeCellAndRemainder(row: any, remainder: number, status: StatusCell, note: string) {

@@ -3,11 +3,10 @@ import AdminReceivedTable from "../../tables/AdminReceivedTable";
 import InputAutocomplete from "../../Input/InputAutocomplete";
 import {Button} from "antd";
 import {Worker} from "../../../store/stasReducer/types/worker";
-import {WorkerService} from "../../../services/WorkerService";
+import {WorkerService} from "../../../services/entities/WorkerService";
 import {UtilsStore} from "../../../store/UtilsStore";
 import {useTypeDispatch} from "../../../hooks/useTypeDispatch";
 import CreateWorkerModal from "../../modals/admin/CreateWorkerModal";
-import {AdminService} from "../../../services/AdminService";
 import ChangeWorkerModal from "../../modals/admin/ChangeWorkerModal";
 
 const ReceivedPanel = () => {
@@ -39,7 +38,7 @@ const ReceivedPanel = () => {
             UtilsStore.showError(dispatch, "Сотрудник не выбран")
             return
         }
-        AdminService.deleteWorker(worker.personnelNumber)
+        WorkerService.deleteBy(worker.personnelNumber)
             .then(() => {
                 setWorker(null)
             })
@@ -70,7 +69,7 @@ const ReceivedPanel = () => {
 
             {worker
                 ? <div style={{display: "flex", alignItems: "center", padding: 5}}>
-                <span style={{fontSize: 16}}>
+                <span style={{fontSize: 16, border: "1px solid black", padding: 5}}>
                     Выбран: <span style={{fontWeight: "bold"}}>{worker.nameWorker} ({worker.personnelNumber})</span>
                 </span>
                     <Button style={{margin: "0 10px"}} type="primary" size="middle"

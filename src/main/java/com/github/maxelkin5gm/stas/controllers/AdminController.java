@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminController {
     AdminService adminService;
 
+
+    // Sto and Detail //
     @PostMapping("/addStoAndDetail")
     public void addStoAndDetail(@RequestParam String nameSto,
                                 @RequestParam String nameDetail,
@@ -28,6 +30,8 @@ public class AdminController {
         adminService.deleteRelationshipStoAndDetail(nameSto, nameDetail, operationNumber);
     }
 
+
+    // Change Cell //
     @PostMapping("/changeCellAndRemainder")
     public void changeCellAndRemainder(@RequestParam int stasIndex,
                                        @RequestParam String side,

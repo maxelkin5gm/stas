@@ -14,7 +14,7 @@ import com.github.maxelkin5gm.stas.dao.TableDao;
 public class TableController {
     TableDao tableDao;
 
-    // Worker START //
+    // Worker panel START //
     @GetMapping("/findAllByWorkerAndStas")
     public List<Map<String, Object>> findAllByWorkerAndStas(@RequestParam String personnelNumber,
                                                             @RequestParam int stasIndex) {
@@ -25,9 +25,10 @@ public class TableController {
     public List<Map<String, Object>> findAllByWorker(@RequestParam String personnelNumber) {
         return tableDao.findAllByWorker(personnelNumber);
     }
-    // Worker END //
+    // Worker panel END //
 
-    // Detail START //
+
+    // Detail panel START //
     @GetMapping("/findAllByDetailAndStas")
     public List<Map<String, Object>> findAllByDetailAndStas(@RequestParam String nameDetail,
                                                             @RequestParam String operationNumber,
@@ -40,9 +41,10 @@ public class TableController {
                                                      @RequestParam String operationNumber) {
         return tableDao.findAllByDetail(nameDetail, operationNumber);
     }
-    // Detail END //
+    // Detail panel END //
 
-    // Sto START //
+
+    // Sto panel START //
     @GetMapping("/findAllByStoAndStas")
     public List<Map<String, Object>> findAllByStoAndStas(@RequestParam String nameSto,
                                                          @RequestParam int stasIndex) {
@@ -63,15 +65,16 @@ public class TableController {
     public List<Map<String, Object>> findAllByStoAndRemainder(@RequestParam String nameSto, @RequestParam int remainder) {
         return tableDao.findAllByStoAndRemainder(nameSto, remainder);
     }
-    // Sto END //
+    // Sto panel END //
 
-    // Cell START //
+
+    // Cell panel START //
     @GetMapping("/findAllByCellAndStas")
     public List<Map<String, Object>> findAllByCellAndStas(@RequestParam String side,
                                                           @RequestParam int cellNumber,
                                                           @RequestParam int stasIndex) {
         return tableDao.findAllByCellAndStas(side, cellNumber, stasIndex);
     }
-    // Cell END //
+    // Cell panel END //
 
 }

@@ -1,5 +1,5 @@
 import axios from "axios";
-import {DetailEntity} from "../types/models";
+import {DetailEntity} from "../../types/models";
 
 export class DetailService {
 
@@ -9,5 +9,14 @@ export class DetailService {
         })
             .then(res => res.data)
             .catch(() => [] as DetailEntity[])
+    }
+
+    static deleteBy(nameDetail: string, operationNumber: string) {
+        return axios.post("/api/detail/delete", null, {
+            params: {
+                nameDetail,
+                operationNumber
+            }
+        })
     }
 }

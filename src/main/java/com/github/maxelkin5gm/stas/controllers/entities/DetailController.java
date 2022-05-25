@@ -19,9 +19,9 @@ public class DetailController {
         return detailDao.findAllBy(nameSto);
     }
 
-    @PostMapping("/deleteBy")
-    public void deleteBy(@RequestParam String nameDetail,
-                         @RequestParam String operationNumber) {
+    @PostMapping("/delete")
+    public void delete(@RequestParam String nameDetail,
+                       @RequestParam String operationNumber) {
         detailDao.deleteBy(nameDetail, operationNumber);
     }
 }

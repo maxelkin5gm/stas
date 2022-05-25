@@ -57,6 +57,8 @@ public class AdminService {
     @Transactional
     public void changeCellAndRemainder(int stasIndex, String side, int cellNumber, String nameSto, int remainder,
                                        String status, String note) {
+        if (remainder < 0) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Остаток не может быть меньше 0");
+
         var stoEntity = stoDao.findBy(nameSto)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Такого СТО не существует"));
         var cellEntity = cellDao.findBy(stasIndex, side, cellNumber)
@@ -64,7 +66,6 @@ public class AdminService {
         stoCellDao.findBy(stoEntity.getId(), cellEntity.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Такого СТО в ячейке не найдено"));
 
-        if (remainder < 0) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Остаток не может быть меньше 0");
         stoCellDao.update(remainder, stoEntity.getId(), cellEntity.getId());
 
         cellDao.updateStatusAndNoteBy(status, note, cellEntity.getId());
@@ -90,13 +91,12 @@ public class AdminService {
         var cellEntity = cellDao.findBy(stasIndex, side, cellNumber).orElse(null);
         if (cellEntity == null) {
             var status = "УСТАНОВЛЕНА";
-            var id = cellDao.insert(stasIndex,side, cellNumber, status);
+            var id = cellDao.insert(stasIndex, side, cellNumber, status);
             cellEntity = new CellEntity(id, stasIndex, side, cellNumber, status, "");
         }
 
-        if (stoCellDao.findBy(stoEntity.getId(), cellEntity.getId()).isPresent()) {
+        if (stoCellDao.findBy(stoEntity.getId(), cellEntity.getId()).isPresent())
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Такое СТО уже есть в ячейке");
-        }
 
         stoCellDao.insert(stoEntity.getId(), cellEntity.getId(), remainder);
     }

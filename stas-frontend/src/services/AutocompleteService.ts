@@ -19,7 +19,6 @@ export class AutocompleteService {
 
             case "personnelNumber":
                 return await this.findAllPersonnelNumberByLike(part)
-
         }
     }
 

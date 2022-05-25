@@ -3,7 +3,7 @@ import {useTypeDispatch} from "../../../hooks/useTypeDispatch";
 
 import cl from "../style/RightClickModal.module.scss"
 import BaseModal from "../BaseModal";
-import {DetailService} from "../../../services/DetailService";
+import {DetailService} from "../../../services/entities/DetailService";
 import {DetailEntity} from "../../../types/models";
 import {UtilsStore} from "../../../store/UtilsStore";
 

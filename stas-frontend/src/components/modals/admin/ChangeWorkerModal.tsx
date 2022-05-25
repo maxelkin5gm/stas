@@ -2,10 +2,10 @@ import React, {useState} from 'react';
 import BaseModal from "../BaseModal";
 import InputCustom from "../../Input/InputCustom";
 import {Button} from "antd";
-import {AdminService} from "../../../services/AdminService";
 import {useTypeDispatch} from "../../../hooks/useTypeDispatch";
 import {UtilsStore} from "../../../store/UtilsStore";
 import {Worker} from "../../../store/stasReducer/types/worker";
+import {WorkerService} from "../../../services/entities/WorkerService";
 
 interface ChangeWorkerModalProps {
     onClose: () => void
@@ -24,7 +24,7 @@ const ChangeWorkerModal = ({onClose, worker, setWorker}: ChangeWorkerModalProps)
             return
         }
         UtilsStore.setLoader(dispatch, true)
-        AdminService.updateWorker(worker.personnelNumber, nameWorkerInputState[0], personnelNumberInputState[0])
+        WorkerService.update(worker.personnelNumber, nameWorkerInputState[0], personnelNumberInputState[0])
             .then(() => {
                 setWorker({
                     nameWorker: nameWorkerInputState[0],

@@ -22,8 +22,9 @@ public class DetailDao {
     JdbcTemplate jdbcTemplate;
 
     public Optional<DetailEntity> findBy(String nameDetail, String operationNumber) {
-        return jdbcTemplate.query("SELECT * FROM DETAIL WHERE nameDetail = ? AND operationNumber = ?",
-                new BeanPropertyRowMapper<>(DetailEntity.class), nameDetail, operationNumber).stream().findAny();
+        return jdbcTemplate.query("""
+                SELECT * FROM DETAIL WHERE nameDetail = ? AND operationNumber = ?;
+                """, new BeanPropertyRowMapper<>(DetailEntity.class), nameDetail, operationNumber).stream().findAny();
     }
 
     public List<Map<String, Object>> findAllBy(String nameSto) {
@@ -50,8 +51,9 @@ public class DetailDao {
     public int insert(String nameDetail, String operationNumber) {
         var keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(
-                    "INSERT INTO DETAIL (nameDetail, operationNumber) VALUES (?, ?);");
+            PreparedStatement ps = connection.prepareStatement("""
+                    INSERT INTO DETAIL (nameDetail, operationNumber) VALUES (?, ?);
+                    """);
             ps.setString(1, nameDetail);
             ps.setString(2, operationNumber);
             return ps;
@@ -60,8 +62,9 @@ public class DetailDao {
     }
 
     public void deleteBy(String nameDetail, String operationNumber) {
-        var count = jdbcTemplate.update("DELETE FROM DETAIL WHERE nameDetail = ? AND operationNumber = ?;",
-                nameDetail, operationNumber);
+        var count = jdbcTemplate.update("""
+                DELETE FROM DETAIL WHERE nameDetail = ? AND operationNumber = ?;
+                """, nameDetail, operationNumber);
         if (count == 0)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Такой детали и номера операции не найдено");
     }

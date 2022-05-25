@@ -5,7 +5,7 @@ import {useTypeDispatch} from "../../../hooks/useTypeDispatch";
 import cl from "../style/DoubleClickModal.module.scss";
 import BaseModal from "../BaseModal";
 import {UtilsStore} from "../../../store/UtilsStore";
-import {CellService} from "../../../services/CellService";
+import {CellService} from "../../../services/entities/CellService";
 import {SearchAllStateActionTypes} from "../../../store/searchAllReducer/searchAllReducer.type";
 
 
