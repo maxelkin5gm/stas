@@ -1,4 +1,5 @@
 import {StatusCell} from "../store/stasReducer/types/selectedCell";
+import {StasStateEnum} from "../store/stasReducer/types/state";
 
 export interface DetailEntity {
     id?: number
@@ -13,4 +14,11 @@ export interface CellEntity {
     cellNumber: number
     status: StatusCell
     note: string
+}
+
+export interface StasDeliveryState {
+    error: string,
+    state: StasStateEnum,
+    side: string,
+    cellNumber: number
 }

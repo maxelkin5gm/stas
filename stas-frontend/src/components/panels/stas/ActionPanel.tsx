@@ -4,8 +4,9 @@ import {useTypeSelector} from "../../../hooks/useTypeSelector";
 import {useTypeDispatch} from "../../../hooks/useTypeDispatch";
 
 import {StasStateEnum} from "../../../store/stasReducer/types/state";
-import {SelectedCell, StatusCell} from "../../../store/stasReducer/types/selectedCell";
-import {ActionService} from "../../../services/ActionService";
+import {StatusCell} from "../../../store/stasReducer/types/selectedCell";
+import {StasService} from "../../../services/StasService";
+import {UtilsStore} from "../../../store/UtilsStore";
 
 interface ActionPanelProps {
     stasIndex: number,
@@ -18,18 +19,25 @@ const ActionPanel = ({stasIndex}: ActionPanelProps) => {
 
     let statusText = selectedCell?.status === StatusCell.INSTALLED ? "УСТАН." : null
     statusText = selectedCell?.status === StatusCell.REMOVED ? "СНЯТА" : statusText
-    const actionPanelService = new ActionService(dispatch, stasIndex, selectedCell as SelectedCell);
+
+    const stasService = new StasService(dispatch, stasIndex);
 
     function bringCellHandler() {
-        actionPanelService.bringCell();
+        if (!selectedCell) {
+            UtilsStore.showError(dispatch, "Ячейка не выбрана")
+            return
+        }
+        stasService.bringCell(selectedCell.side, selectedCell.cellNumber)
+            .catch(() => UtilsStore.showError(dispatch));
     }
 
     function bringBackCellHandler() {
-        actionPanelService.bringBackCell()
+        stasService.bringBackCell()
+            .catch(() => UtilsStore.showError(dispatch));
     }
 
     function removeCellHandler() {
-        actionPanelService.removeCell()
+        // actionPanelService.removeCell()
     }
 
     return (
