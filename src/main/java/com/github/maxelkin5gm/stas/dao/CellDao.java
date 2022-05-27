@@ -2,6 +2,7 @@ package com.github.maxelkin5gm.stas.dao;
 
 import com.github.maxelkin5gm.stas.entities.CellEntity;
 
+import com.github.maxelkin5gm.stas.entities.enums.StatusCellEnum;
 import lombok.AllArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -34,7 +35,8 @@ public class CellDao {
 
     @Transactional
     public void updateStatusAndNoteBy(String status, String note, int cellId) {
-        jdbcTemplate.update("UPDATE CELL SET status = ?, note = ? WHERE CELL.id = ?;", status, note, cellId);
+        jdbcTemplate.update("UPDATE CELL SET status = ?, note = ? WHERE CELL.id = ?;",
+                status, note, cellId);
     }
 
     public int insert(int stasIndex, String side, int cellNumber, String status) {

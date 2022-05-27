@@ -7,6 +7,7 @@ import {StasStateEnum} from "../../../store/stasReducer/types/state";
 import {StatusCell} from "../../../store/stasReducer/types/selectedCell";
 import {StasService} from "../../../services/StasService";
 import {UtilsStore} from "../../../store/UtilsStore";
+import {StasStateActionTypes} from "../../../store/stasReducer/stasReducer.type";
 
 interface ActionPanelProps {
     stasIndex: number,
@@ -37,7 +38,24 @@ const ActionPanel = ({stasIndex}: ActionPanelProps) => {
     }
 
     function removeCellHandler() {
-        // actionPanelService.removeCell()
+        if (!selectedCell) {
+            UtilsStore.showError(dispatch, "Ячейка не выбрана")
+            return
+        }
+        stasService.removeCell(selectedCell.side, selectedCell.cellNumber)
+            .then(() => {
+                dispatch({type: StasStateActionTypes.REFRESH_TABLE, stasIndex})
+            })
+            .catch((e) => UtilsStore.showError(dispatch, e.response?.data?.message));
+    }
+
+    function returnCellHandler() {
+        if (!selectedCell) {
+            UtilsStore.showError(dispatch, "Ячейка не выбрана")
+            return
+        }
+        stasService.returnCell(selectedCell.side, selectedCell.cellNumber)
+            .catch((e) => UtilsStore.showError(dispatch, e.response?.data?.message));
     }
 
     return (
@@ -70,10 +88,13 @@ const ActionPanel = ({stasIndex}: ActionPanelProps) => {
             </div>
 
             <div>
-                <Button
-                    disabled={!selectedCell || stasState === StasStateEnum.GO || (stasState === StasStateEnum.READY && selectedCell?.status === StatusCell.INSTALLED)}
-                    style={{width: "90%"}} type="primary" size="middle"
-                    onClick={removeCellHandler}>{stasState === StasStateEnum.WAIT ? <>Снять</> : <>Вернуть</>}</Button>
+                {stasState === StasStateEnum.WAIT
+                    ? <Button style={{width: "90%"}} type="primary" size="middle"
+                              onClick={removeCellHandler}>Снять</Button>
+                    : <Button disabled={!selectedCell || selectedCell.status === StatusCell.INSTALLED}
+                              style={{width: "90%"}} type="primary" size="middle"
+                              onClick={returnCellHandler}>Вернуть</Button>
+                }
             </div>
         </>
     );

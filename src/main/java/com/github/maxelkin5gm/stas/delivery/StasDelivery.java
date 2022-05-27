@@ -1,47 +1,57 @@
 package com.github.maxelkin5gm.stas.delivery;
 
+import com.github.maxelkin5gm.stas.entities.enums.StateStasEnum;
+
 import java.util.Objects;
 
 public class StasDelivery {
 
     static final StasDelivery[] LIST_STAS = new StasDelivery[]{new StasDelivery(), new StasDelivery(), new StasDelivery()};
 
-    private String state;
+    private StateStasEnum state;
     private int cellNumber;
     private String side;
     private String error;
 
     public StasDelivery() {
-        state = "READY";
-        cellNumber = 11;
-        side = "ПРАВО";
+        state = StateStasEnum.READY;
     }
 
     public void bringCell(String side, int cellNumber) {
-        state = "GO";
+        state = StateStasEnum.GO;
         this.cellNumber = cellNumber;
         this.side = side;
         try {
-            Thread.sleep(5000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        state = "WAIT";
+        state = StateStasEnum.WAIT;
     }
 
     public void bringBackCell() {
-        state = "GO";
+        state = StateStasEnum.GO;
         try {
-            Thread.sleep(5000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        state = "READY";
+        state = StateStasEnum.READY;
+    }
+
+    public void removeCell() {
+        state = StateStasEnum.READY;
+    }
+
+    public void returnCell(String side, int cellNumber) {
+        state = StateStasEnum.WAIT;
+        this.cellNumber = cellNumber;
+        this.side = side;
     }
 
 
     public boolean isBusy() {
-        return !Objects.equals(state, "READY");
+        return !Objects.equals(state, StateStasEnum.READY);
     }
 
     public static StasDelivery getBy(int stasIndex) {
@@ -49,7 +59,7 @@ public class StasDelivery {
     }
 
 
-    public String getState() {
+    public StateStasEnum getState() {
         return state;
     }
 

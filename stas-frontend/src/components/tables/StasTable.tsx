@@ -7,6 +7,7 @@ import {StasStateActionTypes} from "../../store/stasReducer/stasReducer.type";
 import StasDoubleClickModal from "../modals/table/StasDoubleClickModal";
 import {fillStasTable} from "./utils/fillStasTable";
 import {UtilsStore} from "../../store/UtilsStore";
+import {TableTypeEnum} from "../../store/stasReducer/types/table";
 
 interface StasTableProps {
     stasIndex: number,
@@ -45,7 +46,10 @@ const StasTable = ({stasIndex, isLoading}: StasTableProps) => {
     useEffect(() => {
         UtilsStore.setLoader(dispatch, true)
         fillStasTable(tableQuery, stasIndex, setTableState)
-            .catch((e: Error) => UtilsStore.showError(dispatch, e.message))
+            .catch((e: Error) => {
+                UtilsStore.setTable(dispatch,stasIndex, {type: TableTypeEnum.CLEAR, query: undefined})
+                UtilsStore.showError(dispatch, e.message)
+            })
             .finally(() => UtilsStore.setLoader(dispatch, false))
     }, [tableQuery, stasIndex, dispatch])
 

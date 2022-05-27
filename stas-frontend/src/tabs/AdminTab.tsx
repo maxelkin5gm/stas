@@ -1,15 +1,25 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTypeSelector} from "../hooks/useTypeSelector";
 import cl from "./style/AdminTab.module.scss"
 import StoDetailPanel from "../components/panels/admin/StoDetailPanel";
 import ReceivedPanel from "../components/panels/admin/ReceivedPanel";
 import ChangeCellPanel from "../components/panels/admin/ChangeCellPanel";
+import {AppStateActionTypes} from "../store/appReducer/appReducer.type";
+import {useTypeDispatch} from "../hooks/useTypeDispatch";
 
 
 const AdminTab = () => {
+    const dispatch = useTypeDispatch();
+
     const tabIndex = useTypeSelector(state => state.app.tabIndex)
     const displayStyle = (tabIndex === 4) ? {} : {display: "none"}
 
+    const [isAuth, setIsAuth] = useState(false)
+    useEffect(() => {
+        if (!isAuth && tabIndex === 4)
+            if (window.prompt("Введите пароль") === "1") setIsAuth(true)
+            else dispatch({type: AppStateActionTypes.SET_TAB, tabIndex: 0})
+    }, [tabIndex, isAuth, setIsAuth, dispatch])
 
     return (
         <div className={cl.tab} style={displayStyle}>

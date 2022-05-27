@@ -1,11 +1,13 @@
 package com.github.maxelkin5gm.stas.controllers;
 
 
+import com.github.maxelkin5gm.stas.delivery.StasDelivery;
+import com.github.maxelkin5gm.stas.entities.enums.StatusCellEnum;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.ServletResponse;
 import java.io.IOException;
 
 @RestController
@@ -13,11 +15,8 @@ import java.io.IOException;
 public class TestController {
 
     @GetMapping("/test")
-    public void test(ServletResponse resp) throws IOException, InterruptedException {
-//        resp.getWriter().close();
-//        Thread.sleep(5000);
-        System.out.println("test");
-//        return StasDelivery.getStasBy(0);
+    public StasDelivery test() throws IOException, InterruptedException {
+        return StasDelivery.getBy(0);
     }
 
 

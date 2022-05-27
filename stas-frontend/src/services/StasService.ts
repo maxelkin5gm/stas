@@ -10,7 +10,7 @@ import {StasDeliveryState} from "../types/models";
 
 export class StasService {
 
-    private QUERY_SPEED = 3000;
+    private QUERY_SPEED = 1000;
 
     constructor(private dispatch: ReturnType<typeof useTypeDispatch>,
                 private stasIndex: number) {
@@ -32,6 +32,19 @@ export class StasService {
         await this.initState()
     }
 
+    async removeCell(side: string, cellNumber: number) {
+        await this.removeCellQuery(side, cellNumber)
+        this.setState(StasStateEnum.READY)
+        this.setSelectedCell(side, cellNumber, StatusCell.REMOVED)
+    }
+
+    async returnCell(side: string, cellNumber: number) {
+        await this.returnCellQuery(side, cellNumber)
+        this.setState(StasStateEnum.WAIT)
+        this.setCellTable(side, cellNumber)
+        this.setSelectedCell(side, cellNumber, StatusCell.INSTALLED)
+    }
+
     async initState() {
         const stasDeliveryState = await this.getState()
 
@@ -50,7 +63,7 @@ export class StasService {
             case StasStateEnum.WAIT:
                 this.setState(StasStateEnum.WAIT)
                 this.setCellTable(stasDeliveryState.side, stasDeliveryState.cellNumber)
-                this.setSelectedCell(stasDeliveryState.side, stasDeliveryState.cellNumber)
+                this.setSelectedCell(stasDeliveryState.side, stasDeliveryState.cellNumber, StatusCell.INSTALLED)
                 return
 
             case StasStateEnum.READY:
@@ -85,13 +98,13 @@ export class StasService {
 
     // fetch
     private getState() {
-        return axios.get<StasDeliveryState>("/api/state/getState", {
+        return axios.get<StasDeliveryState>("/api/delivery/getState", {
             params: {stasIndex: this.stasIndex}
         }).then(res => res.data)
     }
 
     private bringCellQuery(side: string, cellNumber: number) {
-        return axios.get<void>("/api/delivery/bringCell", {
+        return axios.post<void>("/api/delivery/bringCell", null, {
             params: {
                 stasIndex: this.stasIndex,
                 side,
@@ -101,13 +114,13 @@ export class StasService {
     }
 
     private bringBackCellQuery() {
-        return axios.get<void>("/api/delivery/bringBackCell", {
+        return axios.post<void>("/api/delivery/bringBackCell", null, {
             params: {stasIndex: this.stasIndex,}
         })
     }
 
     private removeCellQuery(side: string, cellNumber: number) {
-        return axios.get<void>("/api/delivery/removeCell", {
+        return axios.post<void>("/api/delivery/removeCell", null, {
             params: {
                 stasIndex: this.stasIndex,
                 side,
@@ -115,8 +128,9 @@ export class StasService {
             }
         })
     }
+
     private returnCellQuery(side: string, cellNumber: number) {
-        return axios.get<void>("/api/delivery/returnCell", {
+        return axios.post<void>("/api/delivery/returnCell", null, {
             params: {
                 stasIndex: this.stasIndex,
                 side,
@@ -127,14 +141,14 @@ export class StasService {
 
 
     // utils
-    private setSelectedCell(side: string, cellNumber: number) {
+    private setSelectedCell(side: string, cellNumber: number, status: StatusCell) {
         this.dispatch({
             type: StasStateActionTypes.SET_SELECTED_CELL,
             stasIndex: this.stasIndex,
             selectedCell: {
                 side,
                 cellNumber,
-                status: StatusCell.INSTALLED
+                status
             }
         })
     }
