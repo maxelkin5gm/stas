@@ -2,6 +2,8 @@ package com.github.maxelkin5gm.stas.controllers;
 
 import com.github.maxelkin5gm.stas.dao.CellDao;
 import com.github.maxelkin5gm.stas.delivery.StasDelivery;
+import com.github.maxelkin5gm.stas.delivery.StasFactory;
+
 import com.github.maxelkin5gm.stas.entities.enums.StatusCellEnum;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,10 +19,16 @@ import java.io.IOException;
 public class DeliveryController {
 
     CellDao cellDao;
+    StasFactory stasFactory;
 
     @GetMapping("/getState")
     public StasDelivery getState(@RequestParam int stasIndex) {
-        return StasDelivery.getBy(stasIndex);
+        return stasFactory.getBy(stasIndex);
+    }
+
+    @PostMapping("/resetError")
+    public void resetError(@RequestParam int stasIndex) {
+        stasFactory.getBy(stasIndex).setError(null);
     }
 
     @PostMapping("/bringCell")
@@ -28,16 +36,22 @@ public class DeliveryController {
                           @RequestParam String side,
                           @RequestParam int cellNumber,
                           ServletResponse response) throws IOException {
-        var stas = StasDelivery.getBy(stasIndex);
-        if (stas.isBusy()) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "В данный момент СТАС занят");
-        response.getWriter().close();
-        stas.bringCell(side, cellNumber);
+        var stasDelivery = stasFactory.getBy(stasIndex);
+        if (!stasDelivery.takeStasForBring()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "В данный момент СТАС " + (stasIndex + 1) + " занят");
+        }
+        stasDelivery.bringCell(side, cellNumber, response);
     }
 
     @PostMapping("/bringBackCell")
     public void bringBackCell(@RequestParam int stasIndex, ServletResponse response) throws IOException {
-        response.getWriter().close();
-        StasDelivery.getBy(stasIndex).bringBackCell();
+        var stasDelivery = stasFactory.getBy(stasIndex);
+        if (!stasDelivery.takeStasForBringBack()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "В данный момент СТАС " + (stasIndex + 1) + " занят");
+        }
+        stasDelivery.bringBackCell(response);
     }
 
     @PostMapping("/removeCell")
@@ -46,7 +60,7 @@ public class DeliveryController {
                            @RequestParam int cellNumber) {
         var cellEntity = cellDao.findBy(stasIndex + 1, side, cellNumber)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Такая ячейка не найдена"));
-        StasDelivery.getBy(stasIndex).removeCell();
+        stasFactory.getBy(stasIndex).removeCell();
         cellDao.updateStatusAndNoteBy(StatusCellEnum.REMOVED.toString(), cellEntity.getNote(), cellEntity.getId());
     }
 
@@ -56,9 +70,7 @@ public class DeliveryController {
                            @RequestParam int cellNumber) {
         var cellEntity = cellDao.findBy(stasIndex + 1, side, cellNumber)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Такая ячейка не найдена"));
-        var stas = StasDelivery.getBy(stasIndex);
-        if (stas.isBusy()) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "В данный момент СТАС занят");
-        stas.returnCell(side, cellNumber);
+        stasFactory.getBy(stasIndex).returnCell(side, cellNumber);
         cellDao.updateStatusAndNoteBy(StatusCellEnum.INSTALLED.toString(), cellEntity.getNote(), cellEntity.getId());
     }
 }

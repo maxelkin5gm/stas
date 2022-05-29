@@ -2,8 +2,6 @@ package com.github.maxelkin5gm.stas.utils;
 
 import javax.swing.*;
 import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
 
 public class DbHelper {
 

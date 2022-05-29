@@ -1,7 +1,7 @@
 package com.github.maxelkin5gm.stas.services;
 
 import com.github.maxelkin5gm.stas.dao.*;
-import com.github.maxelkin5gm.stas.dto.CartGiveQuery;
+import com.github.maxelkin5gm.stas.dto.CartGiveQueryDto;
 import com.github.maxelkin5gm.stas.entities.ReceivedStoEntity;
 
 import lombok.AllArgsConstructor;
@@ -24,7 +24,7 @@ public class CartService {
     ReceivedStoDao receivedStoDao;
 
     @Transactional
-    public void give(int stasIndex, String side, int cellNumber, String personnelNumber, List<CartGiveQuery> cart) {
+    public void give(int stasIndex, String side, int cellNumber, String personnelNumber, List<CartGiveQueryDto> cart) {
         var cellEntity = cellDao.findBy(stasIndex, side, cellNumber).orElseThrow();
         cart.forEach(cartItem -> {
             var workerEntity = workerDao.findBy(personnelNumber).orElseThrow();

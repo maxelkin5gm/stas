@@ -29,12 +29,10 @@ const ActionPanel = ({stasIndex}: ActionPanelProps) => {
             return
         }
         stasService.bringCell(selectedCell.side, selectedCell.cellNumber)
-            .catch(() => UtilsStore.showError(dispatch));
     }
 
     function bringBackCellHandler() {
         stasService.bringBackCell()
-            .catch(() => UtilsStore.showError(dispatch));
     }
 
     function removeCellHandler() {

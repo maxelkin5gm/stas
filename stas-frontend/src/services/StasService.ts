@@ -18,18 +18,26 @@ export class StasService {
 
     async bringCell(side: string, cellNumber: number) {
         this.setState(StasStateEnum.GO)
-        await this.bringCellQuery(side, cellNumber)
-            .catch(() => UtilsStore.showError(this.dispatch, "Ошибка при попытке доставки. Операция отменена."))
-        await this.waitWhileGoState()
-        await this.initState()
+        try {
+            await this.bringCellQuery(side, cellNumber)
+            await this.waitWhileGoState()
+            await this.initState()
+        } catch (e: any) {
+            UtilsStore.showError(this.dispatch, e.response?.data?.message)
+            this.setState(StasStateEnum.READY)
+        }
     }
 
     async bringBackCell() {
         this.setState(StasStateEnum.GO)
-        await this.bringBackCellQuery()
-            .catch(() => UtilsStore.showError(this.dispatch, "Ошибка при попытке доставки. Операция отменена."))
-        await this.waitWhileGoState()
-        await this.initState()
+        try {
+            await this.bringBackCellQuery()
+            await this.waitWhileGoState()
+            await this.initState()
+        } catch (e: any) {
+            UtilsStore.showError(this.dispatch, e.response?.data?.message)
+            this.setState(StasStateEnum.READY)
+        }
     }
 
     async removeCell(side: string, cellNumber: number) {
@@ -50,6 +58,8 @@ export class StasService {
 
         if (stasDeliveryState.error) {
             UtilsStore.showError(this.dispatch, stasDeliveryState.error)
+            await this.resetError();
+            this.setState(StasStateEnum.READY);
             return
         }
 
@@ -101,6 +111,12 @@ export class StasService {
         return axios.get<StasDeliveryState>("/api/delivery/getState", {
             params: {stasIndex: this.stasIndex}
         }).then(res => res.data)
+    }
+
+    private resetError() {
+        return axios.post<StasDeliveryState>("/api/delivery/resetError", null, {
+            params: {stasIndex: this.stasIndex}
+        })
     }
 
     private bringCellQuery(side: string, cellNumber: number) {
