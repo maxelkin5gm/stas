@@ -6,6 +6,7 @@ import ReceivedPanel from "../components/panels/admin/ReceivedPanel";
 import ChangeCellPanel from "../components/panels/admin/ChangeCellPanel";
 import {AppStateActionTypes} from "../store/appReducer/appReducer.type";
 import {useTypeDispatch} from "../hooks/useTypeDispatch";
+import {AdminService} from "../services/AdminService";
 
 
 const AdminTab = () => {
@@ -17,9 +18,13 @@ const AdminTab = () => {
     const [isAuth, setIsAuth] = useState(false)
     useEffect(() => {
         if (!isAuth && tabIndex === 4)
-            if (window.prompt("Введите пароль") === "1") setIsAuth(true)
-            else dispatch({type: AppStateActionTypes.SET_TAB, tabIndex: 0})
+            AdminService.getPassword().then((password) => {
+                if (window.prompt("Введите пароль") === String(password)) setIsAuth(true)
+                else dispatch({type: AppStateActionTypes.SET_TAB, tabIndex: 0})
+            })
     }, [tabIndex, isAuth, setIsAuth, dispatch])
+
+    if (!isAuth) return null;
 
     return (
         <div className={cl.tab} style={displayStyle}>

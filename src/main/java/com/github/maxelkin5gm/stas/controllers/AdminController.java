@@ -2,16 +2,21 @@ package com.github.maxelkin5gm.stas.controllers;
 
 import com.github.maxelkin5gm.stas.services.AdminService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/admin/")
-@AllArgsConstructor
 public class AdminController {
+
     AdminService adminService;
+    @Value("${ADMIN_PASSWORD}")
+    String adminPassword;
+
+    public AdminController(AdminService adminService) {
+        this.adminService = adminService;
+    }
 
 
     // Sto and Detail //
@@ -64,6 +69,12 @@ public class AdminController {
                              @RequestParam String nameSto,
                              @RequestParam int remainder) {
         adminService.addStoInCell(stasIndex, side, cellNumber, nameSto, remainder);
+    }
+
+    // Auth //
+    @GetMapping("/getPassword")
+    public String getPassword() {
+        return adminPassword;
     }
 
 

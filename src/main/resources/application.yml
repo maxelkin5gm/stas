@@ -1,3 +1,5 @@
 server:
   error:
     include-message: always
+
+ADMIN_PASSWORD: "1"

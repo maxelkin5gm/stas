@@ -97,4 +97,9 @@ export class AdminService {
             }
         })
     }
+
+    // Auth
+    static getPassword() {
+        return axios.get<string>("/api/admin/getPassword").then(res => res.data)
+    }
 }
