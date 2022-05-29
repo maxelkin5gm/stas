@@ -5,12 +5,15 @@ import lombok.SneakyThrows;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Serial {
-    private final SerialPort serialPort;
+    private SerialPort serialPort;
 
-    public Serial(String portDescriptor) {
-        serialPort = SerialPort.getCommPort(portDescriptor);
+    public Serial() {
+        var ports = SerialPort.getCommPorts();
+        if (ports[0] != null) serialPort = ports[0];
+        else serialPort = SerialPort.getCommPort("");
     }
 
     @SneakyThrows
@@ -44,11 +47,19 @@ public class Serial {
         return new String(data, StandardCharsets.UTF_8);
     }
 
-    public static ArrayList<String> getAvailablePorts() {
-        var serialPorts = new ArrayList<String>();
+    public static List<String> getAvailablePorts() {
+        List<String> serialPorts = new ArrayList<>();
         for (var serialPort : SerialPort.getCommPorts()) {
             serialPorts.add(serialPort.getSystemPortName());
         }
         return serialPorts;
+    }
+
+    public String getSystemPortName() {
+        return serialPort.getSystemPortName();
+    }
+
+    public void setSerialPort(String portDescriptor) {
+        serialPort = SerialPort.getCommPort(portDescriptor);
     }
 }

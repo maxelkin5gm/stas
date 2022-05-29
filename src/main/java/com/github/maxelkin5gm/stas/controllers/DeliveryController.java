@@ -1,6 +1,7 @@
 package com.github.maxelkin5gm.stas.controllers;
 
 import com.github.maxelkin5gm.stas.dao.CellDao;
+import com.github.maxelkin5gm.stas.delivery.Serial;
 import com.github.maxelkin5gm.stas.delivery.StasDelivery;
 import com.github.maxelkin5gm.stas.delivery.StasFactory;
 
@@ -12,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.ServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/delivery/")
@@ -24,6 +26,22 @@ public class DeliveryController {
     @GetMapping("/getState")
     public StasDelivery getState(@RequestParam int stasIndex) {
         return stasFactory.getBy(stasIndex);
+    }
+
+    @GetMapping("/getAllPorts")
+    public List<String> getAllPorts() {
+        return Serial.getAvailablePorts();
+    }
+
+    @GetMapping("/getCurrentPorts")
+    public String[] getCurrentPorts() {
+        return stasFactory.getCurrentPorts();
+    }
+
+    @PostMapping("/setPort")
+    public void setPort(@RequestParam int stasIndex,
+                        @RequestParam String portName) {
+        stasFactory.getBy(stasIndex).setSerial(portName);
     }
 
     @PostMapping("/resetError")

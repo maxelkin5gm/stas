@@ -19,6 +19,7 @@ const NavBar = () => {
                             <Tab className={cl.header__link} classActive={cl.active} tabIndex={3}>Поиск по
                                 всем</Tab>
                             <Tab className={cl.header__link} classActive={cl.active} tabIndex={4}>Админ</Tab>
+                            <Tab className={cl.header__link} classActive={cl.active} tabIndex={5}>Настройки</Tab>
                         </nav>
                     </div>
                     <Loader/>

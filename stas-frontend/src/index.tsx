@@ -12,6 +12,7 @@ import StasTab from "./tabs/StasTab";
 import SearchAllTab from "./tabs/SearchAllTab";
 import AdminTab from "./tabs/AdminTab";
 import ErrorModal from "./components/modals/ErrorModal";
+import SettingsTab from "./tabs/SettingsTab";
 
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement
@@ -31,6 +32,8 @@ root.render(
                 <SearchAllTab/>
 
                 <AdminTab/>
+
+                <SettingsTab />
             </div>
 
             <ErrorModal/>

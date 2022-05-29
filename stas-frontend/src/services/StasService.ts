@@ -155,6 +155,23 @@ export class StasService {
         })
     }
 
+    public static getAllPorts() {
+        return axios.get<string[]>("/api/delivery/getAllPorts").then(res => res.data)
+    }
+
+    public static getCurrentPorts() {
+        return axios.get<string[]>("/api/delivery/getCurrentPorts").then(res => res.data)
+    }
+
+    public static setPort(stasIndex: number, portName: string) {
+        return axios.post<void>("/api/delivery/setPort", null, {
+            params: {
+                stasIndex,
+                portName
+            }
+        })
+    }
+
 
     // utils
     private setSelectedCell(side: string, cellNumber: number, status: StatusCell) {

@@ -1,5 +1,6 @@
 package com.github.maxelkin5gm.stas.delivery;
 
+import com.fazecast.jSerialComm.SerialPort;
 import com.github.maxelkin5gm.stas.entities.enums.StateStasEnum;
 import com.github.maxelkin5gm.stas.utils.ValidateCell;
 import lombok.AccessLevel;
@@ -13,7 +14,7 @@ import java.util.Objects;
 public class StasDelivery {
 
     @Getter(AccessLevel.PRIVATE)
-    private Serial serial = new Serial("COM3");
+    private final Serial serial = new Serial();
     private final int stasIndex;
     private int cellNumber;
     private String side;
@@ -160,10 +161,14 @@ public class StasDelivery {
     }
 
     public void setSerial(String portDescriptor) {
-        serial = new Serial(portDescriptor);
+        serial.setSerialPort(portDescriptor);
     }
 
     public void setError(String error) {
         this.error = error;
+    }
+
+    public String getSystemPortName() {
+        return serial.getSystemPortName();
     }
 }
