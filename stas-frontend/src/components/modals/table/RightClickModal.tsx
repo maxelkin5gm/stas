@@ -43,7 +43,7 @@ const RightClickModal = ({onClose, modalState}: DetailsByStoModalProps) => {
 
                 {optionsState.length !== 0
                     ?
-                    <div>
+                    <div style={{overflow: "auto", maxHeight: "500px", padding: 10}}>
                         {optionsState.map(option =>
                             <p key={option.nameDetail + option.operationNumber}>
                                 Деталь: <span>{option.nameDetail}</span> Операция: <span>{option.operationNumber}</span>
