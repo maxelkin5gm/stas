@@ -10,10 +10,8 @@ import java.util.List;
 public class Serial {
     private SerialPort serialPort;
 
-    public Serial() {
-        var ports = SerialPort.getCommPorts();
-        if (ports[0] != null) serialPort = ports[0];
-        else serialPort = SerialPort.getCommPort("");
+    public Serial(String portName) {
+        setSerialPort(portName);
     }
 
     @SneakyThrows

@@ -3,3 +3,6 @@ server:
     include-message: always
 
 ADMIN_PASSWORD: "1"
+STAS1_PORT: "COM3"
+STAS2_PORT: "COM3"
+STAS3_PORT: "COM3"

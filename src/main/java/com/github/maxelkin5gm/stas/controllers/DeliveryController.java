@@ -4,8 +4,8 @@ import com.github.maxelkin5gm.stas.dao.CellDao;
 import com.github.maxelkin5gm.stas.delivery.Serial;
 import com.github.maxelkin5gm.stas.delivery.StasDelivery;
 import com.github.maxelkin5gm.stas.delivery.StasFactory;
-
 import com.github.maxelkin5gm.stas.entities.enums.StatusCellEnum;
+
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

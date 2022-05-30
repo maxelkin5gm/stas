@@ -5,8 +5,11 @@ import com.github.maxelkin5gm.stas.entities.enums.StateStasEnum;
 import com.github.maxelkin5gm.stas.utils.ValidateCell;
 import lombok.AccessLevel;
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.ServletResponse;
+import javax.swing.*;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -14,15 +17,16 @@ import java.util.Objects;
 public class StasDelivery {
 
     @Getter(AccessLevel.PRIVATE)
-    private final Serial serial = new Serial();
+    private final Serial serial;
     private final int stasIndex;
     private int cellNumber;
     private String side;
     private StateStasEnum state = StateStasEnum.READY;
     private String error;
 
-    public StasDelivery(int stasIndex) {
+    public StasDelivery(int stasIndex, String portName) {
         this.stasIndex = stasIndex;
+        serial = new Serial(portName);
     }
 
     public void bringCell(String side, int cellNumber, ServletResponse response) throws IOException {
@@ -33,47 +37,36 @@ public class StasDelivery {
             this.cellNumber = cellNumber;
             this.side = side;
             this.error = null;
-//            if (!serial.openPort())
-//                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-//                        "Не получилось открыть порт. Проверьте настройки или перезапустите сервер.");
-//
-//            var command = "p," + cellNumber + "," + sideInt;
-//            serial.writeString(command);
-//            var responseStatus = serial.readString(5000);
-//            if (responseStatus == null || !responseStatus.equals("OK")) {
-//                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Arduino crash");
-//            }
-//            response.getWriter().close();
-//
-//            responseStatus = serial.readString(120000);
-//            if (responseStatus == null || !responseStatus.equals("READY")) {
-//                error = "Arduino crash";
-//                setState(StateStasEnum.READY);
-//                return;
-//            }
 
-            // for test, потом удалить exceptions
+            if (!serial.openPort())
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "Не получилось открыть порт. Проверьте настройки или перезапустите сервер.");
+
+            var command = "p," + cellNumber + "," + sideInt;
+            serial.writeString(command);
+            JOptionPane.showMessageDialog(new JFrame(), command, "Отправил команду", JOptionPane.INFORMATION_MESSAGE);
+
+            var responseStatus = serial.readString(5000);
+            JOptionPane.showMessageDialog(new JFrame(), responseStatus, "Получил ответ", JOptionPane.INFORMATION_MESSAGE);
+            if (responseStatus == null || !responseStatus.equals("OK")) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Arduino crash");
+            }
             response.getWriter().close();
-            Thread.sleep(5000);
 
-//            error = "СТАС " + (stasIndex + 1) + ": Arduino crash";
-//            setState(StateStasEnum.READY);
-
+            responseStatus = serial.readString(120000);
+            JOptionPane.showMessageDialog(new JFrame(), responseStatus, "Получил ответ", JOptionPane.INFORMATION_MESSAGE);
+            if (responseStatus == null || !responseStatus.equals("READY")) {
+                error = "Arduino crash";
+                setState(StateStasEnum.READY);
+                return;
+            }
             setState(StateStasEnum.WAIT);
-            return;
 
-
-//            setState(StateStasEnum.WAIT);
         } catch (Exception e) {
             setState(StateStasEnum.READY);
-            try {
-                throw e;
-            } catch (InterruptedException ex) {
-                throw new RuntimeException(ex);
-            }
+            throw e;
         } finally {
-            System.out.print("Close port: ");
-            System.out.println(serial.closePort());
+            serial.closePort();
         }
     }
 
@@ -83,48 +76,34 @@ public class StasDelivery {
             var sideInt = ValidateCell.getSideInt(this.side);
             this.error = null;
 
-//            if (!serial.openPort())
-//                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-//                        "Не получилось открыть порт. Проверьте настройки или перезапустите сервер.");
-//
-//            var command = "b," + cellNumber + "," + sideInt;
-//            serial.writeString(command);
-//            var responseStatus = serial.readString(5000);
-//            if (responseStatus == null || !responseStatus.equals("OK")) {
-//                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Arduino crash");
-//            }
-//            response.getWriter().close();
-//
-//            responseStatus = serial.readString(120000);
-//            if (responseStatus == null || !responseStatus.equals("READY")) {
-//                error = "Arduino crash";
-//                setState(StateStasEnum.READY);
-//                return;
-//            }
+            if (!serial.openPort())
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                        "Не получилось открыть порт. Проверьте настройки или перезапустите сервер.");
 
+            var command = "b," + cellNumber + "," + sideInt;
+            serial.writeString(command);
+            JOptionPane.showMessageDialog(new JFrame(), command, "Отправил команду", JOptionPane.INFORMATION_MESSAGE);
 
-
-            // for test, потом удалить exceptions
+            var responseStatus = serial.readString(5000);
+            JOptionPane.showMessageDialog(new JFrame(), responseStatus, "Получил ответ", JOptionPane.INFORMATION_MESSAGE);
+            if (responseStatus == null || !responseStatus.equals("OK")) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Arduino crash");
+            }
             response.getWriter().close();
-            Thread.sleep(5000);
 
-//            error = "СТАС " + (stasIndex + 1) + ": Arduino crash";
-//            setState(StateStasEnum.READY);
-
+            responseStatus = serial.readString(120000);
+            JOptionPane.showMessageDialog(new JFrame(), responseStatus, "Получил ответ", JOptionPane.INFORMATION_MESSAGE);
+            if (responseStatus == null || !responseStatus.equals("READY")) {
+                error = "Arduino crash";
+                setState(StateStasEnum.READY);
+                return;
+            }
             setState(StateStasEnum.READY);
-            return;
 
-
-//            setState(StateStasEnum.WAIT);
         } catch (Exception e) {
             setState(StateStasEnum.READY);
-            try {
-                throw e;
-            } catch (InterruptedException ex) {
-                throw new RuntimeException(ex);
-            }
+            throw e;
         } finally {
-            System.out.print("Close port: ");
             System.out.println(serial.closePort());
         }
     }
@@ -148,6 +127,7 @@ public class StasDelivery {
         }
         return false;
     }
+
     public synchronized boolean takeStasForBringBack() {
         if (Objects.equals(state, StateStasEnum.WAIT)) {
             state = StateStasEnum.GO;
