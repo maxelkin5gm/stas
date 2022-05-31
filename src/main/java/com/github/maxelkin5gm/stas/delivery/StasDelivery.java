@@ -44,19 +44,26 @@ public class StasDelivery {
 
             var command = "p," + cellNumber + "," + sideInt;
             serial.writeString(command);
-            JOptionPane.showMessageDialog(new JFrame(), command, "Отправил команду", JOptionPane.INFORMATION_MESSAGE);
+//            JOptionPane.showMessageDialog(new JFrame(), command, "Отправил команду", JOptionPane.INFORMATION_MESSAGE);
 
             var responseStatus = serial.readString(5000);
-            JOptionPane.showMessageDialog(new JFrame(), responseStatus, "Получил ответ", JOptionPane.INFORMATION_MESSAGE);
-            if (responseStatus == null || !responseStatus.equals("OK")) {
+//            JOptionPane.showMessageDialog(new JFrame(), responseStatus, "Получил ответ", JOptionPane.INFORMATION_MESSAGE);
+            if (responseStatus == null) {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Arduino crash");
             }
+            if (!responseStatus.equals("OK"))
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, responseStatus);
             response.getWriter().close();
 
-            responseStatus = serial.readString(120000);
-            JOptionPane.showMessageDialog(new JFrame(), responseStatus, "Получил ответ", JOptionPane.INFORMATION_MESSAGE);
-            if (responseStatus == null || !responseStatus.equals("READY")) {
+            responseStatus = serial.readString(150000);
+//            JOptionPane.showMessageDialog(new JFrame(), responseStatus, "Получил ответ", JOptionPane.INFORMATION_MESSAGE);
+            if (responseStatus == null) {
                 error = "Arduino crash";
+                setState(StateStasEnum.READY);
+                return;
+            }
+            if (!responseStatus.equals("READY")) {
+                error = responseStatus;
                 setState(StateStasEnum.READY);
                 return;
             }
@@ -82,19 +89,26 @@ public class StasDelivery {
 
             var command = "b," + cellNumber + "," + sideInt;
             serial.writeString(command);
-            JOptionPane.showMessageDialog(new JFrame(), command, "Отправил команду", JOptionPane.INFORMATION_MESSAGE);
+//            JOptionPane.showMessageDialog(new JFrame(), command, "Отправил команду", JOptionPane.INFORMATION_MESSAGE);
 
             var responseStatus = serial.readString(5000);
-            JOptionPane.showMessageDialog(new JFrame(), responseStatus, "Получил ответ", JOptionPane.INFORMATION_MESSAGE);
-            if (responseStatus == null || !responseStatus.equals("OK")) {
+//            JOptionPane.showMessageDialog(new JFrame(), responseStatus, "Получил ответ", JOptionPane.INFORMATION_MESSAGE);
+            if (responseStatus == null) {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Arduino crash");
             }
+            if (!responseStatus.equals("OK"))
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, responseStatus);
             response.getWriter().close();
 
-            responseStatus = serial.readString(120000);
-            JOptionPane.showMessageDialog(new JFrame(), responseStatus, "Получил ответ", JOptionPane.INFORMATION_MESSAGE);
-            if (responseStatus == null || !responseStatus.equals("READY")) {
+            responseStatus = serial.readString(150000);
+//            JOptionPane.showMessageDialog(new JFrame(), responseStatus, "Получил ответ", JOptionPane.INFORMATION_MESSAGE);
+            if (responseStatus == null) {
                 error = "Arduino crash";
+                setState(StateStasEnum.READY);
+                return;
+            }
+            if (!responseStatus.equals("READY")) {
+                error = responseStatus;
                 setState(StateStasEnum.READY);
                 return;
             }

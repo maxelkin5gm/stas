@@ -58,7 +58,7 @@ const SettingsTab = () => {
             </div>
 
             <div className={cl.section}>
-                <h2>Выбор порта СТАС 1</h2>
+                <h2>Выбор порта СТАС 2</h2>
                 <h3>Текущее значение: {currentPortsState[1]}</h3>
                 <select
                     onChange={(e) => setSelectState(e.target.value)}
@@ -71,7 +71,7 @@ const SettingsTab = () => {
             </div>
 
             <div className={cl.section}>
-                <h2>Выбор порта СТАС 1</h2>
+                <h2>Выбор порта СТАС 3</h2>
                 <h3>Текущее значение: {currentPortsState[2]}</h3>
                 <select
                     onChange={(e) => setSelectState(e.target.value)}

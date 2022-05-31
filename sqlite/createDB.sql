@@ -165,10 +165,10 @@ INSERT INTO WORKER (nameWorker, personnelNumber)
 VALUES ('ЛОГИНОВ Н.В.', '3333');
 -- 3
 -------------------------------------------------------------------------
-INSERT INTO RECEIVED_STO (amount, receivedNameSto, receivedNameDetail, receivedOperationNumber, cell_id, worker_id)
-VALUES (3, 'НАПИЛЬНИК', 'БОЕГОЛОВКА', '100', 1, 1);
-INSERT INTO RECEIVED_STO (amount, receivedNameSto, receivedNameDetail, receivedOperationNumber, cell_id, worker_id)
-VALUES (1, 'ДРЕЛЬ', 'ГИРОСКОП', '110', 2, 1);
+-- INSERT INTO RECEIVED_STO (amount, receivedNameSto, receivedNameDetail, receivedOperationNumber, cell_id, worker_id)
+-- VALUES (3, 'НАПИЛЬНИК', 'БОЕГОЛОВКА', '100', 1, 1);
+-- INSERT INTO RECEIVED_STO (amount, receivedNameSto, receivedNameDetail, receivedOperationNumber, cell_id, worker_id)
+-- VALUES (1, 'ДРЕЛЬ', 'ГИРОСКОП', '110', 2, 1);
 -------------------------------------------------------------------------
 
 
