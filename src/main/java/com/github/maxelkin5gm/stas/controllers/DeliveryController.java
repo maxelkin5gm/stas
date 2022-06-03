@@ -4,6 +4,7 @@ import com.github.maxelkin5gm.stas.dao.CellDao;
 import com.github.maxelkin5gm.stas.delivery.Serial;
 import com.github.maxelkin5gm.stas.delivery.StasDelivery;
 import com.github.maxelkin5gm.stas.delivery.StasFactory;
+import com.github.maxelkin5gm.stas.delivery.TestDelivery;
 import com.github.maxelkin5gm.stas.entities.enums.StatusCellEnum;
 
 import lombok.AllArgsConstructor;
@@ -24,7 +25,7 @@ public class DeliveryController {
     StasFactory stasFactory;
 
     @GetMapping("/getState")
-    public StasDelivery getState(@RequestParam int stasIndex) {
+    public TestDelivery getState(@RequestParam int stasIndex) {
         return stasFactory.getBy(stasIndex);
     }
 

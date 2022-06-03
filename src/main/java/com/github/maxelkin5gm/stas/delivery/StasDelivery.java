@@ -44,10 +44,8 @@ public class StasDelivery {
 
             var command = "p," + cellNumber + "," + sideInt;
             serial.writeString(command);
-//            JOptionPane.showMessageDialog(new JFrame(), command, "Отправил команду", JOptionPane.INFORMATION_MESSAGE);
 
             var responseStatus = serial.readString(5000);
-//            JOptionPane.showMessageDialog(new JFrame(), responseStatus, "Получил ответ", JOptionPane.INFORMATION_MESSAGE);
             if (responseStatus == null) {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Arduino crash");
             }
@@ -56,7 +54,6 @@ public class StasDelivery {
             response.getWriter().close();
 
             responseStatus = serial.readString(150000);
-//            JOptionPane.showMessageDialog(new JFrame(), responseStatus, "Получил ответ", JOptionPane.INFORMATION_MESSAGE);
             if (responseStatus == null) {
                 error = "Arduino crash";
                 setState(StateStasEnum.READY);
@@ -89,10 +86,8 @@ public class StasDelivery {
 
             var command = "b," + cellNumber + "," + sideInt;
             serial.writeString(command);
-//            JOptionPane.showMessageDialog(new JFrame(), command, "Отправил команду", JOptionPane.INFORMATION_MESSAGE);
 
             var responseStatus = serial.readString(5000);
-//            JOptionPane.showMessageDialog(new JFrame(), responseStatus, "Получил ответ", JOptionPane.INFORMATION_MESSAGE);
             if (responseStatus == null) {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Arduino crash");
             }
@@ -101,7 +96,6 @@ public class StasDelivery {
             response.getWriter().close();
 
             responseStatus = serial.readString(150000);
-//            JOptionPane.showMessageDialog(new JFrame(), responseStatus, "Получил ответ", JOptionPane.INFORMATION_MESSAGE);
             if (responseStatus == null) {
                 error = "Arduino crash";
                 setState(StateStasEnum.READY);
