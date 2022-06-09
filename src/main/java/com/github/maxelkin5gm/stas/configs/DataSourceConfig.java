@@ -17,6 +17,7 @@ public class DataSourceConfig {
     public DataSource dataSource() {
         Properties props = new Properties();
         props.setProperty("foreign_keys", "true");
+//        return new DriverManagerDataSource("jdbc:postgresql://localhost:5432/test?user=postgres&password=2508", props);
         return new DriverManagerDataSource("jdbc:sqlite:" + PATH_TO_DATABASE, props);
 //        return new DriverManagerDataSource("jdbc:sqlite:./sqlite/db.sqlite", props);
     }
