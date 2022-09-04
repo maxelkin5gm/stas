@@ -24,7 +24,6 @@ const StasTab = ({stasIndex}: StasTabProps) => {
     const tabIndex = useTypeSelector(state => state.app.tabIndex)
     const displayStyle = (tabIndex === stasIndex) ? {} : {display: "none"}
 
-
     useEffect(() => {
         new StasService(dispatch, stasIndex).initState()
             .catch(() => UtilsStore.showError(dispatch))

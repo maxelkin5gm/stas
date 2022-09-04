@@ -39,15 +39,6 @@ public class StoDao {
         return Objects.requireNonNull(keyHolder.getKey()).intValue();
     }
 
-    public StoEntity findOrInsert(String nameSto) {
-        var stoEntity = findBy(nameSto).orElse(null);
-        if (stoEntity == null) {
-            var id = insert(nameSto);
-            stoEntity = new StoEntity(id, nameSto);
-        }
-        return stoEntity;
-    }
-
     public void deleteBy(String nameSto) {
         jdbcTemplate.update("DELETE FROM STO WHERE nameSto = ?;", nameSto);
     }
