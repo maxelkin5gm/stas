@@ -3,6 +3,8 @@ Implementation of a control panel for an automated warehouse. The software allow
 
 The Arduino controller is connected to the mechanical part of the warehouse and controls it. In turn, the server sends commands to the controller. The web interface allows you to manage all this. This is how the control panel works.
 
+Stack: Java (Spring, jSerialComm), React (TypeScript, Redux, SCSS), PostgreSQL, SQLite, Arduino Controller (C++).
+
 ![image](https://user-images.githubusercontent.com/68002377/198352714-a586d8af-890c-4b87-860a-0bac20bad1a6.png)
 
 ![image](https://user-images.githubusercontent.com/68002377/198353658-fc45333f-6f0f-4415-bfa4-913e9ad5f0b4.png)
